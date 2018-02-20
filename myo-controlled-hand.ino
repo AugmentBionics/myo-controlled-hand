@@ -2,12 +2,26 @@
 #include "Config.h"
 #include "MotorController.h"
 
-int buttonPin = BUTTON_PIN;
+int buttonPin                 = BUTTON_PIN;
+int pins[NUMBER_OF_ACTUATORS] = { MOTOR_1_PIN, MOTOR_2_PIN, MOTOR_3_PIN };
+struct Mapping linearMapping[2] = {
+  { 0,    0 },
+  { 0, 1024 }
+};
+
+struct Config actuatorConfigs[NUMBER_OF_ACTUATORS] = {
+  {
+    "thumb",
+    MOTOR_1_PIN,
+    linearMapping,
+    2,
+    0,
+    1024
+  }
+};
 
 void setup() {
-  MotorController mc = MotorController();
-
+  MotorController mc = MotorController(actuatorConfigs);
 }
 
-void loop() {
-}
+void loop() {}

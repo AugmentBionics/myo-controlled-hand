@@ -20,6 +20,7 @@ public:
 
   // Set hand position to the one defined in
   void setHandPosition(struct Grip grip);
+  void handleDynamicActuation(int myoInput);
 
 private:
 

@@ -12,6 +12,12 @@ MotorController::MotorController(struct Config configs[NUMBER_OF_ACTUATORS]) {
   }
 }
 
+void MotorController::handleDynamicActuation(int myoInput) {
+  int constrainedInput = constrain(myoInput, 0, 1023);
+
+  struct ActuationPattern ap = _currentGrip.actuationPattern;
+}
+
 void MotorController::setHandPosition(struct Grip grip) {
   if (grip.type != triggered) {
     // First motion -> second motion -> etc.

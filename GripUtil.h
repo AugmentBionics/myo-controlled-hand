@@ -7,18 +7,13 @@
 enum GripType { simple, dynamic, triggered };
 enum FeedbackScheme { continuous, contact, none };
 
-struct ActuationScheme {
-  int actuationStartPosition[NUMBER_OF_ACTUATORS];
-  int actuationGoalPosition[NUMBER_OF_ACTUATORS];
-};
-
 struct Grip {
-  char                  *name;
-  GripType               type;
-  int                    fingerPositions[NUMBER_OF_ACTUATORS];
-  int                    order[NUMBER_OF_ACTUATORS][NUMBER_OF_ACTUATORS];
-  FeedbackScheme         hapticFeedbackScheme[NUMBER_OF_TOUCH_SENSORS];
-  struct ActuationScheme dynamicActuationScheme;
+  char          *name;
+  GripType       type;
+  int            fingerPositions[NUMBER_OF_ACTUATORS];
+  int            order[NUMBER_OF_ACTUATORS];
+  FeedbackScheme hapticFeedbackScheme[NUMBER_OF_TOUCH_SENSORS];
+  int            actuationGoalPosition[NUMBER_OF_ACTUATORS];
 };
 
 #endif // ifndef GripUtil_h

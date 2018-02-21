@@ -9,6 +9,10 @@ Actuator::Actuator(struct Config config) {
   init(config);
 }
 
+struct Config Actuator::getConfig() {
+  return _config;
+}
+
 void Actuator::init(struct Config config) {
   if (_servo.attached()) {
     _servo.detach();
@@ -19,5 +23,6 @@ void Actuator::init(struct Config config) {
 
 void Actuator::setPosition(int position) {
   int remappedPosition = map(constrain(position, 0, 1023), 0, 1023, 0, 90);
+
   _servo.write(remappedPosition);
 }

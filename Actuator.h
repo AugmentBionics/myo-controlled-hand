@@ -23,9 +23,11 @@ public:
   void init(struct Config config);
   void setPosition(int position);
 
+  struct Config getConfig();
+
 private:
 
-  Config _config;
+  struct Config _config;
   Servo  _servo;
 };
 

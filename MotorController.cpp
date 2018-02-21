@@ -45,38 +45,56 @@ void MotorController::moveActuator(Actuator *actuator,
 
 int MotorController::remap(Actuator *actuator, int position) {
   struct Config config = actuator->getConfig();
-  int outputPosition   = constrain(position, 0, 1023);
+
+  return interpolateOnCurve(
+           position,
+           0,
+           1023,
+           config.controlCurveconfig.
+           controlCurveResolution,
+           config.lowerLimit,
+           config.upperLimit);
+}
+
+int interpolateOnCurve(int             input,
+                       int             rangeMin,
+                       int             rangeMax,
+                       struct Mapping *curve,
+                       int             curveResolution,
+                       int             finalRangeMin,
+                       int             finalRangeMax) {
+  int output = constrain(input, rangeMin, rangeMax);
 
   int i = 0;
 
   // Scan through mappings to set lower bounds for interpolation
-  int inputRangeMin  = 0;
-  int outputRangeMin = 0;
+  int inputRangeMin  = rangeMin;
+  int outputRangeMin = rangeMin;
 
-  for (i = 0; i < config.controlCurveResolution; i++) {
-    if (outputPosition > config.controlCurve[i].input) {
-      inputRangeMin  = config.controlCurve[i].input;
-      outputRangeMin = config.controlCurve[i].output;
+  for (i = 0; i < curveResolution; i++) {
+    if (output > curve[i].input) {
+      inputRangeMin  = curve[i].input;
+      outputRangeMin = curve[i].output;
     }
   }
 
   // Setup upper interpolation bounds
-  int inputRangeMax  = 1023;
-  int outputRangeMax = 1023;
+  int inputRangeMax  = rangeMax;
+  int outputRangeMax = rangeMax;
 
-  if (i < config.controlCurveResolution - 1) {
-    inputRangeMax  = config.controlCurve[i + 1].output;
-    outputRangeMax = config.controlCurve[i + 1].output;
+  if (i < curveResolution - 1) {
+    inputRangeMax  = curve[i + 1].output;
+    outputRangeMax = curve[i + 1].output;
   }
-  outputPosition = map(outputPosition,
-                       inputRangeMin,
-                       inputRangeMax,
-                       outputRangeMin,
-                       outputRangeMax);
-  outputPosition = map(outputPosition,
-                       outputRangeMin,
-                       outputRangeMax,
-                       config.lowerLimit,
-                       config.upperLimit);
-  return outputPosition;
+  output = map(output,
+               inputRangeMin,
+               inputRangeMax,
+               outputRangeMin,
+               outputRangeMax);
+  output = map(output,
+               outputRangeMin,
+               outputRangeMax,
+               finalRangeMin,
+               finalRangeMax);
+  return output;
 }

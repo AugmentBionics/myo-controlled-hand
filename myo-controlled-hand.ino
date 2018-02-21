@@ -3,14 +3,18 @@
 #include "MotorController.h"
 #include "GripLoader.h"
 
-int buttonPin                 = BUTTON_PIN;
-int pins[NUMBER_OF_ACTUATORS] = { MOTOR_1_PIN, MOTOR_2_PIN, MOTOR_3_PIN };
-struct Mapping linearMapping[2] = {
+const int buttonPin PROGMEM                 = BUTTON_PIN;
+const int pins[NUMBER_OF_ACTUATORS] PROGMEM = {
+  MOTOR_1_PIN,
+  MOTOR_2_PIN,
+  MOTOR_3_PIN
+};
+const struct Mapping linearMapping[2] PROGMEM = {
   { 0,    0 },
   { 0, 1024 }
 };
 
-struct Config actuatorConfigs[NUMBER_OF_ACTUATORS] = {
+const struct Config actuatorConfigs[NUMBER_OF_ACTUATORS] PROGMEM = {
   {
     "thumb",
     MOTOR_1_PIN,

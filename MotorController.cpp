@@ -11,9 +11,7 @@ MotorController::MotorController(struct Config *configs) {
 }
 
 void MotorController::setHandPosition(struct Grip grip) {
-  switch (grip.type) {
-  case simple:
-
+  if (grip.type != triggered) {
     // First motion -> second motion -> etc.
     // i.e. for each "batch" in the order
     for (int i = 0; i < NUMBER_OF_ACTUATORS; i++) {
@@ -27,10 +25,6 @@ void MotorController::setHandPosition(struct Grip grip) {
       }
       delay(grip.motionStepDelay);
     }
-    break;
-
-  default:
-    break;
   }
 }
 

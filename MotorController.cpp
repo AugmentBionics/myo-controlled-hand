@@ -39,11 +39,11 @@ int MotorController::remap(Actuator *actuator, int position) {
   struct Config config = actuator->getConfig();
   int outputPosition   = constrain(position, 0, 1023);
 
+  int i = 0;
+
+  // Scan through mappings to set lower bounds for interpolation
   int inputRangeMin  = 0;
-  int inputRangeMax  = 1023;
   int outputRangeMin = 0;
-  int outputRangeMax = 1023;
-  int i              = 0;
 
   for (i = 0; i < config.controlCurveResolution; i++) {
     if (outputPosition > config.controlCurve[i].input) {
@@ -51,6 +51,10 @@ int MotorController::remap(Actuator *actuator, int position) {
       outputRangeMin = config.controlCurve[i].output;
     }
   }
+
+  // Setup upper interpolation bounds
+  int inputRangeMax  = 1023;
+  int outputRangeMax = 1023;
 
   if (i < config.controlCurveResolution - 1) {
     inputRangeMax  = config.controlCurve[i + 1].output;

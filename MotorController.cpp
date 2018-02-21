@@ -35,7 +35,10 @@ void MotorController::handleDynamicActuation(int myoInput) {
 
     // move actuator to that position (will remap again to motion curve of
     // actuator
-          moveActuator(_actuators + i, remappedInput); //Don't know why uncrustify indents this
+
+          moveActuator(_actuators + i, remappedInput);
+
+    // Don't know why uncrustify indents the above line
   }
 }
 

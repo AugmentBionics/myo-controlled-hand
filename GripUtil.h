@@ -8,7 +8,7 @@ enum GripType { simple, dynamic, triggered };
 enum FeedbackScheme { continuous, contact, none };
 
 struct Grip {
-  char          *name;
+  String         name;
   GripType       type;
   int            fingerPositions[NUMBER_OF_ACTUATORS];
   int            order[NUMBER_OF_ACTUATORS];

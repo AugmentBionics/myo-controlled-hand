@@ -13,9 +13,30 @@ MotorController::MotorController(struct Config configs[NUMBER_OF_ACTUATORS]) {
 }
 
 void MotorController::handleDynamicActuation(int myoInput) {
-  int constrainedInput = constrain(myoInput, 0, 1023);
+  if (_currentGrip.type != dynamic) {
+    return;
+  }
 
-  struct ActuationPattern ap = _currentGrip.actuationPattern;
+  for (int i = 0; i < NUMBER_OF_ACTUATORS; i++) {
+    struct ActuationPattern ap = _currentGrip.actuationPattern[i];
+
+    if (!ap.isActuated) {
+      break;
+    }
+
+    // Remap input by actuation pattern
+    int remappedInput = interpolateOnCurve(myoInput,
+                                           0,
+                                           1023,
+                                           ap.controlCurve,
+                                           ap.controlCurveResolution,
+                                           _currentGrip.fingerPositions[i],
+                                           ap.actuationGoalPosition);
+
+    // move actuator to that position (will remap again to motion curve of
+    // actuator
+          moveActuator(_actuators + i, remappedInput); //Don't know why uncrustify indents this
+  }
 }
 
 void MotorController::setHandPosition(struct Grip grip) {

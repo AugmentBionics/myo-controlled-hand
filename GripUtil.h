@@ -10,16 +10,17 @@ enum FeedbackScheme { continuous, contact, none };
 struct ActuationPattern {
   struct Mapping *controlCurve;
   int             controlCurveResolution;
-  int             actuationGoalPosition[NUMBER_OF_ACTUATORS];
+  int             actuationGoalPosition;
+  bool            isActuated;
 };
 
 struct Grip {
-  String         name;
-  GripType       type;
-  int            fingerPositions[NUMBER_OF_ACTUATORS];
-  int            order[NUMBER_OF_ACTUATORS];
-  unsigned long  motionStepDelay;
-  FeedbackScheme hapticFeedbackScheme[NUMBER_OF_TOUCH_SENSORS];
+  String                  name;
+  GripType                type;
+  int                     fingerPositions[NUMBER_OF_ACTUATORS];
+  int                     order[NUMBER_OF_ACTUATORS];
+  unsigned long           motionStepDelay;
+  FeedbackScheme          hapticFeedbackScheme[NUMBER_OF_TOUCH_SENSORS];
   struct ActuationPattern actuationPattern[NUMBER_OF_ACTUATORS];
 };
 

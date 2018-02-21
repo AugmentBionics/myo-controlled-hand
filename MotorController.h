@@ -35,7 +35,7 @@ private:
                           struct Mapping *curve,
                           int             curveResolution,
                           int             finalRangeMin,
-                          int             finalRangeMax)
+                          int             finalRangeMax);
   int remap(Actuator *actuator,
             int       position);
 };

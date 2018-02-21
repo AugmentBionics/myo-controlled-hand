@@ -71,8 +71,8 @@ int MotorController::remap(Actuator *actuator, int position) {
            position,
            0,
            1023,
-           config.controlCurveconfig.
-           controlCurveResolution,
+           config.controlCurve,
+           config.controlCurveResolution,
            config.lowerLimit,
            config.upperLimit);
 }

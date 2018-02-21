@@ -14,10 +14,18 @@ void MotorController::setHandPosition(struct Grip grip) {
   switch (grip.type) {
   case simple:
 
+    // First motion -> second motion -> etc.
+    // i.e. for each "batch" in the order
     for (int i = 0; i < NUMBER_OF_ACTUATORS; i++) {
+      // Scan through order
       for (int j = 0; j < NUMBER_OF_ACTUATORS; j++) {
-        if (grip.order[j] == i) {}
+        // If order value == "batch" number
+        if (grip.order[j] == i) {
+          // set actuator of corresponding index to move
+          moveActuator(_actuators + j, grip.fingerPositions[j]);
+        }
       }
+      delay(grip.motionStepDelay);
     }
     break;
 
@@ -26,9 +34,8 @@ void MotorController::setHandPosition(struct Grip grip) {
   }
 }
 
-void MotorController::moveActuator(Actuator     *actuator,
-                                   int           position,
-                                   unsigned long delay) {
+void MotorController::moveActuator(Actuator *actuator,
+                                   int       position) {
   int remappedPosition = remap(actuator, position);
 
   actuator->setPosition(remappedPosition);

@@ -12,6 +12,7 @@ struct Grip {
   GripType       type;
   int            fingerPositions[NUMBER_OF_ACTUATORS];
   int            order[NUMBER_OF_ACTUATORS];
+  unsigned long  motionStepDelay;
   FeedbackScheme hapticFeedbackScheme[NUMBER_OF_TOUCH_SENSORS];
   int            actuationGoalPosition[NUMBER_OF_ACTUATORS];
 };

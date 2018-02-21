@@ -23,8 +23,7 @@ private:
   Actuator _actuators[NUMBER_OF_ACTUATORS];
 
   void moveActuator(Actuator     *actuator,
-                    int           position,
-                    unsigned long delay);
+                    int           position);
   int  remap(Actuator *actuator,
              int       position);
 };

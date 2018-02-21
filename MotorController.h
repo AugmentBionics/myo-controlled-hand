@@ -17,14 +17,16 @@ public:
 
   MotorController(struct Config *configs);
   void setHandPosition(struct Grip grip);
-  
 
 private:
 
   Actuator _actuators[NUMBER_OF_ACTUATORS];
 
-  void moveActuator(Actuator *actuator, int position, unsigned long delay);
-  int remap(Actuator *actuator, int position);
+  void moveActuator(Actuator     *actuator,
+                    int           position,
+                    unsigned long delay);
+  int  remap(Actuator *actuator,
+             int       position);
 };
 
 

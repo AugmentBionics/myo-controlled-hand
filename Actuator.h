@@ -20,15 +20,15 @@ public:
   Actuator();
   Actuator(struct Config config);
 
-  void init(struct Config config);
-  void setPosition(int position);
+  void          init(struct Config config);
+  void          setPosition(int position);
 
   struct Config getConfig();
 
 private:
 
   struct Config _config;
-  Servo  _servo;
+  Servo _servo;
 };
 
 

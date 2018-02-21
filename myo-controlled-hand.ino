@@ -17,7 +17,23 @@ struct Config actuatorConfigs[NUMBER_OF_ACTUATORS] = {
     linearMapping,
     2,
     0,
-    1024
+    1023
+  },
+  {
+    "indexFinger",
+    MOTOR_2_PIN,
+    linearMapping,
+    2,
+    0,
+    1023
+  },
+  {
+    "otherFingers",
+    MOTOR_3_PIN,
+    linearMapping,
+    2,
+    0,
+    1023
   }
 };
 

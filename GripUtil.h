@@ -16,5 +16,4 @@ struct Grip {
   FeedbackScheme hapticFeedbackScheme[NUMBER_OF_TOUCH_SENSORS];
   int            actuationGoalPosition[NUMBER_OF_ACTUATORS];
 };
-
 #endif // ifndef GripUtil_h

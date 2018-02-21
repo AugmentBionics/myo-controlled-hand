@@ -5,6 +5,8 @@
 #include <Servo.h>
 
 MotorController::MotorController(struct Config configs[NUMBER_OF_ACTUATORS]) {
+  _currentGrip = { .name = "initial grip", .type = simple };
+
   for (int i = 0; i < NUMBER_OF_ACTUATORS; i++) {
     _actuators[i] = Actuator::Actuator(configs[i]);
   }

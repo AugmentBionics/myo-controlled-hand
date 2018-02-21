@@ -23,7 +23,8 @@ public:
 
 private:
 
-  Actuator _actuators[NUMBER_OF_ACTUATORS];
+  struct Grip _currentGrip;
+  Actuator    _actuators[NUMBER_OF_ACTUATORS];
 
   void moveActuator(Actuator *actuator,
                     int       position);

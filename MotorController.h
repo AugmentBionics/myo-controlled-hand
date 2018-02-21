@@ -15,15 +15,18 @@ struct Mapping {
 class MotorController {
 public:
 
+  // Constructor takes an array of struct Configs for the actuators
   MotorController(struct Config *configs);
+
+  // Set hand position to the one defined in
   void setHandPosition(struct Grip grip);
 
 private:
 
   Actuator _actuators[NUMBER_OF_ACTUATORS];
 
-  void moveActuator(Actuator     *actuator,
-                    int           position);
+  void moveActuator(Actuator *actuator,
+                    int       position);
   int  remap(Actuator *actuator,
              int       position);
 };

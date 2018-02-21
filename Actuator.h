@@ -21,6 +21,7 @@ public:
   Actuator(struct Config config);
 
   void init(struct Config config);
+  void setPosition(int position);
 
 private:
 

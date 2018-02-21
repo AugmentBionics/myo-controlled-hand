@@ -29,8 +29,15 @@ private:
 
   void moveActuator(Actuator *actuator,
                     int       position);
-  int  remap(Actuator *actuator,
-             int       position);
+  int  interpolateOnCurve(int             input,
+                          int             rangeMin,
+                          int             rangeMax,
+                          struct Mapping *curve,
+                          int             curveResolution,
+                          int             finalRangeMin,
+                          int             finalRangeMax)
+  int remap(Actuator *actuator,
+            int       position);
 };
 
 

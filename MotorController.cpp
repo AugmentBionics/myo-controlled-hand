@@ -56,13 +56,13 @@ int MotorController::remap(Actuator *actuator, int position) {
            config.upperLimit);
 }
 
-int interpolateOnCurve(int             input,
-                       int             rangeMin,
-                       int             rangeMax,
-                       struct Mapping *curve,
-                       int             curveResolution,
-                       int             finalRangeMin,
-                       int             finalRangeMax) {
+int MotorController::interpolateOnCurve(int             input,
+                                        int             rangeMin,
+                                        int             rangeMax,
+                                        struct Mapping *curve,
+                                        int             curveResolution,
+                                        int             finalRangeMin,
+                                        int             finalRangeMax) {
   int output = constrain(input, rangeMin, rangeMax);
 
   int i = 0;

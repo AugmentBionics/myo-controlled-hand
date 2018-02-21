@@ -4,7 +4,7 @@
 #include "GripUtil.h"
 #include <Servo.h>
 
-MotorController::MotorController(struct Config *configs) {
+MotorController::MotorController(struct Config configs[NUMBER_OF_ACTUATORS]) {
   for (int i = 0; i < NUMBER_OF_ACTUATORS; i++) {
     _actuators[i] = Actuator::Actuator(configs[i]);
   }

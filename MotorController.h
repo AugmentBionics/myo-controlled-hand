@@ -16,7 +16,7 @@ class MotorController {
 public:
 
   // Constructor takes an array of struct Configs for the actuators
-  MotorController(struct Config *configs);
+  MotorController(struct Config configs[NUMBER_OF_ACTUATORS]);
 
   // Set hand position to the one defined in
   void setHandPosition(struct Grip grip);

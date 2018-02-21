@@ -22,7 +22,7 @@ void Actuator::init(struct Config config) {
 }
 
 void Actuator::setPosition(int position) {
-  int remappedPosition = map(constrain(position, 0, 1023), 0, 1023, 0, 90);
+  int microseconds = map(constrain(position, 0, 1023), 0, 1023, 2000, 1000);
 
-  _servo.write(remappedPosition);
+  _servo.writeMicroseconds(microseconds);
 }

@@ -3,7 +3,6 @@
 
 #include "Arduino.h"
 #include "Config.h"
-#include "MotorController.h"
 #include <Servo.h>
 
 struct Config {
@@ -21,14 +20,12 @@ public:
   Actuator();
   Actuator(struct Config config);
 
-  void init();
+  void init(struct Config config);
 
 private:
 
-  Config   _config;
-  Servo    _servo;
-  struct Mapping *_controlCurve;
-  int _controlCurveResolution;
+  Config _config;
+  Servo  _servo;
 };
 
 

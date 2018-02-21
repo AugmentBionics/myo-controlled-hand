@@ -8,3 +8,5 @@ MotorController::MotorController(struct Config *configs) {
     _actuators[i] = Actuator::Actuator(configs[i]);
   }
 }
+
+void MotorController::setHandPosition() {}

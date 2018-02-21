@@ -1,10 +1,10 @@
 #include "Arduino.h"
 #include "Actuator.h"
-
 #include <Servo.h>
 
-
-Actuator::Actuator() {}
+Actuator::Actuator() {
+	
+	}
 
 Actuator::Actuator(struct Config config) {
   init(config);

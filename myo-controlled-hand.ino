@@ -1,6 +1,7 @@
 #include <Servo.h>
 #include "Config.h"
 #include "MotorController.h"
+#include "GripLoader.h"
 
 int buttonPin                 = BUTTON_PIN;
 int pins[NUMBER_OF_ACTUATORS] = { MOTOR_1_PIN, MOTOR_2_PIN, MOTOR_3_PIN };
@@ -20,8 +21,9 @@ struct Config actuatorConfigs[NUMBER_OF_ACTUATORS] = {
   }
 };
 
-void setup() {
-  MotorController mc = MotorController(actuatorConfigs);
-}
+MotorController mc = MotorController(actuatorConfigs);
+GripLoader gl      = GripLoader();
+
+void setup() {}
 
 void loop() {}

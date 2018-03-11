@@ -7,9 +7,6 @@
 #define MOTOR_3_PIN 7
 #define NUMBER_OF_ACTUATORS 3
 #define NUMBER_OF_TOUCH_SENSORS 1
-
-typedef int bool;
-#define true 1
-#define false 0
+#define NUMBER_OF_PRIMARY_GRIPS 5
 
 #endif // ifndef Config_h

@@ -34,11 +34,11 @@ struct Config actuatorConfigs[NUMBER_OF_ACTUATORS] = {
      1023}};
 
 volatile unsigned int gripIndex = 0;
+unsigned int currentGripIndex = NUMBER_OF_PRIMARY_GRIPS; // Nonsensical value to trigger first update.
 
 // "Neutral" "Index" "Power" "Pinch" "Hook"
 String grips[NUMBER_OF_PRIMARY_GRIPS] = {"Neutral", "Index", "Power", "Pinch", "Hook"};
 
-StateController sc = StateController();
 MotorController mc = MotorController(actuatorConfigs);
 GripLoader gl = GripLoader();
 
@@ -55,7 +55,7 @@ void loop()
 {
   unsigned long currentMillis = millis();
   // If currect grip is not the currently set grip and enough time has passed:
-  if ((sc.currentGripIndex != gripIndex) && (currentMillis - previousMillis >= stateUpdateMinMillis))
+  if ((currentGripIndex != gripIndex) && (currentMillis - previousMillis >= stateUpdateMinMillis))
   {
     // Get the grip by name
     struct Grip grip = gl.load(grips[gripIndex]);

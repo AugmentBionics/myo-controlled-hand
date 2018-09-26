@@ -7,8 +7,13 @@
 enum GripType { simple, dynamic, triggered };
 enum FeedbackScheme { continuous, contact, none };
 
+struct Mapping {
+  int input;
+  int output;
+};
+
 struct ActuationPattern {
-  struct Mapping *controlCurve;
+  Mapping *controlCurve;
   int             controlCurveResolution;
   int             actuationGoalPosition;
   bool            isActuated;

@@ -3,6 +3,7 @@
 
 #include "Arduino.h"
 #include "Config.h"
+#include "GripUtil.h"
 #include <Servo.h>
 
 /* Actuator configuration information:
@@ -17,7 +18,7 @@
 struct Config {
   String          name;
   int             pin;
-  struct Mapping *controlCurve;
+  Mapping *controlCurve;
   int             controlCurveResolution;
   int             lowerLimit;
   int             upperLimit;
@@ -26,18 +27,20 @@ struct Config {
 class Actuator {
 public:
 
-  Actuator();
-  Actuator(struct Config config);
+    Actuator();
+    Actuator(Config config);
 
-  void          init(struct Config config);
-  void          setPosition(int position);
+    void          init(Config config);
+    void          setPosition(int position);
+    int           getPosition();
 
-  struct Config getConfig();
+    Config getConfig();
 
 private:
 
-  struct Config _config;
-  Servo _servo;
+    Config _config;
+    Servo _servo;
+    int _currentPosition;
 };
 
 

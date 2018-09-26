@@ -13,31 +13,34 @@ struct Mapping {
 };
 
 class MotorController {
-public:
+  public:
 
-  // Constructor takes an array of struct Configs for the actuators
-  MotorController(struct Config configs[NUMBER_OF_ACTUATORS]);
+    // Constructor takes an array of Configs for the actuators
+    MotorController();
 
-  // Set hand position to the one defined in
-  void setHandPosition(struct Grip grip);
-  void handleDynamicActuation(int myoInput);
+    // Set hand position to the one defined in
+    void setHandPosition(Grip grip);
+    void handleDynamicActuation(int myoInput);
+    void init(Config configs[NUMBER_OF_ACTUATORS], int lower, int upper);
 
-private:
+  private:
 
-  struct Grip _currentGrip;
-  Actuator    _actuators[NUMBER_OF_ACTUATORS];
+    Grip _currentGrip;
+    Actuator    _actuators[NUMBER_OF_ACTUATORS];
+    int _upperThreshold;
+    int _lowerThreshold;
 
-  void moveActuator(Actuator *actuator,
-                    int       position);
-  int  interpolateOnCurve(int             input,
-                          int             rangeMin,
-                          int             rangeMax,
-                          struct Mapping *curve,
-                          int             curveResolution,
-                          int             finalRangeMin,
-                          int             finalRangeMax);
-  int remap(Actuator *actuator,
-            int       position);
+    void moveActuator(Actuator *actuator,
+                      int       position);
+    int  interpolateOnCurve(int             input,
+                            int             rangeMin,
+                            int             rangeMax,
+                            Mapping *curve,
+                            int             curveResolution,
+                            int             finalRangeMin,
+                            int             finalRangeMax);
+    int remap(Actuator *actuator,
+              int       position);
 };
 
 

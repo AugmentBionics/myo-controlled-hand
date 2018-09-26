@@ -5,18 +5,15 @@
 
 Actuator::Actuator() {}
 
-Actuator::Actuator(struct Config config) {
+Actuator::Actuator(Config config) {
   init(config);
 }
 
-struct Config Actuator::getConfig() {
+Config Actuator::getConfig() {
   return _config;
 }
 
-void Actuator::init(struct Config config) {
-  if (_servo.attached()) {
-    _servo.detach();
-  }
+void Actuator::init(Config config) {
   _config = config;
   _servo.attach(_config.pin);
 }

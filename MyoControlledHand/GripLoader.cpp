@@ -3,7 +3,7 @@
 
 GripLoader::GripLoader() {}
 
-struct Grip GripLoader::load(String gripName)
+Grip GripLoader::load(String gripName)
 {
     return
     {
@@ -23,11 +23,11 @@ struct Grip GripLoader::load(String gripName)
 //   int                     order[NUMBER_OF_ACTUATORS];
 //   unsigned long           motionStepDelay;
 //   FeedbackScheme          hapticFeedbackScheme[NUMBER_OF_TOUCH_SENSORS];
-//   struct ActuationPattern actuationPattern[NUMBER_OF_ACTUATORS];
+//   ActuationPattern actuationPattern[NUMBER_OF_ACTUATORS];
 // };
 
 // struct ActuationPattern {
-//   struct Mapping *controlCurve;
+//   Mapping *controlCurve;
 //   int             controlCurveResolution;
 //   int             actuationGoalPosition;
 //   bool            isActuated;

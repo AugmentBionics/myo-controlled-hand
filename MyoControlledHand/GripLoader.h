@@ -10,7 +10,7 @@ public:
 
   GripLoader();
 
-  struct Grip load(String gripName);
+    Grip load(String gripName);
 
 private:
 };

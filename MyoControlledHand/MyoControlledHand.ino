@@ -2,10 +2,15 @@
 #include "Config.h"
 #include "MotorController.h"
 #include "GripLoader.h"
-#include "StateController.h"
+#include "GripUtil.h"
 
-int buttonPin = BUTTON_PIN;
-int pins[NUMBER_OF_ACTUATORS] = {
+Mapping linearMapping[2] = {
+  {0, 0},
+  {0, 1024}
+};
+
+Config actuatorConfigs[NUMBER_OF_ACTUATORS] = {
+  { "thumb",
     MOTOR_1_PIN,
     MOTOR_2_PIN,
     MOTOR_3_PIN};
@@ -36,11 +41,62 @@ struct Config actuatorConfigs[NUMBER_OF_ACTUATORS] = {
 volatile unsigned int gripIndex = 0;
 unsigned int currentGripIndex = NUMBER_OF_PRIMARY_GRIPS; // Nonsensical value to trigger first update.
 
-// "Neutral" "Index" "Power" "Pinch" "Hook"
-String grips[NUMBER_OF_PRIMARY_GRIPS] = {"Neutral", "Index", "Power", "Pinch", "Hook"};
+MotorController mc;
 
-MotorController mc = MotorController(actuatorConfigs);
-GripLoader gl = GripLoader();
+Grip openGrip = {
+  "Open",
+  simple,
+  {0, 0, 0},
+  {0, 0, 0},
+  200UL,
+  {none},
+  {
+    {linearMapping, 2, 0, false},
+    {linearMapping, 2, 0, false},
+    {linearMapping, 2, 0, false}
+  }
+};
+
+Grip powerGrip = {
+  "Power",
+  dynamic,
+  {1024, 0, 0},
+  {0, 0, 0},
+  200UL,
+  {none},
+  {
+    {linearMapping, 2, 0, false},
+    {linearMapping, 2, 500, true},
+    {linearMapping, 2, 980, true}
+  }
+};
+
+Grip pinchGrip = {
+  "Pinch",
+  dynamic,
+  {800, 0, 1023},
+  {0, 0, 0},
+  200UL,
+  {none},
+  {
+    {linearMapping, 2, 0, false},
+    {linearMapping, 2, 800, true},
+    {linearMapping, 2, 0, false}
+  }
+};
+
+Grip grips[NUMBER_OF_PRIMARY_GRIPS] = {openGrip, powerGrip, pinchGrip};
+
+
+// struct Grip {
+//   String                  name;
+//   GripType                type;
+//   int                     fingerPositions[NUMBER_OF_ACTUATORS];
+//   int                     order[NUMBER_OF_ACTUATORS];
+//   unsigned long           motionStepDelay;
+//   FeedbackScheme          hapticFeedbackScheme[NUMBER_OF_TOUCH_SENSORS];
+//   ActuationPattern actuationPattern[NUMBER_OF_ACTUATORS];
+// };
 
 unsigned long previousMillis = 0;
 unsigned long stateUpdateMinMillis = 0;

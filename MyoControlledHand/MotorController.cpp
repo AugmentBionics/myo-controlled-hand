@@ -18,7 +18,7 @@ void MotorController::handleDynamicActuation(int myoInput) {
   }
 
   for (int i = 0; i < NUMBER_OF_ACTUATORS; i++) {
-    struct ActuationPattern ap = _currentGrip.actuationPattern[i];
+    ActuationPattern ap = _currentGrip.actuationPattern[i];
 
     if (!ap.isActuated) {
       break;
@@ -42,7 +42,8 @@ void MotorController::handleDynamicActuation(int myoInput) {
   }
 }
 
-void MotorController::setHandPosition(struct Grip grip) {
+void MotorController::setHandPosition(Grip grip) {
+  Serial.println("Setting hand position");
   if (grip.type != triggered) {
     // First motion -> second motion -> etc.
     // i.e. for each "batch" in the order
@@ -58,17 +59,16 @@ void MotorController::setHandPosition(struct Grip grip) {
       delay(grip.motionStepDelay);
     }
   }
+  _currentGrip = grip;
 }
 
 void MotorController::moveActuator(Actuator *actuator,
                                    int       position) {
-  int remappedPosition = remap(actuator, position);
-
-  actuator->setPosition(remappedPosition);
+  actuator->setPosition(position);
 }
 
 int MotorController::remap(Actuator *actuator, int position) {
-  struct Config config = actuator->getConfig();
+  Config config = actuator->getConfig();
 
   return interpolateOnCurve(
            position,
@@ -83,7 +83,7 @@ int MotorController::remap(Actuator *actuator, int position) {
 int MotorController::interpolateOnCurve(int             input,
                                         int             rangeMin,
                                         int             rangeMax,
-                                        struct Mapping *curve,
+                                        Mapping *curve,
                                         int             curveResolution,
                                         int             finalRangeMin,
                                         int             finalRangeMax) {

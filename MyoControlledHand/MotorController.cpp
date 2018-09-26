@@ -2,11 +2,21 @@
 #include "MotorController.h"
 #include "Actuator.h"
 #include "GripUtil.h"
-#include <Servo.h>
 
-MotorController::MotorController(struct Config configs[NUMBER_OF_ACTUATORS]) {
+
+static inline int8_t sgn(int val) {
+  if (val < 0) return -1;
+  if (val == 0) return 0;
+  return 1;
+}
+
+MotorController::MotorController() {
   _currentGrip = { .name = "initial grip", .type = simple };
+}
 
+void MotorController::init(Config configs[NUMBER_OF_ACTUATORS], int lower, int upper) {
+  _upperThreshold = upper;
+  _lowerThreshold = lower;
   for (int i = 0; i < NUMBER_OF_ACTUATORS; i++) {
     _actuators[i] = Actuator::Actuator(configs[i]);
   }

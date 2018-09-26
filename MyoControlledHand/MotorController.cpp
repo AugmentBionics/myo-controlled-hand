@@ -26,29 +26,29 @@ void MotorController::handleDynamicActuation(int myoInput) {
   if (_currentGrip.type != dynamic) {
     return;
   }
-
   for (int i = 0; i < NUMBER_OF_ACTUATORS; i++) {
     ActuationPattern ap = _currentGrip.actuationPattern[i];
 
     if (!ap.isActuated) {
-      break;
+      //Serial.print(_actuators[i].getConfig().name); Serial.println(" is not actuated");
+      continue;
+    }
+    //Serial.print(_actuators[i].getConfig().name); Serial.println(" is actuated");
+
+    int deltaPosition = ap.actuationGoalPosition - _actuators[i].getPosition();
+    int nudge = 0;
+    //    Serial.print(deltaPosition); Serial.print(" - ");
+    if (myoInput > _upperThreshold) {
+      //      Serial.print(myoInput); Serial.print(" > ");
+      nudge = 1;
+    } else if (myoInput < _lowerThreshold) {
+      //      Serial.print(myoInput); Serial.print(" < ");
+      nudge = -1;
     }
 
-    // Remap input by actuation pattern
-    int remappedInput = interpolateOnCurve(myoInput,
-                                           0,
-                                           1023,
-                                           ap.controlCurve,
-                                           ap.controlCurveResolution,
-                                           _currentGrip.fingerPositions[i],
-                                           ap.actuationGoalPosition);
+    //    Serial.println(deltaPosition);
 
-    // move actuator to that position (will remap again to motion curve of
-    // actuator
-
-          moveActuator(_actuators + i, remappedInput);
-
-    // Don't know why uncrustify indents the above line
+    moveActuator(_actuators + i, _actuators[i].getPosition() + 1 * nudge);
   }
 }
 

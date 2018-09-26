@@ -7,10 +7,6 @@
 #include "GripUtil.h"
 
 
-struct Mapping {
-  int input;
-  int output;
-};
 
 class MotorController {
   public:

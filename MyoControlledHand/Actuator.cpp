@@ -19,7 +19,11 @@ void Actuator::init(Config config) {
 }
 
 void Actuator::setPosition(int position) {
-  int microseconds = map(constrain(position, 0, 1023), 0, 1023, 2000, 1000);
-
+  int microseconds = map(constrain(position, 0, 1023), 0, 1023, _config.lowerLimit, _config.upperLimit);
   _servo.writeMicroseconds(microseconds);
+  _currentPosition = constrain(position, 0, 1023);
+}
+
+int Actuator::getPosition() {
+  return _currentPosition;
 }

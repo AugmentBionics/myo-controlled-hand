@@ -13,4 +13,4 @@
 #define NUMBER_OF_TOUCH_SENSORS 1
 #define NUMBER_OF_PRIMARY_GRIPS 3
 
-#endif // ifndef Config_h
+#endif // Config_h

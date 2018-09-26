@@ -7,14 +7,14 @@
 #include <Servo.h>
 
 /* Actuator configuration information:
- *
- * controlCurve is a list of mappings from 0-1023 range to 0-1023 range to
- * facilitate non-linear motion curve
- *
- * controlCurveResolution is the number of mappings in the curve
- *
- * lower and upper limits refer to a range to then map the 0-1023 range to
- */
+
+   controlCurve is a list of mappings from 0-1023 range to 0-1023 range to
+   facilitate non-linear motion curve
+
+   controlCurveResolution is the number of mappings in the curve
+
+   lower and upper limits refer to a range to then map the 0-1023 range to
+*/
 struct Config {
   String          name;
   int             pin;
@@ -25,7 +25,7 @@ struct Config {
 };
 
 class Actuator {
-public:
+  public:
 
     Actuator();
     Actuator(Config config);
@@ -36,7 +36,7 @@ public:
 
     Config getConfig();
 
-private:
+  private:
 
     Config _config;
     Servo _servo;
@@ -44,4 +44,4 @@ private:
 };
 
 
-#endif // ifndef Actuator_h
+#endif // Actuator_h

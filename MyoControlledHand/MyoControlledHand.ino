@@ -12,31 +12,34 @@ Mapping linearMapping[2] = {
 Config actuatorConfigs[NUMBER_OF_ACTUATORS] = {
   { "thumb",
     MOTOR_1_PIN,
+    linearMapping,
+    2,
+    1711,
+    1100
+  },
+  { "indexFinger",
     MOTOR_2_PIN,
-    MOTOR_3_PIN};
-struct Mapping linearMapping[2] = {
-    {0, 0},
-    {0, 1024}};
-
-struct Config actuatorConfigs[NUMBER_OF_ACTUATORS] = {
-    {"thumb",
-     MOTOR_1_PIN,
-     linearMapping,
-     2,
-     0,
-     1023},
-    {"indexFinger",
-     MOTOR_2_PIN,
-     linearMapping,
-     2,
-     0,
-     1023},
-    {"otherFingers",
-     MOTOR_3_PIN,
-     linearMapping,
-     2,
-     0,
-     1023}};
+    linearMapping,
+    2,
+    1720,
+    1200
+  },
+  { "otherFingers",
+    MOTOR_3_PIN,
+    linearMapping,
+    2,
+    1695,
+    1240
+  },
+};
+// struct Config {
+//   String          name;
+//   int             pin;
+//   Mapping *controlCurve;
+//   int             controlCurveResolution;
+//   int             lowerLimit;
+//   int             upperLimit;
+// };
 
 volatile unsigned int gripIndex = 0;
 unsigned int currentGripIndex = NUMBER_OF_PRIMARY_GRIPS; // Nonsensical value to trigger first update.

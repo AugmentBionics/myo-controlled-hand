@@ -26,7 +26,7 @@ struct Grip {
   int                     order[NUMBER_OF_ACTUATORS];
   unsigned long           motionStepDelay;
   FeedbackScheme          hapticFeedbackScheme[NUMBER_OF_TOUCH_SENSORS];
-  struct ActuationPattern actuationPattern[NUMBER_OF_ACTUATORS];
+  ActuationPattern actuationPattern[NUMBER_OF_ACTUATORS];
 };
 
-#endif // ifndef GripUtil_h
+#endif // GripUtil_h

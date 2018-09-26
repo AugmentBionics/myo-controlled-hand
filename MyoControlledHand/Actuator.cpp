@@ -16,6 +16,8 @@ Config Actuator::getConfig() {
 void Actuator::init(Config config) {
   _config = config;
   _servo.attach(_config.pin);
+  Serial.print("Servo attached on pin:");
+  Serial.println(_config.pin);
 }
 
 void Actuator::setPosition(int position) {

@@ -18,7 +18,7 @@ void MotorController::init(Config configs[NUMBER_OF_ACTUATORS], int lower, int u
   _upperThreshold = upper;
   _lowerThreshold = lower;
   for (int i = 0; i < NUMBER_OF_ACTUATORS; i++) {
-    _actuators[i] = Actuator::Actuator(configs[i]);
+    _actuators[i] = Actuator(configs[i]);
   }
 }
 

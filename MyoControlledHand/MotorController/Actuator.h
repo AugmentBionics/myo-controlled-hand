@@ -16,32 +16,31 @@
    lower and upper limits refer to a range to then map the 0-1023 range to
 */
 struct Config {
-  String          name;
-  int             pin;
-  Mapping *controlCurve;
-  int             controlCurveResolution;
-  int             lowerLimit;
-  int             upperLimit;
+    String name;
+    int pin;
+    Mapping *controlCurve;
+    int controlCurveResolution;
+    int lowerLimit;
+    int upperLimit;
 };
 
 class Actuator {
-  public:
+ public:
 
     Actuator();
     Actuator(Config config);
 
-    void          init(Config config);
-    void          setPosition(int position);
-    int           getPosition();
+    void init(Config config);
+    void setPosition(int position);
+    int getPosition();
 
     Config getConfig();
 
-  private:
+ private:
 
     Config _config;
     Servo _servo;
     int _currentPosition;
 };
-
 
 #endif // Actuator_h

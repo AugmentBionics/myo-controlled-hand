@@ -6,10 +6,8 @@
 #include "Actuator.h"
 #include "GripUtil.h"
 
-
-
 class MotorController {
-  public:
+ public:
 
     // Constructor takes an array of Configs for the actuators
     MotorController();
@@ -19,25 +17,24 @@ class MotorController {
     void handleDynamicActuation(int myoInput);
     void init(Config configs[NUMBER_OF_ACTUATORS], int lower, int upper);
 
-  private:
+ private:
 
     Grip _currentGrip;
-    Actuator    _actuators[NUMBER_OF_ACTUATORS];
+    Actuator _actuators[NUMBER_OF_ACTUATORS];
     int _upperThreshold;
     int _lowerThreshold;
 
     void moveActuator(Actuator *actuator,
-                      int       position);
-    int  interpolateOnCurve(int             input,
-                            int             rangeMin,
-                            int             rangeMax,
-                            Mapping *curve,
-                            int             curveResolution,
-                            int             finalRangeMin,
-                            int             finalRangeMax);
+                      int position);
+    int interpolateOnCurve(int input,
+                           int rangeMin,
+                           int rangeMax,
+                           Mapping *curve,
+                           int curveResolution,
+                           int finalRangeMin,
+                           int finalRangeMax);
     int remap(Actuator *actuator,
-              int       position);
+              int position);
 };
-
 
 #endif // MotorController_h

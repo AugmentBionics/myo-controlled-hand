@@ -3,18 +3,17 @@
 
 GripLoader::GripLoader() {}
 
-Grip GripLoader::load(String gripName)
-{
-  return
-  {
-    "Neutral",
-    simple,
-    {15, 15, 10},
-    {0, 0, 1},
-    40,
-    continuous,
-    {{NULL, 0, 0, false}, {NULL, 0, 0, false}, {NULL, 0, 0, false}}
-  };
+Grip GripLoader::load(String gripName) {
+    return
+        {
+            "Neutral",
+            simple,
+            {15, 15, 10},
+            {0, 0, 1},
+            40,
+            continuous,
+            {{NULL, 0, 0, false}, {NULL, 0, 0, false}, {NULL, 0, 0, false}}
+        };
 }
 // struct Grip {
 //   String                  name;

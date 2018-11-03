@@ -6,14 +6,13 @@
 #include "GripUtil.h"
 
 class GripLoader {
-  public:
+ public:
 
     GripLoader();
 
     Grip load(String gripName);
 
-  private:
+ private:
 };
-
 
 #endif // GripLoader_h

@@ -147,8 +147,8 @@ void setup()
   digitalWrite(7, HIGH);
   pinMode(8, OUTPUT);
   digitalWrite(8, LOW);
-  attachInterrupt(digitalPinToInterrupt(BUTTON_1_PIN), cycleGrip, LOW);
-  attachInterrupt(digitalPinToInterrupt(BUTTON_2_PIN), cycleInput, LOW);
+  attachInterrupt(BUTTON_1_PIN, cycleGrip, LOW);
+  attachInterrupt(BUTTON_2_PIN, cycleInput, LOW);
 }
 
 void loop()

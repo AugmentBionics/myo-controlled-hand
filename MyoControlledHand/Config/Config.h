@@ -18,18 +18,12 @@
 #define MOTOR_4_REV_PIN 12
 #define MOTOR_4_CUR_PIN 13
 
-#define MOTOR_5_FWD_PIN A0
-#define MOTOR_5_REV_PIN A1
-#define MOTOR_5_CUR_PIN A2
-#define MOTOR_LIM_PIN A3
+#define MYO_1_SIG_PIN A0
+#define MYO_1_RAW_PIN A1
+#define MYO_2_SIG_PIN A2
+#define MYO_2_RAW_PIN A3
 
-#define MYO_1_SIG_PIN A4
-#define MYO_1_RAW_PIN A4
-#define MYO_2_SIG_PIN A5
-#define MYO_2_RAW_PIN A6
-
-
-#define NUMBER_OF_ACTUATORS 5
+#define NUMBER_OF_ACTUATORS 4
 #define NUMBER_OF_PRIMARY_GRIPS 4
 
 #endif // Config_h

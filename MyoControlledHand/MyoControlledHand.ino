@@ -71,14 +71,21 @@ void setup() {
 
     mc.init(actuatorConfigs);
 
-    delay(2000);
-    Serial.println("...");
+    pinMode(MYO_1_RAW_PIN, INPUT);
+    pinMode(MYO_1_SIG_PIN, INPUT);
+    pinMode(MYO_2_RAW_PIN, INPUT);
+    pinMode(MYO_2_SIG_PIN, INPUT);
 
-    pinMode(MYO_1_PIN, INPUT);
-    pinMode(MYO_2_PIN, INPUT);
-    pinMode(POT_PIN, INPUT);
+    mc.setGrip(pinchGrip);
 }
 
 void loop() {
-
+    delay(1000);
+    mc.brake();
+    mc.close();
+    delay(1000);
+    mc.brake();
+    delay(100);
+    mc.open();
+    delay(1000);
 }

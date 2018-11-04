@@ -3,8 +3,6 @@
 
 #include "Arduino.h"
 #include "Config.h"
-#include "GripUtil.h"
-#include <Servo.h>
 
 /* Actuator configuration information:
 
@@ -50,7 +48,7 @@ class Actuator {
 
     Config _config;
     State _state = coasting;
-    unsigned long _timeState;
+    unsigned long _timeState = 0;
     unsigned long _timeOfLastUpdate;
     void updateTimeState();
 };

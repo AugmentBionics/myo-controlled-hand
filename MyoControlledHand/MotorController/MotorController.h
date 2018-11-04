@@ -9,32 +9,25 @@
 class MotorController {
  public:
 
-    // Constructor takes an array of Configs for the actuators
     MotorController();
+    MotorController(bool debug);
 
-    // Set hand position to the one defined in
-    void setHandPosition(Grip grip);
-    void handleDynamicActuation(int myoInput);
-    void init(Config configs[NUMBER_OF_ACTUATORS], int lower, int upper);
+    void init(Actuator::Config configs[NUMBER_OF_ACTUATORS]);
+    void setGrip(Grip grip);
+    void open();
+    void close();
+    void brake();
+    void coast();
+    bool *checkCurrentLimiting();
+    bool debug;
 
  private:
 
     Grip _currentGrip;
     Actuator _actuators[NUMBER_OF_ACTUATORS];
-    int _upperThreshold;
-    int _lowerThreshold;
-
-    void moveActuator(Actuator *actuator,
-                      int position);
-    int interpolateOnCurve(int input,
-                           int rangeMin,
-                           int rangeMax,
-                           Mapping *curve,
-                           int curveResolution,
-                           int finalRangeMin,
-                           int finalRangeMax);
-    int remap(Actuator *actuator,
-              int position);
+    bool checkCurrentLimiting(uint16_t actuatorIndex);
+    bool checkCurrentLimiting(Actuator actuator);
+    bool _currentLimitingValues[NUMBER_OF_ACTUATORS];
 };
 
 #endif // MotorController_h

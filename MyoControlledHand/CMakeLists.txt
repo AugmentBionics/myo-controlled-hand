@@ -8,7 +8,6 @@ set(ab_hand_SKETCH
         MyoControlledHand.ino)
 set(ab_hand_HDRS
         Config.h)
-set(ab_hand_PORT /dev/ttyUSB0)
-set(ab_hand_BOARD nano)
-
+set(ab_hand_PORT /dev/ttyUSB1)
+set(ab_hand_BOARD nano328)
 generate_arduino_firmware(ab_hand)

@@ -25,7 +25,7 @@ Actuator::Config actuatorConfigs[NUMBER_OF_ACTUATORS] = {
     },
 };
 
-const PROGMEM Grip openGrip = {
+const Grip openGrip = {
     "Open",
     simple,
     {0, 0, 0, 0},
@@ -33,7 +33,7 @@ const PROGMEM Grip openGrip = {
     {open, open, open, open}
 };
 
-const PROGMEM Grip powerGrip = {
+const Grip powerGrip = {
     "Power",
     simple,
     {0, 0, 0, 0},
@@ -41,7 +41,7 @@ const PROGMEM Grip powerGrip = {
     {actuate, actuate, actuate, actuate}
 };
 
-const PROGMEM Grip pinchGrip = {
+const Grip pinchGrip = {
     "Pinch",
     simple,
     {0, 0, 0, 0},
@@ -49,7 +49,7 @@ const PROGMEM Grip pinchGrip = {
     {actuate, actuate, open, open}
 };
 
-const PROGMEM Grip tripodGrip = {
+const Grip tripodGrip = {
     "Tripod",
     simple,
     {0, 0, 0, 0},
@@ -57,13 +57,13 @@ const PROGMEM Grip tripodGrip = {
     {actuate, actuate, close, close}
 };
 
-const PROGMEM Grip grips[NUMBER_OF_PRIMARY_GRIPS] = {openGrip, powerGrip, pinchGrip, tripodGrip};
+const Grip grips[NUMBER_OF_PRIMARY_GRIPS]  = {openGrip, powerGrip, pinchGrip, tripodGrip};
 
 
 volatile unsigned int gripIndex = 0;
 unsigned int currentGripIndex = NUMBER_OF_PRIMARY_GRIPS; // Nonsensical value to trigger first update.
 
-static MotorController mc(true);
+MotorController mc(true);
 
 void setup() {
     Serial.begin(115200);

@@ -18,48 +18,43 @@ Actuator::Config actuatorConfigs[NUMBER_OF_ACTUATORS] = {
      MOTOR_3_REV_PIN,
      MOTOR_3_CUR_PIN
     },
-    {"ringFinger",
+    {"ringAndLittleFinger",
      MOTOR_4_FWD_PIN,
      MOTOR_4_REV_PIN,
      MOTOR_4_CUR_PIN
-    },
-    {"littleFinger",
-     MOTOR_5_FWD_PIN,
-     MOTOR_5_REV_PIN,
-     MOTOR_5_CUR_PIN
     },
 };
 
 const PROGMEM Grip openGrip = {
     "Open",
     simple,
-    {0, 0, 0, 0, 0},
-    {0, 0, 0, 0, 0},
-    {open, open, open, open, open}
+    {0, 0, 0, 0},
+    {0, 0, 0, 0},
+    {open, open, open, open}
 };
 
 const PROGMEM Grip powerGrip = {
     "Power",
     simple,
-    {0, 0, 0, 0, 0},
-    {100, 100, 100, 100, 100},
-    {actuate, actuate, actuate, actuate, actuate}
+    {0, 0, 0, 0},
+    {100, 100, 100, 100},
+    {actuate, actuate, actuate, actuate}
 };
 
 const PROGMEM Grip pinchGrip = {
     "Pinch",
     simple,
-    {0, 0, 0, 0, 0},
-    {100, 100, 0, 0, 0},
-    {actuate, actuate, open, open, open}
+    {0, 0, 0, 0},
+    {100, 100, 0, 0},
+    {actuate, actuate, open, open}
 };
 
 const PROGMEM Grip tripodGrip = {
     "Tripod",
     simple,
-    {0, 0, 0, 0, 0},
-    {100, 100, 0, 0, 0},
-    {actuate, actuate, close, close, close}
+    {0, 0, 0, 0},
+    {100, 100, 0, 0},
+    {actuate, actuate, close, close}
 };
 
 const PROGMEM Grip grips[NUMBER_OF_PRIMARY_GRIPS] = {openGrip, powerGrip, pinchGrip, tripodGrip};

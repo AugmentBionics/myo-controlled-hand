@@ -1,6 +1,7 @@
 #include "Config.h"
 #include "MotorController.h"
 #include "GripUtil.h"
+#include "MyoInput.h"
 
 Actuator::Config actuatorConfigs[NUMBER_OF_ACTUATORS] = {
     {"thumb",
@@ -57,19 +58,20 @@ const Grip tripodGrip = {
     {actuate, actuate, close, close}
 };
 
-const Grip grips[NUMBER_OF_PRIMARY_GRIPS]  = {openGrip, powerGrip, pinchGrip, tripodGrip};
-
+const Grip grips[NUMBER_OF_PRIMARY_GRIPS] = {openGrip, powerGrip, pinchGrip, tripodGrip};
 
 volatile unsigned int gripIndex = 0;
 unsigned int currentGripIndex = NUMBER_OF_PRIMARY_GRIPS; // Nonsensical value to trigger first update.
 
 MotorController mc(true);
+MyoInput myo;
 
 void setup() {
     Serial.begin(115200);
     Serial.println("START");
 
     mc.init(actuatorConfigs);
+    myo.init();
 
     pinMode(MYO_1_RAW_PIN, INPUT);
     pinMode(MYO_1_SIG_PIN, INPUT);
@@ -80,12 +82,19 @@ void setup() {
 }
 
 void loop() {
-    delay(1000);
-    mc.brake();
-    mc.close();
-    delay(1000);
-    mc.brake();
-    delay(100);
-    mc.open();
-    delay(1000);
+    switch (myo.readAction()) {
+        case MyoInput::open:
+            // open
+            mc.open();
+            break;
+        case MyoInput::close:
+            // close
+            mc.close();
+            break;
+        case MyoInput::none:
+            // brake
+            mc.coast();
+            break;
+    }
+    delay(3);
 }

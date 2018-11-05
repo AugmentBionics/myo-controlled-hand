@@ -57,7 +57,7 @@ void MotorController::setGrip(Grip grip) {
     for (uint16_t i = 0; i < NUMBER_OF_ACTUATORS; ++i) {
         if (_currentGrip.actuationPattern[i] == ActuationScheme::close
             || _currentGrip.actuationPattern[i] == ActuationScheme::open) {
-            _actuators[i].coast();
+            _actuators[i].brake();
             DEBUG_LOG_TUPLE(_actuators[i].getName(), "CST");
         }
     }

@@ -17,6 +17,7 @@
 #define MOTOR_4_FWD_PIN 11
 #define MOTOR_4_REV_PIN 12
 #define MOTOR_4_CUR_PIN 13
+#define MOTOR_LIM_PIN A4
 
 #define MYO_1_SIG_PIN A0
 #define MYO_1_RAW_PIN A1

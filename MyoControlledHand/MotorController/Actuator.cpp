@@ -1,31 +1,72 @@
 #include "Arduino.h"
 #include "Actuator.h"
-#include <Servo.h>
 
-
-Actuator::Actuator() {}
-
-Actuator::Actuator(Config config) {
-  init(config);
+Actuator::Actuator()
+    : _config({"UNINITIALIZED", NOT_A_PIN, NOT_A_PIN, NOT_A_PIN}) {
 }
 
-Config Actuator::getConfig() {
-  return _config;
+Actuator::Actuator(Config config) : _config(config) {
+    pinMode(_config.forwardPin, OUTPUT);
+    pinMode(_config.reversePin, OUTPUT);
+    pinMode(_config.curretPin, INPUT);
+    coast();
 }
 
-void Actuator::init(Config config) {
-  _config = config;
-  _servo.attach(_config.pin);
-  Serial.print("Servo attached on pin:");
-  Serial.println(_config.pin);
+void Actuator::runForward() {
+    drive(HIGH, LOW);
+    updateTimeState();
+    _state = forward;
 }
 
-void Actuator::setPosition(int position) {
-  int microseconds = map(constrain(position, 0, 1023), 0, 1023, _config.lowerLimit, _config.upperLimit);
-  _servo.writeMicroseconds(microseconds);
-  _currentPosition = constrain(position, 0, 1023);
+void Actuator::runReverse() {
+    drive(LOW, HIGH);
+    updateTimeState();
+    _state = reverse;
 }
 
-int Actuator::getPosition() {
-  return _currentPosition;
+void Actuator::brake() {
+    drive(HIGH, HIGH);
+    updateTimeState();
+    _state = braking;
+}
+
+void Actuator::coast() {
+    drive(LOW, LOW);
+    updateTimeState();
+    _state = coasting;
+}
+
+void Actuator::drive(uint8_t forward, uint8_t reverse) {
+    digitalWrite(_config.forwardPin, forward);
+    digitalWrite(_config.reversePin, reverse);
+}
+
+bool Actuator::isLimited() {
+    return static_cast<bool>(digitalRead(_config.curretPin));
+}
+
+void Actuator::updateTimeState() {
+    const unsigned long now = millis();
+    unsigned long delta = now - _timeOfLastUpdate;
+    switch (_state) {
+        case forward:_timeState += delta;
+            break;
+        case reverse:
+            if (delta < _timeState)
+                _timeState -= delta;
+            else _timeState = 0;
+            break;
+        case unknown:break;
+        case braking:break;
+        case coasting:break;
+    }
+    _timeOfLastUpdate = now;
+}
+
+unsigned long Actuator::getTimeState() {
+    return _timeState;
+}
+
+String Actuator::getName() {
+    return _config.name;
 }

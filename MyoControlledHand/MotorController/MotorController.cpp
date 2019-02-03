@@ -1,134 +1,107 @@
 #include "Arduino.h"
 #include "MotorController.h"
-#include "Actuator.h"
-#include "GripUtil.h"
+
+#define DEBUG_LOG(message) if(debug){Serial.println(message);}
+#define DEBUG_LOG_TUPLE(m1, m2) if(debug){Serial.print(m1); Serial.print(", "); Serial.println(m2);}
+
+//#define CURRENT_POLLING_RATE 10
+//static const uint16_t ocr1aValue = static_cast<const uint16_t>(62500.0f / float(CURRENT_POLLING_RATE));
 
 
-static inline int8_t sgn(int val) {
-  if (val < 0) return -1;
-  if (val == 0) return 0;
-  return 1;
+MotorController::MotorController(bool debug) : debug(debug) {
+    _currentGrip = {.name = "initial grip", .type = simple};
 }
 
-MotorController::MotorController() {
-  _currentGrip = { .name = "initial grip", .type = simple };
+MotorController::MotorController() : MotorController(false) {
 }
 
-void MotorController::init(Config configs[NUMBER_OF_ACTUATORS], int lower, int upper) {
-  _upperThreshold = upper;
-  _lowerThreshold = lower;
-  for (int i = 0; i < NUMBER_OF_ACTUATORS; i++) {
-    _actuators[i] = Actuator(configs[i]);
-  }
-}
-
-void MotorController::handleDynamicActuation(int myoInput) {
-  if (_currentGrip.type != dynamic) {
-    return;
-  }
-  for (int i = 0; i < NUMBER_OF_ACTUATORS; i++) {
-    ActuationPattern ap = _currentGrip.actuationPattern[i];
-
-    if (!ap.isActuated) {
-      //Serial.print(_actuators[i].getConfig().name); Serial.println(" is not actuated");
-      continue;
-    }
-    //Serial.print(_actuators[i].getConfig().name); Serial.println(" is actuated");
-
-    int deltaPosition = ap.actuationGoalPosition - _actuators[i].getPosition();
-    int nudge = 0;
-    //    Serial.print(deltaPosition); Serial.print(" - ");
-    if (myoInput > _upperThreshold) {
-      //      Serial.print(myoInput); Serial.print(" > ");
-      nudge = 1;
-    } else if (myoInput < _lowerThreshold) {
-      //      Serial.print(myoInput); Serial.print(" < ");
-      nudge = -1;
-    }
-
-    //    Serial.println(deltaPosition);
-
-    moveActuator(_actuators + i, _actuators[i].getPosition() + 1 * nudge);
-  }
-}
-
-void MotorController::setHandPosition(Grip grip) {
-  Serial.println("Setting hand position");
-  if (grip.type != triggered) {
-    // First motion -> second motion -> etc.
-    // i.e. for each "batch" in the order
+void MotorController::init(Actuator::Config configs[NUMBER_OF_ACTUATORS]) {
     for (int i = 0; i < NUMBER_OF_ACTUATORS; i++) {
-      // Scan through order
-      for (int j = 0; j < NUMBER_OF_ACTUATORS; j++) {
-        // If order value == "batch" number
-        if (grip.order[j] == i) {
-          // set actuator of corresponding index to move
-          moveActuator(_actuators + j, grip.fingerPositions[j]);
+        _actuators[i] = Actuator(configs[i]);
+    }
+}
+
+void MotorController::setGrip(Grip grip) {
+    _currentGrip = grip;
+    DEBUG_LOG("Set grip to ");
+    DEBUG_LOG(_currentGrip.name);
+
+    for (uint16_t i = 0; i < NUMBER_OF_ACTUATORS; ++i) {
+        if (_currentGrip.actuationPattern[i] == ActuationScheme::close) {
+            _actuators[i].runForward();
+            DEBUG_LOG_TUPLE(_actuators[i].getName(), "FWD");
+        } else if (_currentGrip.actuationPattern[i] == ActuationScheme::open) {
+            _actuators[i].runReverse();
+            DEBUG_LOG_TUPLE(_actuators[i].getName(), "REV");
         }
-      }
-      delay(grip.motionStepDelay);
     }
-  }
-  _currentGrip = grip;
-}
 
-void MotorController::moveActuator(Actuator *actuator,
-                                   int       position) {
-  actuator->setPosition(position);
-}
-
-int MotorController::remap(Actuator *actuator, int position) {
-  Config config = actuator->getConfig();
-
-  return interpolateOnCurve(
-           position,
-           0,
-           1023,
-           config.controlCurve,
-           config.controlCurveResolution,
-           config.lowerLimit,
-           config.upperLimit);
-}
-
-int MotorController::interpolateOnCurve(int             input,
-                                        int             rangeMin,
-                                        int             rangeMax,
-                                        Mapping *curve,
-                                        int             curveResolution,
-                                        int             finalRangeMin,
-                                        int             finalRangeMax) {
-  int output = constrain(input, rangeMin, rangeMax);
-
-  int i = 0;
-
-  // Scan through mappings to set lower bounds for interpolation
-  int inputRangeMin  = rangeMin;
-  int outputRangeMin = rangeMin;
-
-  for (i = 0; i < curveResolution; i++) {
-    if (output > curve[i].input) {
-      inputRangeMin  = curve[i].input;
-      outputRangeMin = curve[i].output;
+    uint16_t limitCounts[NUMBER_OF_ACTUATORS];
+    const uint8_t threshold = 10;
+    bool done = false;
+    while (!done) {
+        done = true;
+        for (uint16_t i = 0; i < NUMBER_OF_ACTUATORS; ++i) {
+            if (_currentGrip.actuationPattern[i] == ActuationScheme::close
+                || _currentGrip.actuationPattern[i] == ActuationScheme::open) {
+                if (_actuators[i].isLimited()) {
+                    limitCounts[i] += 1;
+                    done = done && limitCounts[i] > threshold;
+                } else {
+                    limitCounts[i] = 0;
+                }
+            }
+        }
     }
-  }
 
-  // Setup upper interpolation bounds
-  int inputRangeMax  = rangeMax;
-  int outputRangeMax = rangeMax;
+    for (uint16_t i = 0; i < NUMBER_OF_ACTUATORS; ++i) {
+        if (_currentGrip.actuationPattern[i] == ActuationScheme::close
+            || _currentGrip.actuationPattern[i] == ActuationScheme::open) {
+            _actuators[i].coast();
+            DEBUG_LOG_TUPLE(_actuators[i].getName(), "CST");
+        }
+    }
+}
 
-  if (i < curveResolution - 1) {
-    inputRangeMax  = curve[i + 1].output;
-    outputRangeMax = curve[i + 1].output;
-  }
-  output = map(output,
-               inputRangeMin,
-               inputRangeMax,
-               outputRangeMin,
-               outputRangeMax);
-  output = map(output,
-               outputRangeMin,
-               outputRangeMax,
-               finalRangeMin,
-               finalRangeMax);
-  return output;
+bool MotorController::checkCurrentLimiting(uint16_t actuatorIndex) {
+    return checkCurrentLimiting(_actuators[actuatorIndex]);
+}
+
+bool MotorController::checkCurrentLimiting(Actuator actuator) {
+    return actuator.isLimited();
+}
+
+bool *MotorController::checkCurrentLimiting() {
+    for (uint16_t i = 0; i < NUMBER_OF_ACTUATORS; ++i) {
+        _currentLimitingValues[i] = checkCurrentLimiting(i);
+    }
+    return _currentLimitingValues;
+}
+
+void MotorController::open() {
+    for (uint16_t i = 0; i < NUMBER_OF_ACTUATORS; ++i) {
+        if (_currentGrip.actuationPattern[i] == ActuationScheme::actuate)
+            _actuators[i].runReverse();
+    }
+}
+
+void MotorController::close() {
+    for (uint16_t i = 0; i < NUMBER_OF_ACTUATORS; ++i) {
+        if (_currentGrip.actuationPattern[i] == ActuationScheme::actuate)
+            _actuators[i].runForward();
+    }
+}
+
+void MotorController::brake() {
+    for (uint16_t i = 0; i < NUMBER_OF_ACTUATORS; ++i) {
+        if (_currentGrip.actuationPattern[i] == ActuationScheme::actuate)
+            _actuators[i].brake();
+    }
+}
+
+void MotorController::coast() {
+    for (uint16_t i = 0; i < NUMBER_OF_ACTUATORS; ++i) {
+        if (_currentGrip.actuationPattern[i] == ActuationScheme::actuate)
+            _actuators[i].coast();
+    }
 }

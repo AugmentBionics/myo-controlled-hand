@@ -3,8 +3,6 @@
 
 #include "Arduino.h"
 #include "Config.h"
-#include "GripUtil.h"
-#include <Servo.h>
 
 /* Actuator configuration information:
 
@@ -15,33 +13,44 @@
 
    lower and upper limits refer to a range to then map the 0-1023 range to
 */
-struct Config {
-  String          name;
-  int             pin;
-  Mapping *controlCurve;
-  int             controlCurveResolution;
-  int             lowerLimit;
-  int             upperLimit;
-};
+
 
 class Actuator {
-  public:
+ public:
+    struct Config {
+        String name;
+        uint8_t forwardPin;
+        uint8_t reversePin;
+        uint8_t curretPin;
+    };
+
+    enum State {
+        unknown,
+        forward,
+        reverse,
+        braking,
+        coasting
+    };
 
     Actuator();
-    Actuator(Config config);
+    explicit Actuator(Config config);
 
-    void          init(Config config);
-    void          setPosition(int position);
-    int           getPosition();
+    void drive(uint8_t, uint8_t);
+    void runForward();
+    void runReverse();
+    void brake();
+    void coast();
+    bool isLimited();
+    unsigned long getTimeState();
+    String getName();
 
-    Config getConfig();
-
-  private:
+ private:
 
     Config _config;
-    Servo _servo;
-    int _currentPosition;
+    State _state = coasting;
+    unsigned long _timeState = 0;
+    unsigned long _timeOfLastUpdate;
+    void updateTimeState();
 };
-
 
 #endif // Actuator_h

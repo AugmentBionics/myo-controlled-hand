@@ -5,24 +5,24 @@
 
 Actuator::Config actuatorConfigs[NUMBER_OF_ACTUATORS] = {
     {"thumb",
-     MOTOR_1_FWD_PIN,
-     MOTOR_1_REV_PIN,
-     MOTOR_1_CUR_PIN
+     MOTOR_4_REV_PIN,
+     MOTOR_4_FWD_PIN,
+     MOTOR_4_CUR_PIN
     },
     {"indexFinger",
-     MOTOR_2_FWD_PIN,
-     MOTOR_2_REV_PIN,
-     MOTOR_2_CUR_PIN
+     MOTOR_1_REV_PIN,
+     MOTOR_1_FWD_PIN,
+     MOTOR_1_CUR_PIN
     },
     {"middleFinger",
-     MOTOR_3_FWD_PIN,
-     MOTOR_3_REV_PIN,
-     MOTOR_3_CUR_PIN
+     MOTOR_2_REV_PIN,
+     MOTOR_2_FWD_PIN,
+     MOTOR_2_CUR_PIN
     },
     {"ringAndLittleFinger",
-     MOTOR_4_FWD_PIN,
-     MOTOR_4_REV_PIN,
-     MOTOR_4_CUR_PIN
+     MOTOR_3_REV_PIN,
+     MOTOR_3_FWD_PIN,
+     MOTOR_3_CUR_PIN
     },
 };
 

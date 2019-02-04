@@ -13,15 +13,14 @@
 
    lower and upper limits refer to a range to then map the 0-1023 range to
 */
-
-
 class Actuator {
  public:
+
     struct Config {
         String name;
         uint8_t forwardPin;
         uint8_t reversePin;
-        uint8_t curretPin;
+        uint8_t currentPin;
     };
 
     enum State {

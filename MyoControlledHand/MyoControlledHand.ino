@@ -54,14 +54,28 @@ const Grip tripodGrip = {
     "Tripod",
     simple,
     {0, 0, 0, 0},
-    {100, 100, 0, 0},
-    {actuate, actuate, close, close}
+    {100, 100, 100, 0},
+    {actuate, actuate, actuate, close}
 };
 
 const Grip grips[NUMBER_OF_PRIMARY_GRIPS] = {openGrip, powerGrip, pinchGrip, tripodGrip};
+const Grip indexGrip = {
+    "index",
+    simple,
+    {0, 0, 0, 0},
+    {0, 100, 0, 0},
+    {close, actuate, close, close}
+};
 
 volatile unsigned int gripIndex = 0;
 unsigned int currentGripIndex = NUMBER_OF_PRIMARY_GRIPS; // Nonsensical value to trigger first update.
+const Grip keyGrip = {
+    "key",
+    simple,
+    {0, 0, 0, 0},
+    {100, 0, 0, 0},
+    {actuate, close, close, close}
+};
 
 MotorController mc(true);
 MyoInput myo;
@@ -78,7 +92,7 @@ void setup() {
     pinMode(MYO_2_RAW_PIN, INPUT);
     pinMode(MYO_2_SIG_PIN, INPUT);
 
-    mc.setGrip(pinchGrip);
+    mc.setGrip(openGrip);
 }
 
 void loop() {

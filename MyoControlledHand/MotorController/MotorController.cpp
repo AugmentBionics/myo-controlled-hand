@@ -39,7 +39,7 @@ void MotorController::setGrip(Grip grip) {
     }
 
     uint16_t limitCounts[NUMBER_OF_ACTUATORS];
-    const uint8_t threshold = 10;
+    const uint16_t threshold = 200;
     bool done = false;
     while (!done) {
         done = true;
@@ -48,19 +48,20 @@ void MotorController::setGrip(Grip grip) {
                 || _currentGrip.actuationPattern[i] == ActuationScheme::open) {
                 if (_actuators[i].isLimited()) {
                     limitCounts[i] += 1;
-                    done = done && limitCounts[i] > threshold;
                 } else {
                     limitCounts[i] = 0;
                 }
+                done = done && limitCounts[i] > threshold;
             }
         }
+
+        delay(5);
     }
 
     for (uint16_t i = 0; i < NUMBER_OF_ACTUATORS; ++i) {
         if (_currentGrip.actuationPattern[i] == ActuationScheme::close
             || _currentGrip.actuationPattern[i] == ActuationScheme::open) {
             _actuators[i].brake();
-            DEBUG_LOG_TUPLE(_actuators[i].getName(), "CST");
         }
     }
 }

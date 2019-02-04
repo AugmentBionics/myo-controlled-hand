@@ -1,3 +1,6 @@
+/*! \file Config.h
+ * Global configuration file that defines constants and pins
+ */
 #ifndef Config_h
 #define Config_h
 #include "Arduino.h"

@@ -10,7 +10,7 @@ class MotorController {
  public:
 
     MotorController();
-    MotorController(bool debug);
+    explicit MotorController(bool debug);
 
     void init(Actuator::Config configs[NUMBER_OF_ACTUATORS]);
     void setGrip(Grip grip);
@@ -18,6 +18,7 @@ class MotorController {
     void close();
     void brake();
     void coast();
+    void test();
     bool *checkCurrentLimiting();
     bool debug;
 

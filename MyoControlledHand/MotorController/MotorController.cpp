@@ -87,6 +87,57 @@ void MotorController::open() {
             _actuators[i].runReverse();
     }
 }
+void MotorController::test() {
+
+    const uint16_t threshold = 200;
+    for (uint16_t i = 0; i < NUMBER_OF_ACTUATORS; ++i) {
+        Serial.println(_actuators[i].getName());
+        _actuators[i].runForward();
+
+        uint16_t limitCount = 0;
+        unsigned long t = 0;
+        bool done = false;
+        while (!done) {
+            done = true;
+            if (_actuators[i].isLimited()) {
+                limitCount += 1;
+            } else {
+                limitCount = 0;
+            }
+            done = done && limitCount > threshold;
+            Serial.println(limitCount);
+            delay(5);
+            if (++t > 1000)
+                break;
+        }
+
+        _actuators[i].brake();
+        delay(1300);
+        Serial.println(_actuators[i].getName());
+        _actuators[i].runReverse();
+
+        limitCount = 0;
+        done = false;
+        t = 0;
+        while (!done) {
+            done = true;
+            if (_actuators[i].isLimited()) {
+                limitCount += 1;
+            } else {
+                limitCount = 0;
+            }
+            done = done && limitCount > threshold;
+            Serial.println(limitCount);
+            delay(5);
+
+//            if (++t > 2000)
+//                break;
+        }
+
+        _actuators[i].brake();
+
+    }
+}
 
 void MotorController::close() {
     for (uint16_t i = 0; i < NUMBER_OF_ACTUATORS; ++i) {

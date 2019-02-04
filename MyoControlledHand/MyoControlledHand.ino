@@ -58,7 +58,6 @@ const Grip tripodGrip = {
     {actuate, actuate, actuate, close}
 };
 
-const Grip grips[NUMBER_OF_PRIMARY_GRIPS] = {openGrip, powerGrip, pinchGrip, tripodGrip};
 const Grip indexGrip = {
     "index",
     simple,
@@ -67,8 +66,6 @@ const Grip indexGrip = {
     {close, actuate, close, close}
 };
 
-volatile unsigned int gripIndex = 0;
-unsigned int currentGripIndex = NUMBER_OF_PRIMARY_GRIPS; // Nonsensical value to trigger first update.
 const Grip keyGrip = {
     "key",
     simple,
@@ -77,8 +74,13 @@ const Grip keyGrip = {
     {actuate, close, close, close}
 };
 
+const Grip grips[NUMBER_OF_PRIMARY_GRIPS] = {openGrip, powerGrip, pinchGrip, tripodGrip, indexGrip, keyGrip};
+
 MotorController mc(true);
 MyoInput myo;
+
+byte incomingByte = 0;
+unsigned int prevGripIndex = 0;
 
 void setup() {
     Serial.begin(115200);

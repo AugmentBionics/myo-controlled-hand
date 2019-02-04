@@ -98,6 +98,14 @@ void setup() {
 }
 
 void loop() {
+    while (Serial.available() > 0) {
+        incomingByte = Serial.read();
+    }
+    unsigned intF index = min(NUMBER_OF_PRIMARY_GRIPS - 1, (uint8_t) incomingByte - 1);
+    if (index != prevGripIndex) {
+        mc.setGrip(grips[index]);
+        prevGripIndex = index;
+    }
     switch (myo.readAction()) {
         case MyoInput::open:
             // open

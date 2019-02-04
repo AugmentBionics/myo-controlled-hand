@@ -1,8 +1,12 @@
+> Needs updating
+
+-- Alex 04/02/19!
+
 # myo-controlled-hand
 
 ![Augment Bionics Logo][logo]
 
-Muscle-controlled, robotic, below elbow prosthesis.
+Muscle-controlled, robotic, below-elbow prosthesis.
 
 ## Raw data
 Run demo.py to see a sample plot of the data.

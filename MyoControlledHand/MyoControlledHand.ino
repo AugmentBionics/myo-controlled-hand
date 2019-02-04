@@ -89,11 +89,6 @@ void setup() {
     mc.init(actuatorConfigs);
     myo.init();
 
-    pinMode(MYO_1_RAW_PIN, INPUT);
-    pinMode(MYO_1_SIG_PIN, INPUT);
-    pinMode(MYO_2_RAW_PIN, INPUT);
-    pinMode(MYO_2_SIG_PIN, INPUT);
-
     mc.setGrip(openGrip);
 }
 

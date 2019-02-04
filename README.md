@@ -1,6 +1,6 @@
-> Needs updating
+> Needs updating!
 
--- Alex 04/02/19!
+-- Alex 04/02/19
 
 # myo-controlled-hand
 

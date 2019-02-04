@@ -117,7 +117,7 @@ void loop() {
             break;
         case MyoInput::none:
             // brake
-            mc.coast();
+            mc.brake();
             break;
     }
     delay(3);

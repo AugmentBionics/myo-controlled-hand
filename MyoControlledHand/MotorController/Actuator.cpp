@@ -8,7 +8,7 @@ Actuator::Actuator()
 Actuator::Actuator(Config config) : _config(config) {
     pinMode(_config.forwardPin, OUTPUT);
     pinMode(_config.reversePin, OUTPUT);
-    pinMode(_config.curretPin, INPUT);
+    pinMode(_config.currentPin, INPUT);
     coast();
 }
 
@@ -42,7 +42,7 @@ void Actuator::drive(uint8_t forward, uint8_t reverse) {
 }
 
 bool Actuator::isLimited() {
-    return static_cast<bool>(digitalRead(_config.curretPin));
+    return static_cast<bool>(1 - digitalRead(_config.currentPin));
 }
 
 void Actuator::updateTimeState() {

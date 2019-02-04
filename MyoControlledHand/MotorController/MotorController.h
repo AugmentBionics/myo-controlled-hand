@@ -6,6 +6,9 @@
 #include "Actuator.h"
 #include "GripUtil.h"
 
+/*!
+ * Class that controls a number of Actuators.
+ */
 class MotorController {
  public:
 

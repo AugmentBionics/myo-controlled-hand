@@ -1,3 +1,13 @@
+/*! \file MyoControlledHand.ino
+ * Main Arduino sketch that:
+ * <ul>
+ * <li>Defines actuator configurations
+ * <li>Defines Grips
+ * <li>Handles Serial input with grip switch
+ * <li>Handles results from myo sensor input interpretation
+ * </ul>
+ */
+
 #include "Config.h"
 #include "MotorController.h"
 #include "GripUtil.h"
@@ -82,6 +92,14 @@ MyoInput myo;
 byte incomingByte = 0;
 unsigned int prevGripIndex = 0;
 
+/*!
+ * Runs <b>once</b> when the program begins.
+ * <ol>
+ *  <li>Starts serial connection
+ *  <li>Initialises myo sensor input and the motor controller
+ *  <li>Instructs hand to go to the \c openGrip
+ * </ol>
+ */
 void setup() {
     Serial.begin(115200);
     Serial.println("START");
@@ -92,6 +110,14 @@ void setup() {
     mc.setGrip(openGrip);
 }
 
+/*!
+ * Starts immediately after setup().
+ * Loops indefinitely.
+ * <ul>
+ * <li>Gets most recently received byte from Serial and instructs motor controller to move to selected grip
+ * <li>Gets users action as discerned by MyoInput and instructs the motor controller to modify grip accordingly
+ * </ul>
+ */
 void loop() {
     while (Serial.available() > 0) {
         incomingByte = Serial.read();

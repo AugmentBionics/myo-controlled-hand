@@ -56,4 +56,4 @@ struct ActuationPattern {
   bool                    isActuated;
 };
 ```
-[logo]: https://scontent.fman2-2.fna.fbcdn.net/v/t1.0-1/p200x200/23231398_377704696016999_8213432785652578076_n.jpg?oh=cc58feacfcd007298764406130dfe57c&oe=5B047353 "Augment Bionics Logo"
+[logo]: https://www.eng.ed.ac.uk/sites/eng.ed.ac.uk/files/images/augment-bionics-logo-100h.jpg "Augment Bionics Logo"

@@ -19,6 +19,8 @@ void MotorController::init(Actuator::Config configs[NUMBER_OF_ACTUATORS]) {
     for (int i = 0; i < NUMBER_OF_ACTUATORS; i++) {
         _actuators[i] = Actuator(configs[i]);
     }
+    pinMode(MOTOR_LIM_PIN, OUTPUT);
+    digitalWrite(MOTOR_LIM_PIN, HIGH);
 }
 
 void MotorController::setGrip(Grip grip) {

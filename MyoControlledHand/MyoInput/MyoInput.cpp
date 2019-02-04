@@ -20,8 +20,6 @@ MyoInput::Action MyoInput::readAction() {
 
     float t1 = 375;
     float t2 = 380;
-//    float t1 = 385;
-//    float t2 = 385;
 
     _m1Raw = analogRead(MYO_1_RAW_PIN);
     _m1Sig = analogRead(MYO_1_SIG_PIN);
@@ -39,42 +37,13 @@ MyoInput::Action MyoInput::readAction() {
     bool b1 = r1 > t1;
     bool b2 = r2 > t2;
 
-    float d1 = r1 - t1;
-    float d2 = r2 - t2;
-
     if (b1 && (r1 - r2) > 25) {
-        Serial.print("Close\t");
-        Serial.println(d1);
         return MyoInput::close;
     } else if (b2 && (r2 - r1) > 25) {
-        Serial.print("Open\t");
-        Serial.println(d2);
         return MyoInput::open;
     } else {
-        Serial.print(d1);
-        Serial.print('\t');
-        Serial.println(d2);
         return MyoInput::none;
     }
-
-//    Serial.print(_m1Raw);
-//    Serial.print(",");
-//    Serial.print(_m1Sig);
-//    Serial.print(",");
-//    Serial.print(_m2Raw);
-//    Serial.print(",");
-//    Serial.print(_m2Sig);
-//    Serial.print(",");
-//    Serial.print(range(_m1RawBuffer, bufferSize));
-//    Serial.print(",");
-//    Serial.print(range(_m2RawBuffer, bufferSize));
-//    Serial.print(",");
-//    Serial.print(0);
-//    Serial.print(",");
-//    Serial.print(1023);
-//    Serial.print("\n");
-
-    return none;
 }
 
 void MyoInput::init() {

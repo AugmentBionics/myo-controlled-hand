@@ -108,8 +108,9 @@ void setup()   {
 
     pinMode(3, INPUT);
 
-    pinMode(4, INPUT);    
-  
+    pinMode(4, INPUT);  
+
+    pinMode(5, INPUT);
 
     // by default, we'll generate the high voltage from the 3.3v line internally! (neat!)
     display.begin(SSD1306_SWITCHCAPVCC, 0x3C);  // initialize with the I2C addr 0x3D (for the 128x64)
@@ -138,6 +139,7 @@ void loop() {
     unsigned int newI = currentI;
     int val = digitalRead(3);
     int val2 = digitalRead(4);
+    int val3 = digitalRead(5);
     if (primary == 0){
         if (val2 == HIGH && val == HIGH){
            newI = newI;
@@ -179,6 +181,17 @@ void loop() {
         }
     }
     else{
+        if (val3 == HIGH){
+            newI = primary;
+            lock();
+            Serial.write(newI);
+            i = currentI;
+            lastChangeMillis = millis();
+            currentI = newI;
+            showGrip(newI);
+            return;
+        }
+        
         if (val2 == HIGH && val == HIGH){
            newI = newI;
         }
@@ -245,6 +258,10 @@ void showGrip(unsigned int grip) {
     }
     else { 
         display.setTextSize(1);
+        display.setCursor(offsetX+100, 0);
+        display.println('P');
+        
+        display.setTextSize(1);
         display.setCursor(offsetX, 0);
         display.println(gripNamesPrimary[grip - 1]);
     
@@ -287,4 +304,3 @@ void flash(unsigned int t) {
     display.invertDisplay(0);
     digitalWrite(10, LOW);
 }
-

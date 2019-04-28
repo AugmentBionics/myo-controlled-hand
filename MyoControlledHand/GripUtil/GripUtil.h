@@ -6,7 +6,7 @@
 #define GripUtil_h
 
 #include "Arduino.h"
-#include "Config.h"
+#include "../Config/Config.h"
 
 /*! @brief Type of grip
  * (to support future expansion to different grip control schemes
@@ -29,7 +29,7 @@ enum ActuationScheme {
  * @note Currently only <b>GripType::simple</b> is used and grips are only defined by there <b>actuationPatter</b>.
  */
 struct Grip {
-    String name;
+    char name[8];
     GripType type;
     uint8_t startPercent[NUMBER_OF_ACTUATORS]; /*!< [UNUSED] see note */
     uint8_t finishPercent[NUMBER_OF_ACTUATORS]; /*!< [UNUSED] see note */

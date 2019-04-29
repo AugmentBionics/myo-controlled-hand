@@ -5,7 +5,7 @@
 MyoInput::MyoInput() {
 }
 
-float range(int *buffer, unsigned int length) {
+float range(const int *buffer, unsigned int length) {
     int minVal = UINT16_MAX;
     int maxVal = 0;
     for (int i = 0; i < length; ++i) {

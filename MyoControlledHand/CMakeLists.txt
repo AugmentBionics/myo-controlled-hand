@@ -8,6 +8,9 @@ set(CMAKE_CXX_STANDARD 11)
 
 set(p USB0)
 
+
+link_directories(~/Arduino/libraries/)
+
 #UI arduino
 generate_arduino_firmware(ab_ui
         BOARD nano328

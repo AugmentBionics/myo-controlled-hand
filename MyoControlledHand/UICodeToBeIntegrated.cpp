@@ -1,3 +1,7 @@
+//UI
+#include "Arduino.h"
+#include "UIMessaging.h"
+
 #include <Adafruit_GFX.h>
 #include <Adafruit_SPITFT.h>
 #include <Adafruit_SPITFT_Macros.h>
@@ -100,7 +104,8 @@ int primary = 0;
 bool primaryBool = false;
 
 void setup()   {
-    Serial.begin(115200);
+    Serial.begin(9600);
+    Serial.println("UI Arduino starting...");
 
     pinMode(A0, INPUT);
 
@@ -135,7 +140,10 @@ int prevVal = 0;
 unsigned int boundaries[7] = {0, 171, 342, 513, 684, 855, 1023};
 unsigned int width = 10;
 
+UIMessageHandler messageHandler;
+
 void loop() {
+    messageHandler.handleSerial();
     unsigned int newI = currentI;
     int val = digitalRead(3);
     int val2 = digitalRead(4);

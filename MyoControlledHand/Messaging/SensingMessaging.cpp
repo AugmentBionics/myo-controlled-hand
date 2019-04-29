@@ -19,11 +19,17 @@ void SensingMessageHandler::interpretMessage(int length) {
             case 'm': // mode switch
 
                 switch (messageBuffer[2]) {
-                    case '1': // mode 1: free move
-                        Serial.println("mode 1: free move");
+                    case '1': // mode 1: freemove
+                        Serial.println("mode 1: freemove");
+                        state->setMode(freemove);
                         break;
-                    case '2': // mode 2: lock
-                        Serial.println("mode 2: lock");
+                    case '2': // mode 2: locked
+                        Serial.println("mode 2: locked");
+                        state->setMode(locked);
+                        break;
+                    case '3': // mode 3: idle
+                        Serial.println("mode 2: locked");
+                        state->setMode(locked);
                         break;
                     default:break;
                 }
@@ -33,8 +39,8 @@ void SensingMessageHandler::interpretMessage(int length) {
             {
                 int myoToEdit = 1;
                 String str(messageBuffer);
-                int newl;
-                int newu;
+                int newl = -1;
+                int newu = -1;
                 int lx = str.indexOf('l');
                 int ux = str.indexOf('u');
                 if (lx >= 0 && ux > lx) {
@@ -70,4 +76,39 @@ void SensingMessageHandler::interpretMessage(int length) {
     clearMessageBuffer();
 }
 
-SensingMessageHandler::SensingMessageHandler() : MessageHandler('m') {}
+SensingMessageHandler::SensingMessageHandler(SensingState *state) : MessageHandler('m'), state(state) {}
+
+void SensingMessageHandler::sendGripOpen() {
+    sendMessage('m', "mo");
+}
+
+void SensingMessageHandler::sendGripClose() {
+    sendMessage('m', "mc");
+}
+
+void SensingMessageHandler::sendGripIdle() {
+    sendMessage('m', "mi");
+}
+
+void SensingMessageHandler::sendGripBrake() {
+    sendMessage('m', "mb");
+}
+
+void SensingMessageHandler::sendGripSelection(GripSelection selection) {
+    switch (selection) {
+        case primary:sendMessage('u', "s1");
+            break;
+        case secondary:sendMessage('u', "s2");
+            break;
+    }
+}
+
+void SensingMessageHandler::sendMessage(char targetAddress, const String &message) const {
+    Serial.write('@');
+    Serial.write(targetAddress);
+    Serial.println(message);
+}
+
+void SensingState::setMode(Mode mode) {
+    this->mode = mode;
+}

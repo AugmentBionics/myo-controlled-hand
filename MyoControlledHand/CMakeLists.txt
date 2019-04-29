@@ -19,8 +19,8 @@ generate_arduino_firmware(ab_ui
 #Myo sensor arduino
 generate_arduino_firmware(ab_sensing
         BOARD nano328
-        SRCS Messaging/Messaging.cpp Messaging/SensingMessaging.cpp sensing.cpp
-        HDRS Messaging/Messaging.h Messaging/SensingMessaging.h Config/Config.h
+        SRCS Messaging/Messaging.cpp Messaging/SensingMessaging.cpp MyoInput/MyoInput.cpp sensing.cpp
+        HDRS Messaging/Messaging.h Messaging/SensingMessaging.h MyoInput/MyoInput.h Config/Config.h
         PORT /dev/tty${p})
 #---
 

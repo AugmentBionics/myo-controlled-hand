@@ -34,6 +34,20 @@ void UIMessageHandler::interpretMessage(int length) {
                 break;
             }
 
+            case 's': // select grip
+            {
+                int gIndex = int(messageBuffer[2] - '0');
+                if (gIndex <= 1) {
+                    // primary grip
+                    Serial.println("Primary grip...");
+                    break;
+                } else {
+                    // secondary grip
+                    Serial.println("Secondary grip...");
+                    break;
+                }
+            }
+
             default:break;
         }
     } else {

@@ -53,3 +53,13 @@ void MyoInput::init() {
     pinMode(MYO_2_SIG_PIN, INPUT);
 }
 
+bool MyoInput::gripNeedsUpdating() {
+    // check for triggers
+    return false;
+}
+
+GripSelection MyoInput::lastSelectedGrip() {
+    // check last selection
+    return primary;
+}
+

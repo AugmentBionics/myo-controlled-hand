@@ -1,6 +1,10 @@
 #ifndef MYOCONTROLLEDHAND_MYOINPUT_H
 #define MYOCONTROLLEDHAND_MYOINPUT_H
 
+enum GripSelection {
+    primary,
+    secondary
+};
 /*!
  * Class that reads from myo sensors and interprets this as high-level "actions"
  * TODO: Improve action detection
@@ -18,6 +22,9 @@ class MyoInput {
         close, /*!< User intends to close the grip */
         none /*!< No action detected */
     }; /*!< Actions that can be detected */
+
+    bool gripNeedsUpdating();
+    GripSelection lastSelectedGrip();
 
     Action readAction(); /*!< discern current action @note currently must be polled in loop()*/
 

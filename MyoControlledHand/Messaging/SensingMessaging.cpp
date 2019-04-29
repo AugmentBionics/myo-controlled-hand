@@ -103,12 +103,6 @@ void SensingMessageHandler::sendGripSelection(GripSelection selection) {
     }
 }
 
-void SensingMessageHandler::sendMessage(char targetAddress, const String &message) const {
-    Serial.write('@');
-    Serial.write(targetAddress);
-    Serial.println(message);
-}
-
 void SensingState::setMode(Mode mode) {
     this->mode = mode;
 }

@@ -30,7 +30,6 @@ class SensingMessageHandler : public MessageHandler {
     void sendGripBrake();
     void sendGripSelection(GripSelection selection);
  private:
-    void sendMessage(char targetAddress, const String &message) const;
     void interpretMessage(int length) final;
     SensingState *state;
 };

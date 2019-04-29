@@ -35,3 +35,9 @@ void MessageHandler::handleSerial() {
         }
     }
 }
+
+void MessageHandler::sendMessage(char targetAddress, const String &message) const {
+    Serial.write('@');
+    Serial.write(targetAddress);
+    Serial.println(message);
+}

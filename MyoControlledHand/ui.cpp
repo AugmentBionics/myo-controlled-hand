@@ -99,6 +99,9 @@ unsigned int offsetY = 20;
 int primary = 0;
 bool primaryBool = false;
 
+UIState state;
+UIMessageHandler messageHandler(&state);
+
 void setup() {
     Serial.begin(9600);
     Serial.println(F("UI Arduino starting..."));
@@ -171,6 +174,8 @@ void loop() {
                 lastChangeMillis = 0;
                 primaryBool = true;
             }
+            state.selectGrip(i);
+            messageHandler.sendCurrentGripSelection();
         }
 
         if (currentI != newI) {
@@ -210,6 +215,8 @@ void loop() {
                 primary = 0;
                 showGrip(1);
             }
+            state.selectGrip(i);
+            messageHandler.sendCurrentGripSelection();
         }
 
         if (currentI != newI) {

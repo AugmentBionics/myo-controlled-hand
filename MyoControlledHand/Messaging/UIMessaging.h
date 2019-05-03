@@ -21,7 +21,9 @@ class UIState {
  */
 class UIMessageHandler : public MessageHandler {
  public:
-    UIMessageHandler();
+    explicit UIMessageHandler(UIState *state);
+    void sendCurrentGripSelection();
+    void sedCurrentGripDefinition();
  private:
     void interpretMessage(int length) final;
     UIState *state;

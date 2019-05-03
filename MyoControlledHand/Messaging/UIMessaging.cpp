@@ -58,4 +58,10 @@ void UIMessageHandler::interpretMessage(int length) {
     clearMessageBuffer();
 }
 
-UIMessageHandler::UIMessageHandler() : MessageHandler('u') {}
+UIMessageHandler::UIMessageHandler(UIState *state) : MessageHandler('u'), state(state) {}
+
+void UIMessageHandler::sendCurrentGripSelection() {
+    unsigned int index = state->getSelectedGripIndex();
+    sendMessage('@', "");
+
+}

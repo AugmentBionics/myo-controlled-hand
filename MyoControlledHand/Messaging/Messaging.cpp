@@ -18,7 +18,7 @@ void MessageHandler::handleSerial() {
         }
         if (messageBufferFilling) {
             if (cursor >= 16) {
-                Serial.println("Message too long!!!");
+                Serial.println(F("Message too long!!!"));
                 cursor = 0;
                 messageBufferFilling = false;
                 return;

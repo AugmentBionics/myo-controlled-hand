@@ -8,7 +8,7 @@ void UIMessageHandler::interpretMessage(int length) {
     if (messageBuffer[0] == address) {
         // Message is for UI arduino -> interpret
 
-        Serial.print("Message: ");
+        Serial.print(F("Message: "));
         for (int i = 0; i < length; ++i)
             Serial.write(messageBuffer[i]);
         Serial.print('\n');
@@ -20,9 +20,9 @@ void UIMessageHandler::interpretMessage(int length) {
             case 'l': // update grip list
             {
                 int gIndex = int(messageBuffer[2] - '0');
-                Serial.print("Update grip[");
+                Serial.print(F("Update grip["));
                 Serial.print(gIndex);
-                Serial.print("] name: ");
+                Serial.print(F("] name: "));
                 int k;
                 char nextChar;
                 for (k = 4, nextChar = messageBuffer[k];
@@ -39,11 +39,11 @@ void UIMessageHandler::interpretMessage(int length) {
                 int gIndex = int(messageBuffer[2] - '0');
                 if (gIndex <= 1) {
                     // primary grip
-                    Serial.println("Primary grip...");
+                    Serial.println(F("Primary grip..."));
                     break;
                 } else {
                     // secondary grip
-                    Serial.println("Secondary grip...");
+                    Serial.println(F("Secondary grip..."));
                     break;
                 }
             }

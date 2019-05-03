@@ -88,9 +88,9 @@ void flash(unsigned int t);
 unsigned int i = 1;
 unsigned int currentI = 1;
 unsigned int last = 4;
-String gripNames[] =
+const String PROGMEM gripNames[] =
     {"", "\x10 Open", "\x10 Power", "\x10 Pinch", "\x10 Tripod", "\x10 Index", "\x10 Key", "\x10 Set Primary", ""};
-String gripNamesPrimary[] =
+const String PROGMEM gripNamesPrimary[] =
     {"", "\x10 Open", "\x10 Power", "\x10 Pinch", "\x10 Tripod", "\x10 Index", "\x10 Key", "\x10 Primary",
      "\x10 Reset"};
 
@@ -101,7 +101,7 @@ bool primaryBool = false;
 
 void setup() {
     Serial.begin(9600);
-    Serial.println("UI Arduino starting...");
+    Serial.println(F("UI Arduino starting..."));
 
     pinMode(A0, INPUT);
 
@@ -252,7 +252,7 @@ void showGrip(unsigned int grip) {
     } else {
         display.setTextSize(1);
         display.setCursor(offsetX + 100, 0);
-        display.println('P');
+        display.println(F("P"));
 
         display.setTextSize(1);
         display.setCursor(offsetX, 0);
@@ -278,7 +278,7 @@ void bottomBarOn() {
     display.setTextColor(BLACK, WHITE);
     display.setCursor(0, 56);
     display.setTextSize(1);
-    display.print("                     ");
+    display.print(F("                     "));
     display.setTextColor(WHITE, BLACK);
 }
 
@@ -286,7 +286,7 @@ void bottomBarOff() {
     display.setTextColor(WHITE, BLACK);
     display.setCursor(0, 56);
     display.setTextSize(1);
-    display.print("                     ");
+    display.print(F("                     "));
     display.setTextColor(WHITE, BLACK);
 }
 

@@ -135,11 +135,6 @@ void setup() {
 
 unsigned long lastChangeMillis = 0;
 unsigned long waitMillis = 1400;
-int prevVal = 0;
-unsigned int boundaries[7] = {0, 171, 342, 513, 684, 855, 1023};
-unsigned int width = 10;
-
-UIMessageHandler messageHandler;
 
 void loop() {
     messageHandler.handleSerial();
@@ -226,7 +221,6 @@ void loop() {
             return;
         }
     }
-    prevVal = val;
 }
 
 void lock() {

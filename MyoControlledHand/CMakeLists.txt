@@ -12,8 +12,9 @@ set(sensing_port_num 1)
 set(motor_port_num 2)
 
 
-link_directories(~/Arduino/libraries/)
-link_directories(/usr/share/Arduino/libraries/)
+link_directories(
+        ~/Arduino/libraries/
+)
 
 #UI arduino
 generate_arduino_firmware(ab_ui
@@ -35,7 +36,8 @@ generate_arduino_firmware(ab_sensing
 #Motor control arduino
 generate_arduino_firmware(ab_motor
         BOARD nano328
-        SRCS Messaging/Messaging.cpp Messaging/MotorMessaging.cpp motor.cpp
-        HDRS Messaging/Messaging.h Messaging/MotorMessaging.h Config/Config.h
+        SRCS MotorController/MotorController.cpp Messaging/Messaging.cpp Messaging/MotorMessaging.cpp motor.cpp
+        HDRS MotorController/MotorController.h Messaging/Messaging.h Messaging/MotorMessaging.h Config/Config.h
+        ARDLIBS Wire
         PORT /dev/tty${port_prefix}{motor_port_num})
 #---

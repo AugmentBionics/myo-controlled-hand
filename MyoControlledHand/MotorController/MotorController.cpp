@@ -14,44 +14,32 @@ void MotorController::setGrip(Grip grip) {
 }
 
 void MotorController::open(unsigned int i) {
-    regState = regState & ~mBrake;
-    regState = regState | (motorMasks[i] & mOpen);
-    shiftOutWord(regState);
+    pwm.setPin(reversePins[i], 4096);
+    pwm.setPin(forwardPins[i], 0);
 }
 
 void MotorController::close(unsigned int i) {
-    regState = regState & ~mBrake;
-    regState = regState | (motorMasks[i] & mClose);
-    shiftOutWord(regState);
+    pwm.setPin(reversePins[i], 4096);
+    pwm.setPin(forwardPins[i], 0);
 }
 
 void MotorController::brake(unsigned int i) {
-    regState = regState & ~mBrake;
-    regState = regState | (motorMasks[i] & mBrake);
-    shiftOutWord(regState);
-
+    pwm.setPin(reversePins[i], 4096);
+    pwm.setPin(forwardPins[i], 4096);
 }
 
 void MotorController::idle(unsigned int i) {
-    //Not Implemented
+    pwm.setPin(reversePins[i], 0);
+    pwm.setPin(forwardPins[i], 0);
 }
 
 bool MotorController::checkCurrentLimiting(unsigned int i) {
     return false;
 }
 
-void MotorController::shiftOutWord(unsigned int w) {
-    for (unsigned int i = 0; i < 16; i++) {
-        if (bitRead(w, i) == true) {
-            if (bitRead(outState, i) == false) {
-                //pwm.setPin(i, 4095);
-            }
-        } else if (bitRead(w, i) == false) {
-            if (bitRead(outState, i) == true) {
-                //pwm.setPin(i, 0);
-            }
-        }
-    }
-    outState = w;
-
+void MotorController::setCurrentLimit(unsigned int i, unsigned int limit) {
+    Wire.beginTransmission(CURRENT_LIMITER_ADDR);//i2c device address
+    Wire.write(limPins[i]); //M0 memory address
+    Wire.write(limit); //Current limiting value
+    Wire.endTransmission();
 }

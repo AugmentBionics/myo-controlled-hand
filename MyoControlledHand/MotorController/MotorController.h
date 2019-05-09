@@ -37,9 +37,6 @@ class MotorController {
  private:
 
     Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
-
-    void shiftOutWord(word w);
-
     Grip _currentGrip;
     bool _currentLimitingValues[NUMBER_OF_ACTUATORS];
 
@@ -47,6 +44,13 @@ class MotorController {
     word outState = 0;
     const word motorMasks[NUMBER_OF_ACTUATORS] = {m0Mask, m1Mask, m2Mask, m3Mask};
 
+    const unsigned int forwardPins[NUMBER_OF_ACTUATORS] = {M0_FWD, M1_FWD, M2_FWD, M3_FWD};
+    const unsigned int reversePins[NUMBER_OF_ACTUATORS] = {M0_REV, M1_REV, M2_REV, M3_REV};
+    const unsigned int delPins[NUMBER_OF_ACTUATORS] = {M0_DEL, M1_DEL, M2_DEL, M3_DEL};
+    const unsigned int
+        limPins[NUMBER_OF_ACTUATORS] = {CURRENT_LIMITER_M0, CURRENT_LIMITER_M1, CURRENT_LIMITER_M2, CURRENT_LIMITER_M3};
+
+    void setCurrentLimit(unsigned int i, unsigned int limit);
 };
 
 #endif // MotorController_h

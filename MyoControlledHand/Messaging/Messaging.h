@@ -14,7 +14,7 @@ class MessageHandler {
     virtual void interpretMessage(int length) = 0;
     void sendMessage(char targetAddress, const String &message) const;
     void clearMessageBuffer();
-    char messageBuffer[16]{};
+    char messageBuffer[16] = {};
     unsigned int cursor = 0;
     bool newMessage = false;
     bool messageBufferFilling = false;

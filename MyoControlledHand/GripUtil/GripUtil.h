@@ -29,6 +29,7 @@ enum ActuationScheme {
  * @note Currently only <b>GripType::simple</b> is used and grips are only defined by there <b>actuationPatter</b>.
  */
 struct Grip {
+ public:
     char name[8];
     GripType type;
     uint8_t startPercent[NUMBER_OF_ACTUATORS]; /*!< [UNUSED] see note */

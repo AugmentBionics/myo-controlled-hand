@@ -6,54 +6,54 @@
 #include "Config.h"
 #include "../GripUtil/GripUtil.h"
 
-Grip openGrip = {
-    "Open",
-    simple,
-    {0, 0, 0, 0},
-    {0, 0, 0, 0},
-    {open, open, open, open}
-};
+#define OPEN_GRIP {\
+"Open",\
+simple,\
+{0, 0, 0, 0},\
+{0, 0, 0, 0},\
+{open, open, open, open},\
+}
 
-Grip powerGrip = {
-    "Power",
-    simple,
-    {0, 0, 0, 0},
-    {100, 100, 100, 100},
-    {actuate, actuate, actuate, actuate}
-};
+#define POWER_GRIP {\
+"Power",\
+simple,\
+{0, 0, 0, 0},\
+{100, 100, 100, 100},\
+{actuate, actuate, actuate, actuate}\
+}
 
-Grip pinchGrip = {
-    "Pinch",
-    simple,
-    {0, 0, 0, 0},
-    {100, 100, 0, 0},
-    {actuate, actuate, open, open}
-};
+#define PINCH_GRIP {\
+"Pinch",\
+simple,\
+{0, 0, 0, 0},\
+{100, 100, 0, 0},\
+{actuate, actuate, open, open}\
+}
 
-Grip tripodGrip = {
-    "Tripod",
-    simple,
-    {0, 0, 0, 0},
-    {100, 100, 100, 0},
-    {actuate, actuate, actuate, close}
-};
+#define TRIPOD_GRIP {\
+"Tripod",\
+simple,\
+{0, 0, 0, 0},\
+{100, 100, 100, 0},\
+{actuate, actuate, actuate, close}\
+}
 
-Grip indexGrip = {
-    "Index",
-    simple,
-    {0, 0, 0, 0},
-    {0, 100, 0, 0},
-    {close, actuate, close, close}
-};
+#define INDEX_GRIP {\
+"Index",\
+simple,\
+{0, 0, 0, 0},\
+{0, 100, 0, 0},\
+{close, actuate, close, close}\
+}
 
-Grip keyGrip = {
-    "Key",
-    simple,
-    {0, 0, 0, 0},
-    {100, 0, 0, 0},
-    {actuate, close, close, close}
-};
+#define KEY_GRIP {\
+"Key",\
+simple,\
+{0, 0, 0, 0},\
+{100, 0, 0, 0},\
+{actuate, close, close, close}\
+}
 
-Grip grips[NUMBER_OF_PRIMARY_GRIPS] = {openGrip, powerGrip, pinchGrip, tripodGrip, indexGrip, keyGrip};
+const Grip PROGMEM grips[NUMBER_OF_PRIMARY_GRIPS] = {OPEN_GRIP, POWER_GRIP, PINCH_GRIP, TRIPOD_GRIP, INDEX_GRIP, KEY_GRIP};
 
 #endif // Grips_h

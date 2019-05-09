@@ -1,103 +1,11 @@
 //UI
 #include "Arduino.h"
 #include "UIMessaging.h"
+#include "Config.h"
 
-//#include <Adafruit_GFX.h>
-
-#include <Adafruit_SSD1306.h>
-
-#define OLED_RESET 21
-Adafruit_SSD1306 display(OLED_RESET);
-
-#define NUMFLAKES 10
-#define XPOS 0
-#define YPOS 1
-#define DELTAY 2
-
-#define LOGO16_GLCD_HEIGHT 64
-#define LOGO16_GLCD_WIDTH  72
-static const unsigned char PROGMEM logo16_glcd_bmp[] =
-    {B00000000, B00000001, B00000000, B00000000, B00000000, B00000000, B00000000, B00000000, B00000000, B00000000,
-     B00000000, B01110000, B00000000, B00000000, B00000000, B00000000, B00000000, B00000000, B00000000, B00000000,
-     B00011100, B00000000, B00000000, B00000000, B00000000, B00000000, B00000000, B00000000, B00000000, B11001110,
-     B00000000, B00000000, B00000000, B00000000, B00000000, B00000000, B00000000, B00000000, B00000111, B00000000,
-     B00000000, B00000000, B00000000, B00000000, B00000000, B00000000, B00000000, B10001011, B10000000, B00000000,
-     B00000000, B00000000, B00000000, B00000000, B00000000, B00000000, B00000101, B11000000, B00000000, B00000000,
-     B00000000, B00000000, B00000000, B00000000, B00000000, B01000010, B11100000, B00000000, B00000000, B00000000,
-     B00000000, B00000000, B00000000, B00000000, B00000001, B01110000, B00000000, B00000000, B00000000, B00000000,
-     B00000000, B10000000, B00000000, B00000000, B00111000, B00000000, B00000000, B00000000, B00000000, B00000111,
-     B00011110, B00000000, B00000000, B00011100, B00000000, B00000000, B00000000, B00000000, B11111000, B00000111,
-     B11100000, B00000000, B00001110, B00000000, B00000000, B00000000, B00000011, B11000000, B00000000, B11111110,
-     B00000001, B10000111, B00000000, B00000000, B00000000, B00011110, B00000000, B00110000, B00111111, B11000001,
-     B01010011, B10000000, B00000000, B00000000, B01111000, B00000000, B00000001, B10001111, B11111000, B01000001,
-     B11000000, B00011111, B11100001, B11100000, B00000000, B00000000, B00100001, B11111110, B00010000, B11000000,
-     B01111111, B11111101, B11000000, B00000000, B00000000, B00000100, B01111111, B11000100, B11000001, B11111111,
-     B11111011, B00000000, B00000000, B00000000, B01000000, B10001111, B11110000, B01000001, B11110000, B00000110,
-     B00000000, B00000000, B00000001, B00001000, B00100011, B11111110, B01000011, B01110011, B00001100, B00000000,
-     B00000000, B00000000, B10000001, B00000100, B11111111, B00100111, B11110111, B00001000, B00000000, B00000000,
-     B00000000, B00010000, B01000001, B00011111, B10000011, B11110010, B00010000, B00000000, B00000000, B00000000,
-     B00000100, B00001000, B00100111, B11000111, B11111100, B00110000, B00000000, B00000000, B00000000, B00000001,
-     B00000000, B00010111, B11100111, B11111000, B00100000, B00000000, B00000000, B00000000, B00000000, B00010000,
-     B01000011, B11100111, B11110000, B01000000, B00000000, B00000000, B00000000, B00000000, B00000010, B00010001,
-     B11100111, B11110000, B01000000, B00000000, B00000000, B00000000, B00000000, B11001100, B00011100, B11100111,
-     B11100000, B10000000, B00000000, B00000000, B00000000, B00000010, B00000000, B00110000, B01100111, B11000000,
-     B10000000, B00000000, B00000000, B00000000, B00000000, B00000000, B00000010, B00100111, B10000001, B10000000,
-     B00000000, B00000000, B00000000, B00000000, B01100000, B01100100, B00110111, B10000001, B00000000, B00000000,
-     B00000000, B00000000, B00000000, B00011000, B10110000, B01010111, B00000001, B00000000, B00000000, B00000000,
-     B00000000, B00000000, B00000000, B00001000, B00000111, B00000010, B00000000, B00000000, B00000000, B00000000,
-     B00000000, B00000000, B10000000, B00000110, B00000010, B00000000, B00000000, B00000000, B00000000, B00000000,
-     B00000000, B00000011, B00000110, B00000110, B00000000, B00000000, B00000000, B00000000, B00000000, B00000001,
-     B11000010, B00000100, B00000100, B00000000, B00000000, B00000000, B00000000, B00000000, B00000000, B01010000,
-     B00000100, B00001100, B00000000, B00000000, B00000000, B00000000, B00000000, B00000100, B00000000, B00000000,
-     B00011000, B00000000, B00000000, B00000000, B00000000, B00000000, B00001000, B00000000, B00001000, B00010000,
-     B00000000, B00000000, B00000000, B00000000, B00000000, B00001000, B00000000, B00000000, B00110000, B00000000,
-     B00000000, B00000000, B00000000, B00000000, B00010000, B00000000, B00000000, B01100000, B00000000, B00000000,
-     B00000000, B00000000, B00000000, B00110000, B00000000, B00000000, B11000000, B00000000, B00000000, B00000000,
-     B00000000, B00000000, B00110100, B00000000, B00000011, B10000000, B00000000, B00000000, B00000000, B00000000,
-     B00000000, B01100100, B00000000, B00000111, B00000000, B00000000, B00000000, B00000000, B00000000, B00000000,
-     B01101100, B00000000, B00011110, B00000000, B00000000, B00000000, B00000000, B00000000, B00000000, B01101110,
-     B00000000, B01111100, B00000000, B00000000, B00000000, B00000000, B00000000, B00000000, B11011110, B00000011,
-     B11110000, B00000000, B00000000, B00000000, B00000000, B00000000, B00000000, B11011110, B01111111, B11000000,
-     B00000000, B00000000, B00000000, B00000000, B00000000, B00000000, B11011110, B00000000, B00000000, B00000000,
-     B00000000, B00000000, B00000000, B00000000, B00000000, B11111110, B00000000, B00000000, B00000000, B00000000,
-     B00000000, B00000000, B00000000, B00000001, B11111110, B00000000, B00000000, B00000000, B00000000, B00000000,
-     B00000000, B00000000, B00000001, B10111110, B00000000, B00000000, B00000000, B00000000, B00000000, B00000000,
-     B00000000, B00000001, B10111110, B00000000, B00000000, B00000000, B00000000, B00000000, B00000000, B00000000,
-     B00000001, B10111110, B00000000, B00000000, B00000000, B00000000, B00000000, B00000000, B00000000, B00000001,
-     B10111110, B00000000, B00000000, B00000000, B00000000, B00000000, B00000000, B00000000, B00000001, B10111110,
-     B00000000, B00000000, B00000000, B00000000, B00000000, B00000000, B00000000, B00000001, B10111100, B00000000,
-     B00000000, B00000000, B00000000, B00000000, B00000000, B00000000, B00000001, B10111100, B00000000, B00000000,
-     B00000000, B00000000, B00000000, B00000000, B00000000, B00000001, B10111100, B00000000, B00000000, B00000000,
-     B00000000, B00000000, B00000000, B00000000, B00000001, B10111000, B00000000, B00000000, B00000000, B00000000,
-     B00000000, B00000000, B00000000, B00000000, B10111000, B00000000, B00000000, B00000000, B00000000, B00000000,
-     B00000000, B00000000, B00000000, B10110000, B00000000, B00000000, B00000000, B00000000, B00000000, B00000000,
-     B00000000, B00000000, B10100000, B00000000, B00000000, B00000000, B00000000, B00000000, B00000000, B00000000,
-     B00000000, B10000000, B00000000, B00000000, B00000000, B00000000, B00000000, B00000000, B00000000, B00000000,
-     B00000000, B00000000, B00000000, B00000000, B00000000, B00000000, B00000000, B00000000, B00000000, B00000000,
-     B00000000, B00000000, B00000000, B00000000, B00000000, B00000000
-    };
-
-#if (SSD1306_LCDHEIGHT != 64)
-#error("Height incorrect, please fix Adafruit_SSD1306.h!");
-#endif
-
-void showGrip(unsigned int grip);
-void lock();
-void flash(unsigned int t);
-
-unsigned int i = 1;
-unsigned int currentI = 1;
-unsigned int last = 4;
-const String PROGMEM gripNames[] =
-    {"", "\x10 Open", "\x10 Power", "\x10 Pinch", "\x10 Tripod", "\x10 Index", "\x10 Key", "\x10 Set Primary", ""};
-const String PROGMEM gripNamesPrimary[] =
-    {"", "\x10 Open", "\x10 Power", "\x10 Pinch", "\x10 Tripod", "\x10 Index", "\x10 Key", "\x10 Primary",
-     "\x10 Reset"};
-
-unsigned int offsetX = 20;
-unsigned int offsetY = 20;
-int primary = 0;
-bool primaryBool = false;
+#define BUTTON1_PIN 3
+#define BUTTON2_PIN 4
+#define BUTTON3_PIN 5
 
 UIState state;
 UIMessageHandler messageHandler(&state);
@@ -106,195 +14,52 @@ void setup() {
     Serial.begin(9600);
     Serial.println(F("UI Arduino starting..."));
 
-    pinMode(A0, INPUT);
+    // Motor
+    pinMode(10, OUTPUT);
 
-    pinMode(2, OUTPUT);
+    pinMode(BUTTON1_PIN, INPUT);
+    pinMode(BUTTON2_PIN, INPUT);
+    pinMode(BUTTON3_PIN, INPUT);
 
-    pinMode(3, INPUT);
-
-    pinMode(4, INPUT);
-
-    pinMode(5, INPUT);
-
-    // by default, we'll generate the high voltage from the 3.3v line internally! (neat!)
-    display.begin(SSD1306_SWITCHCAPVCC, 0x3C);  // initialize with the I2C addr 0x3D (for the 128x64)
-
-    display.setTextColor(WHITE);
-    display.clearDisplay();
-
-    // splash
-    display.drawBitmap(34, 0, logo16_glcd_bmp, 72, 64, 1);
-    display.display();
-    delay(1000);
-
-    display.clearDisplay();
-    //  testdrawchar(); delay(1000);
-
-    showGrip(i);
+    state.setupScreen();
+    state.showGrip(0);
 }
 
 unsigned long lastChangeMillis = 0;
 unsigned long waitMillis = 1400;
 
 void loop() {
+    // Handle serial instructions
     messageHandler.handleSerial();
-    unsigned int newI = currentI;
-    int val = digitalRead(3);
-    int val2 = digitalRead(4);
-    int val3 = digitalRead(5);
-    if (primary == 0) {
-        if (val2 == HIGH && val == HIGH) {
-            newI = newI;
-        } else if (val == HIGH && currentI != 7) {
-            newI = currentI + 1;
-        } else if (val2 == HIGH && currentI != 1) {
-            newI = currentI - 1;
-        }
 
-        if (currentI != i && millis() - lastChangeMillis >= waitMillis) {
-            if (primaryBool == true && newI != 7) {
-                primary = newI;
-                primaryBool = false;
-                Serial.print(primary);
-            }
-            lock();
-            showGrip(1);
-            Serial.write(newI);
-            i = currentI;
-            if (newI == 7) {
-                currentI = 1;
-                i = currentI;
-                newI = 1;
-                showGrip(1);
-                lastChangeMillis = 0;
-                primaryBool = true;
-            }
-            state.selectGrip(i);
-            messageHandler.sendCurrentGripSelection();
-        }
+    // Read from buttons
+    int button1 = digitalRead(BUTTON1_PIN);
+    int button2 = digitalRead(BUTTON2_PIN);
+    int button3 = digitalRead(BUTTON3_PIN);
 
-        if (currentI != newI) {
-            lastChangeMillis = millis();
-            currentI = newI;
-            showGrip(newI);
-            return;
-        }
-    } else {
-        if (val3 == HIGH) {
-            newI = primary;
-            lock();
-            Serial.write(newI);
-            i = currentI;
-            lastChangeMillis = millis();
-            currentI = newI;
-            showGrip(newI);
-            return;
-        }
-
-        if (val2 == HIGH && val == HIGH) {
-            newI = newI;
-        } else if (val == HIGH && currentI != 8) {
-            newI = currentI + 1;
-        } else if (val2 == HIGH && currentI != 1) {
-            newI = currentI - 1;
-        }
-
-        if (currentI != i && millis() - lastChangeMillis >= waitMillis) {
-            lock();
-            Serial.write(newI);
-            i = currentI;
-            if (newI == 8) {
-                currentI = 1;
-                i = currentI;
-                newI = 1;
-                primary = 0;
-                showGrip(1);
-            }
-            state.selectGrip(i);
-            messageHandler.sendCurrentGripSelection();
-        }
-
-        if (currentI != newI) {
-            lastChangeMillis = millis();
-            currentI = newI;
-            showGrip(newI);
-            return;
-        }
+    // Select primary grip if button 3 is HIGH
+    if (button3 == HIGH) {
+        state.showGrip(state.primaryIndex);
+        lastChangeMillis = millis();
+        state.selectGrip();
+        messageHandler.sendCurrentGripSelection();
+        return;
     }
-}
 
-void lock() {
-    flash(100);
-    delay(45);
-    flash(300);
-}
-
-void showGrip(unsigned int grip) {
-    display.clearDisplay();
-    digitalWrite(10, HIGH);
-    display.setTextColor(WHITE);
-
-    if (primary == 0) {
-        display.setTextSize(1);
-        display.setCursor(offsetX, 0);
-        display.println(gripNames[grip - 1]);
-
-        display.setTextSize(2);
-        display.setCursor(offsetX + 0, offsetY + 5);
-        display.print(gripNames[grip]);
-
-        display.setCursor(1, offsetY + 5);
-        display.print(grip);
-
-        display.setTextSize(1);
-        display.setCursor(offsetX, 55);
-        display.println(gripNames[grip + 1]);
-
-    } else {
-        display.setTextSize(1);
-        display.setCursor(offsetX + 100, 0);
-        display.println(F("P"));
-
-        display.setTextSize(1);
-        display.setCursor(offsetX, 0);
-        display.println(gripNamesPrimary[grip - 1]);
-
-        display.setTextSize(2);
-        display.setCursor(offsetX + 0, offsetY + 5);
-        display.print(gripNamesPrimary[grip]);
-
-        display.setCursor(1, offsetY + 5);
-        display.print(grip);
-
-        display.setTextSize(1);
-        display.setCursor(offsetX, 55);
-        display.println(gripNamesPrimary[grip + 1]);
+    // Update UI Selection
+    if (button1 == HIGH && button2 == HIGH) {
+        // do nothing
+    } else if (button1 == HIGH && state.getShownGripIndex() < NUMBER_OF_PRIMARY_GRIPS - 1) {
+        state.showNextGrip();
+        lastChangeMillis = millis();
+    } else if (button2 == HIGH && state.getShownGripIndex() > 0) {
+        state.showPreviousGrip();
+        lastChangeMillis = millis();
     }
-    display.display();
-    //  delay(20);
-    digitalWrite(10, LOW);
-}
 
-void bottomBarOn() {
-    display.setTextColor(BLACK, WHITE);
-    display.setCursor(0, 56);
-    display.setTextSize(1);
-    display.print(F("                     "));
-    display.setTextColor(WHITE, BLACK);
-}
-
-void bottomBarOff() {
-    display.setTextColor(WHITE, BLACK);
-    display.setCursor(0, 56);
-    display.setTextSize(1);
-    display.print(F("                     "));
-    display.setTextColor(WHITE, BLACK);
-}
-
-void flash(unsigned int t) {
-    digitalWrite(10, HIGH);
-    display.invertDisplay(1);
-    delay(t);
-    display.invertDisplay(0);
-    digitalWrite(10, LOW);
+    // If enough time has passed then send grip selection to motor controller
+    if (state.getSelectedGripIndex() != state.getShownGripIndex() && millis() - lastChangeMillis >= waitMillis) {
+        state.selectGrip();
+        messageHandler.sendCurrentGripSelection();
+    }
 }

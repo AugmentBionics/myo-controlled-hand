@@ -1,7 +1,12 @@
 #include <Grips.h>
 #include "MotorController.h"
 
-MotorController::MotorController() { _currentGrip = grips[0]; }
+MotorController::MotorController() {
+    _currentGrip = grips[0];
+    pwm.begin();
+    pwm.setPWMFreq(24.0f);
+    Wire.begin();
+}
 
 void MotorController::setGrip(Grip grip) {
     _currentGrip = grip;

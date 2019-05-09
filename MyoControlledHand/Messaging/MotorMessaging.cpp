@@ -75,4 +75,52 @@ void MotorMessageHandler::interpretMessage(int length) {
     clearMessageBuffer();
 }
 
-MotorMessageHandler::MotorMessageHandler() : MessageHandler('m') {}
+MotorMessageHandler::MotorMessageHandler(MotorState *state) : MessageHandler('m'), state(state) {}
+
+void MotorState::setGripPattern(const char pattern[]) {
+    unsigned int iMax = NUMBER_OF_ACTUATORS - 1;
+    for (unsigned int i = 0; i <= iMax; ++i) {
+        currentGripPattern[i] = pattern[i];
+    }
+}
+
+void MotorState::closeGrip() {
+    forEachDynamicActuator(&MotorController::close);
+}
+
+void MotorState::openGrip() {
+    forEachDynamicActuator(&MotorController::open);
+}
+
+void MotorState::brake() {
+    forEachDynamicActuator(&MotorController::brake);
+}
+
+void MotorState::idle() {
+    forEachDynamicActuator(&MotorController::idle);
+}
+
+void MotorState::forEachDynamicActuator(MotorControllerFuncPtr function) {
+    for (unsigned int i = 0; i < NUMBER_OF_ACTUATORS; ++i) {
+        switch (currentGripPattern[i]) {
+            case 'd': {
+                (motorController.*function)(i);
+                break;
+            }
+
+            case 'o': {
+                if (!isOpen[i])
+                    motorController.open(i);
+            }
+
+            case 'c': {
+                if (!isClosed[i])
+                    motorController.close(i);
+            }
+
+            default:break;
+        }
+    }
+}
+
+char MotorState::currentGripPattern[NUMBER_OF_ACTUATORS] = {'o', 'o', 'o', 'o'};

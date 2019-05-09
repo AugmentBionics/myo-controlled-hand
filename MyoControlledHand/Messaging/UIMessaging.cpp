@@ -50,14 +50,15 @@ UIMessageHandler::UIMessageHandler(UIState *state) : MessageHandler('u'), state(
 
 void UIMessageHandler::sendCurrentGripSelection() {
     unsigned int index = state->getSelectedGripIndex();
-    char serializedGrip[NUMBER_OF_ACTUATORS];
+    char serializedGrip[NUMBER_OF_ACTUATORS + 1];
     serializeGrip(grips[index], serializedGrip);
-    sendMessage('@', serializedGrip);
+    sendMessage('m', serializedGrip);
 }
 
 void UIMessageHandler::serializeGrip(const Grip &grip, char *out) {
     char c;
-    for (unsigned int i = 0; i < NUMBER_OF_ACTUATORS; ++i) {
+    out[0] = 'p'; // p for pattern
+    for (unsigned int i = 1; i <= NUMBER_OF_ACTUATORS; ++i) {
         switch (grip.actuationPattern[i]) {
             case close:c = 'c';
                 break;

@@ -2,15 +2,13 @@
 #include "Arduino.h"
 #include "MotorMessaging.h"
 
-const unsigned int MOTOR_COUNT = 4;
-
 void setup() {
     Serial.begin(9600);
-    Serial.println("Motor Arduino starting...");
-    pinMode(13, OUTPUT);
+    Serial.println(F("Motor Arduino starting..."));
 }
 
-MotorMessageHandler messageHandler;
+MotorState state;
+MotorMessageHandler messageHandler(&state);
 
 void loop() {
     messageHandler.handleSerial();

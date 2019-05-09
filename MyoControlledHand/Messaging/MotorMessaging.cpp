@@ -1,6 +1,5 @@
 #include "Arduino.h"
 #include "MotorMessaging.h"
-#include "../Config/Grips.h"
 
 void MotorMessageHandler::interpretMessage(int length) {
     if (length <= 2) return;
@@ -19,20 +18,25 @@ void MotorMessageHandler::interpretMessage(int length) {
 
             case 'p': // set grip pattern
             {
+                char pattern[NUMBER_OF_ACTUATORS];
                 Serial.print("Set grip: ");
                 for (int i = 2; i <= NUMBER_OF_ACTUATORS + 2; ++i) {
-                    switch (messageBuffer[i]) {
+                    char c = messageBuffer[i];
+                    switch (c) {
                         case 'o': // opened
+                            pattern[i - 2] = c;
                             break;
                         case 'c': // closed
+                            pattern[i - 2] = c;
                             break;
                         case 'd': // dynamic
+                            pattern[i - 2] = c;
                             break;
-                        default:break;
+                        default: // ignore other characters
+                            break;
                     }
-                    Serial.print(messageBuffer[i]);
                 }
-                Serial.print('\n');
+                state->setGripPattern(pattern);
                 break;
             }
 
@@ -42,15 +46,19 @@ void MotorMessageHandler::interpretMessage(int length) {
                 switch (messageBuffer[2]) {
                     case 'o': // open
                         Serial.println("open");
+                        state->openGrip();
                         break;
                     case 'c': // close
                         Serial.println("close");
+                        state->closeGrip();
                         break;
                     case 'i': // idle
                         Serial.println("idle");
+                        state->idle();
                         break;
                     case 'b': // brake
                         Serial.println("brake");
+                        state->brake();
                         break;
                     default:break;
                 }

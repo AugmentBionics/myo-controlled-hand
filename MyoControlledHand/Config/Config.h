@@ -5,6 +5,22 @@
 #define Config_h
 #include "Arduino.h"
 
+#define M0_FWD 0
+#define M0_REV 1
+#define M0_DEL 2
+
+#define M1_FWD 3
+#define M1_REV 4
+#define M1_DEL 5
+
+#define M2_FWD 6
+#define M2_REV 7
+#define M2_DEL 8
+
+#define M3_FWD 9
+#define M3_REV 10
+#define M3_DEL 11
+
 #define MOTOR_1_FWD_PIN 4
 #define MOTOR_1_REV_PIN 5
 #define MOTOR_1_CUR_PIN 6

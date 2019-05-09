@@ -17,23 +17,6 @@ void UIMessageHandler::interpretMessage(int length) {
 
         switch (messageBuffer[1]) {
 
-            case 'l': // update grip list
-            {
-                int gIndex = int(messageBuffer[2] - '0');
-                Serial.print(F("Update grip["));
-                Serial.print(gIndex);
-                Serial.print(F("] name: "));
-                int k;
-                char nextChar;
-                for (k = 4, nextChar = messageBuffer[k];
-                     nextChar != '\n' && k < 10; nextChar = messageBuffer[++k]) {
-                    grips[gIndex].name[k - 4] = nextChar;
-                }
-                Serial.print(String(grips[gIndex].name));
-                Serial.print('\n');
-                break;
-            }
-
             case 's': // select grip
             {
                 int gIndex = int(messageBuffer[2] - '0');

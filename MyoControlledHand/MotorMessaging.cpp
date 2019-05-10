@@ -131,6 +131,10 @@ void MotorState::forEachDynamicActuator(MotorControllerFuncPtr function) {
     }
 }
 
+void MotorState::init() {
+  motorController.init();
+}
+
 char MotorState::currentGripPattern[NUMBER_OF_ACTUATORS] = {'o', 'o', 'o', 'o'};
 
 bool MotorState::isClosed[NUMBER_OF_ACTUATORS] = {};

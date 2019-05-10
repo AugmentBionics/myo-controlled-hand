@@ -27,6 +27,8 @@ class MotorController {
  public:
     explicit MotorController();
 
+    void init();
+
     void setGrip(Grip grip);
     void open(unsigned int i);
     void close(unsigned int i);

@@ -3,6 +3,9 @@
 
 MotorController::MotorController() {
     _currentGrip = grips[0];
+}
+
+void MotorController::init() {
     pwm.begin();
     pwm.setPWMFreq(24.0f);
     Wire.begin();

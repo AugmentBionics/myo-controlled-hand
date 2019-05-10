@@ -15,6 +15,7 @@ class MotorState {
     void openGrip();
     void brake();
     void idle();
+    void init();
  private:
     static char currentGripPattern[NUMBER_OF_ACTUATORS];
     static bool isClosed[NUMBER_OF_ACTUATORS];

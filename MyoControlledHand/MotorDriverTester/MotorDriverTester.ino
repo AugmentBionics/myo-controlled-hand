@@ -76,22 +76,22 @@ void loop() {
   int button2 = digitalRead(BUTTON2_PIN);
   int button3 = digitalRead(BUTTON3_PIN);
 
-  if (millis() - last_move_time > move_wait_time) {
-    if (button1 == LOW && button2 == LOW) {
-      // Switch grip
-      sendNextGripPattern();
-    } else if (button1 == LOW) {
-      sendOpenMessage();
-    } else if (button2 == LOW) {
-      sendCloseMessage();
-    }
+  if (button1 == LOW && button2 == LOW && (millis() - last_pattern_time > pattern_wait_time)) {
+    // Switch grip
+    sendNextGripPattern();
+    last_pattern_time = millis();
+  } else if (button1 == LOW && (millis() - last_move_time > move_wait_time)) {
+    sendOpenMessage();
+    last_move_time = millis();
+  } else if (button2 == LOW && (millis() - last_move_time > move_wait_time)) {
+    sendCloseMessage();
     last_move_time = millis();
   }
 
-  if (millis() - last_pattern_time > pattern_wait_time) {
-    if (button3 == LOW) {
-      sendBrakeMessage();
-    }
+
+  if (button3 == LOW && (millis() - last_move_time > move_wait_time)) {
+    sendBrakeMessage();
+    last_move_time = millis();
   }
 
   delay(10);

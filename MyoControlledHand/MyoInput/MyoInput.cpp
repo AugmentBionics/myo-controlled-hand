@@ -2,8 +2,7 @@
 #include "MyoInput.h"
 #include "Config.h"
 
-MyoInput::MyoInput() {
-}
+MyoInput::MyoInput(SensingState *state) : state(state) {}
 
 float range(const int *buffer, unsigned int length) {
     int minVal = UINT16_MAX;
@@ -18,9 +17,6 @@ float range(const int *buffer, unsigned int length) {
 MyoInput::Action MyoInput::readAction() {
     static unsigned int i = 0;
 
-    float t1 = 375;
-    float t2 = 380;
-
     _m1Raw = analogRead(MYO_1_RAW_PIN);
     _m1Sig = analogRead(MYO_1_SIG_PIN);
     _m2Raw = analogRead(MYO_2_RAW_PIN);
@@ -34,8 +30,8 @@ MyoInput::Action MyoInput::readAction() {
     float r1 = range(_m1RawBuffer, bufferSize);
     float r2 = range(_m2RawBuffer, bufferSize);
 
-    bool b1 = r1 > t1;
-    bool b2 = r2 > t2;
+    bool b1 = r1 > state->t1;
+    bool b2 = r2 > state->t2;
 
     if (b1 && (r1 - r2) > 25) {
         return MyoInput::close;
@@ -53,13 +49,8 @@ void MyoInput::init() {
     pinMode(MYO_2_SIG_PIN, INPUT);
 }
 
-bool MyoInput::gripNeedsUpdating() {
+bool MyoInput::primaryGripTriggered() {
     // check for triggers
     return false;
-}
-
-GripSelection MyoInput::lastSelectedGrip() {
-    // check last selection
-    return primary;
 }
 

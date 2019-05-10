@@ -29,7 +29,7 @@ void UIMessageHandler::interpretMessage(int length) {
                     sendCurrentGripSelection();
                     break;
                 } else {
-                    // secondary grip
+                    // other grip
                     Serial.println(F("Other grip..."));
                     // not implemented
                     break;

@@ -1,4 +1,5 @@
 //SENSING
+#include <MyoInput.h>
 #include "Arduino.h"
 #include "SensingMessaging.h"
 
@@ -9,29 +10,32 @@ void setup() {
 
 SensingState state;
 SensingMessageHandler messageHandler(&state);
-MyoInput input;
+MyoInput input(&state);
 MyoInput::Action lastAction = MyoInput::none;
 
 void loop() {
     messageHandler.handleSerial();
 
-    if (input.gripNeedsUpdating()) {
-        messageHandler.sendGripSelection(input.lastSelectedGrip());
+    if (input.primaryGripTriggered()) {
+        messageHandler.sendSelectPrimary();
     }
 
     MyoInput::Action action = input.readAction();
 
     // ~~~ Testing
-    action = MyoInput::none;
+    //action = MyoInput::none;
     // ~~~
 
     if (lastAction != action) {
         switch (action) {
-            case MyoInput::open:messageHandler.sendGripOpen();
+            case MyoInput::open: // Open grip
+                messageHandler.sendGripOpen();
                 break;
-            case MyoInput::close:messageHandler.sendGripClose();
+            case MyoInput::close: // Close grip
+                messageHandler.sendGripClose();
                 break;
-            default:messageHandler.sendGripIdle();
+            default:  // No instruction
+                messageHandler.sendGripIdle();
                 break;
         }
         lastAction = action;

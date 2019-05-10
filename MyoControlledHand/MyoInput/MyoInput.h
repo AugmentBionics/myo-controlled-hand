@@ -1,9 +1,10 @@
 #ifndef MYOCONTROLLEDHAND_MYOINPUT_H
 #define MYOCONTROLLEDHAND_MYOINPUT_H
 
+#include <SensingMessaging.h>
 enum GripSelection {
     primary,
-    secondary
+    other
 };
 /*!
  * Class that reads from myo sensors and interprets this as high-level "actions"
@@ -13,7 +14,7 @@ enum GripSelection {
 class MyoInput {
  public:
 
-    MyoInput();
+    explicit MyoInput(SensingState *state);
 
     void init(); /*!< Setup pins */
 
@@ -23,8 +24,7 @@ class MyoInput {
         none /*!< No action detected */
     }; /*!< Actions that can be detected */
 
-    bool gripNeedsUpdating();
-    GripSelection lastSelectedGrip();
+    bool primaryGripTriggered();
 
     Action readAction(); /*!< discern current action @note currently must be polled in loop()*/
 
@@ -36,6 +36,7 @@ class MyoInput {
     int _m2Sig = 0;
     int _m1RawBuffer[bufferSize];
     int _m2RawBuffer[bufferSize];
+    SensingState *state;
 };
 
 #endif //MYOCONTROLLEDHAND_MYOINPUT_H

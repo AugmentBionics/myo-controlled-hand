@@ -28,8 +28,8 @@ void SensingMessageHandler::interpretMessage(int length) {
                         state->setMode(locked);
                         break;
                     case '3': // mode 3: idle
-                        Serial.println("mode 2: locked");
-                        state->setMode(locked);
+                        Serial.println("mode 3: idle");
+                        state->setMode(idle);
                         break;
                     default:break;
                 }
@@ -44,8 +44,8 @@ void SensingMessageHandler::interpretMessage(int length) {
                 int lx = str.indexOf('l');
                 int ux = str.indexOf('u');
                 if (lx >= 0 && ux > lx) {
-                    newl = str.substring(lx + 1, ux).toInt();
-                    newu = str.substring(ux + 1).toInt();
+                    newl = (int)str.substring(lx + 1, ux).toInt();
+                    newu = (int)str.substring(ux + 1).toInt();
                 }
                 Serial.print("Set Thresh.: ");
                 switch (messageBuffer[2]) {
@@ -63,6 +63,7 @@ void SensingMessageHandler::interpretMessage(int length) {
                 Serial.print(newl);
                 Serial.print("upper=");
                 Serial.println(newu);
+
                 break;
             }
 
@@ -94,13 +95,8 @@ void SensingMessageHandler::sendGripBrake() {
     sendMessage('m', "mb");
 }
 
-void SensingMessageHandler::sendGripSelection(GripSelection selection) {
-    switch (selection) {
-        case primary:sendMessage('u', "s1");
-            break;
-        case secondary:sendMessage('u', "s2");
-            break;
-    }
+void SensingMessageHandler::sendSelectPrimary() {
+    sendMessage('u', "s1");
 }
 
 void SensingState::setMode(Mode mode) {

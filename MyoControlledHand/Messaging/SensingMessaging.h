@@ -3,7 +3,6 @@
 
 #include "Arduino.h"
 #include "Messaging.h"
-#include "../MyoInput/MyoInput.h"
 
 enum Mode {
     freemove,
@@ -12,10 +11,13 @@ enum Mode {
 };
 
 class SensingState {
+    friend class MyoInput;
  public:
     void setMode(Mode mode);
  private:
-    Mode mode;
+    Mode mode = idle;
+    float t1 = 375.0f;
+    float t2 = 380.0f;
 };
 
 /*!
@@ -28,7 +30,7 @@ class SensingMessageHandler : public MessageHandler {
     void sendGripClose();
     void sendGripIdle();
     void sendGripBrake();
-    void sendGripSelection(GripSelection selection);
+    void sendSelectPrimary();
  private:
     void interpretMessage(int length) final;
     SensingState *state;

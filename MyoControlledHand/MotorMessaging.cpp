@@ -116,16 +116,19 @@ void MotorState::forEachDynamicActuator(MotorControllerFuncPtr function) {
             case 'o': {
                 if (!isOpen[i])
                     motorController.open(i);
+                break;
             }
 
             case 'c': {
                 if (!isClosed[i])
                     motorController.close(i);
+                break;
             }
 
             case 'i': {
                 if (!isClosed[i])
                     motorController.idle(i);
+                break;
             }
 
             default:break;

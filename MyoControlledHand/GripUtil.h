@@ -6,7 +6,7 @@
 #define GripUtil_h
 
 #include "Arduino.h"
-#include "../Config/Config.h"
+#include "Config.h"
 
 /*! @brief Type of grip
  * (to support future expansion to different grip control schemes

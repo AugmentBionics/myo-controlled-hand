@@ -2,8 +2,8 @@
 #define MotorController_h
 
 #include "Arduino.h"
-#include "../Config/Config.h"
-#include "../GripUtil/GripUtil.h"
+#include "Config.h"
+#include "GripUtil.h"
 #include <Adafruit_PWMServoDriver.h>
 
 

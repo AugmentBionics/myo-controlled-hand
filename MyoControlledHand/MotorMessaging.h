@@ -3,8 +3,8 @@
 
 #include "Arduino.h"
 #include "Messaging.h"
-#include "../Config/Config.h"
-#include "../MotorController/MotorController.h"
+#include "Config.h"
+#include "MotorController.h"
 
 typedef void (MotorController::*MotorControllerFuncPtr)(unsigned int);
 

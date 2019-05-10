@@ -4,7 +4,7 @@
 #ifndef Grips_h
 #define Grips_h
 #include "Config.h"
-#include "../GripUtil/GripUtil.h"
+#include "GripUtil.h"
 
 #define OPEN_GRIP {\
 "Open",\

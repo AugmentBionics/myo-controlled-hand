@@ -27,21 +27,25 @@ void sendMessageStart(char address, char instrCode) {
 void sendOpenMessage() {
   sendMessageStart('m', 'm'); // 'm' for motor controller address, 'p' for grip pattern message
   Serial.write('o'); // 'o' for open
+  Serial.write('\n');
 }
 
 void sendCloseMessage() {
   sendMessageStart('m', 'm'); // 'm' for motor controller address, 'p' for grip pattern message
   Serial.write('c'); // 'c' for close
+  Serial.write('\n');
 }
 
 void sendBrakeMessage() {
   sendMessageStart('m', 'm'); // 'm' for motor controller address, 'p' for grip pattern message
   Serial.write('b'); // 'b' for brake
+  Serial.write('\n');
 }
 
 void sendIdleMessage() {
   sendMessageStart('m', 'm'); // 'm' for motor controller address, 'p' for grip pattern message
   Serial.write('i'); // 'i' for idle
+  Serial.write('\n');
 }
 
 void sendNextGripPattern() {

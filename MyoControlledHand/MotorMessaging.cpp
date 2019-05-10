@@ -38,8 +38,10 @@ void MotorMessageHandler::interpretMessage(int length) {
                         default: // ignore other characters
                             break;
                     }
+                    Serial.write(c);
                 }
                 state->setGripPattern(pattern);
+                Serial.write('\n');
                 break;
             }
 

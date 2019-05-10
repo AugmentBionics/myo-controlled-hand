@@ -32,6 +32,9 @@ void MotorMessageHandler::interpretMessage(int length) {
                         case 'd': // dynamic
                             pattern[i - 2] = c;
                             break;
+                        case 'i': // idle
+                            pattern[i - 2] = c;
+                            break;
                         default: // ignore other characters
                             break;
                     }
@@ -116,6 +119,11 @@ void MotorState::forEachDynamicActuator(MotorControllerFuncPtr function) {
             case 'c': {
                 if (!isClosed[i])
                     motorController.close(i);
+            }
+
+            case 'i': {
+                if (!isClosed[i])
+                    motorController.idle(i);
             }
 
             default:break;

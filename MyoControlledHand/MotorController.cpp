@@ -17,29 +17,29 @@ void MotorController::setGrip(Grip grip) {
 }
 
 void MotorController::open(unsigned int i) {
-  Serial.print("MotorController::open\t");
-  Serial.println(i);
+    Serial.print("MotorController::open\t");
+    Serial.println(i);
     pwm.setPin(reversePins[i], 4096);
     pwm.setPin(forwardPins[i], 0);
 }
 
 void MotorController::close(unsigned int i) {
-  Serial.print("MotorController::close\t");
-  Serial.println(i);
+    Serial.print("MotorController::close\t");
+    Serial.println(i);
     pwm.setPin(reversePins[i], 0);
     pwm.setPin(forwardPins[i], 4096);
 }
 
 void MotorController::brake(unsigned int i) {
-  Serial.print("MotorController::brake\t");
-  Serial.println(i);
+    Serial.print("MotorController::brake\t");
+    Serial.println(i);
     pwm.setPin(reversePins[i], 4096);
     pwm.setPin(forwardPins[i], 4096);
 }
 
 void MotorController::idle(unsigned int i) {
-  Serial.print("MotorController::idle\t");
-  Serial.println(i);
+    Serial.print("MotorController::idle\t");
+    Serial.println(i);
     pwm.setPin(reversePins[i], 0);
     pwm.setPin(forwardPins[i], 0);
 }

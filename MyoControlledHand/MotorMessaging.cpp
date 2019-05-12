@@ -152,13 +152,9 @@ void MotorState::update() {
                 default:break;
                 case MotorInstruction::open: // open -> idle and set isOpen to true
                     motorController.idle(i, true);
-                    Serial.println("Motor " + String(i) + " stopped when opening");
-                    Serial.println("Motor " + String(i) + " IDLE");
                     motorController.isOpen[i] = true;
-                    Serial.println("Motor " + String(i) + " is open");
                     break;
                 case MotorInstruction::close: // brake
-                    Serial.println("Motor " + String(i) + " stopped when closing");
                     motorController.brake(i, true);
                     break;
             }

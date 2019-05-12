@@ -2,8 +2,8 @@
 #include "Messaging.h"
 
 void MessageHandler::clearMessageBuffer() {
-    for (int i = 0; i < 16; ++i) {
-        messageBuffer[i] = 0;
+    for (char &c : messageBuffer) {
+        c = 0;
     }
 }
 void MessageHandler::handleSerial() {

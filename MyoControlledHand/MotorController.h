@@ -22,6 +22,14 @@
 
 #define NC      0b1111000000000000
 
+enum MotorInstruction {
+    none,
+    open,
+    close,
+    brake,
+    idle
+};
+
 class MotorController {
  public:
     explicit MotorController();

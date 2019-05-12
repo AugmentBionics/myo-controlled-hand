@@ -14,4 +14,5 @@ MotorMessageHandler messageHandler(&state);
 
 void loop() {
     messageHandler.handleSerial();
+    state.update();
 }

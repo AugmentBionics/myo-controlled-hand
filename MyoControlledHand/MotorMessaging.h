@@ -16,10 +16,11 @@ class MotorState {
     void brake();
     void idle();
     void init();
+    void update();
  private:
     static char currentGripPattern[NUMBER_OF_ACTUATORS];
-    static bool isClosed[NUMBER_OF_ACTUATORS];
-    static bool isOpen[NUMBER_OF_ACTUATORS];
+    static unsigned int rdCounters[NUMBER_OF_ACTUATORS];
+    const unsigned int rdThreshold = 100;
     static MotorController motorController;
     void forEachDynamicActuator(MotorControllerFuncPtr function);
 };

@@ -13,6 +13,7 @@ void MotorController::open(unsigned int i) {
     Serial.println(i);
     pwm.setPin(reversePins[i], 4096);
     pwm.setPin(forwardPins[i], 0);
+    lastInstruction[i] = MotorInstruction::open;
 }
 
 void MotorController::close(unsigned int i) {
@@ -20,6 +21,8 @@ void MotorController::close(unsigned int i) {
     Serial.println(i);
     pwm.setPin(reversePins[i], 0);
     pwm.setPin(forwardPins[i], 4096);
+    lastInstruction[i] = MotorInstruction::close;
+    isOpen[i] = false;
 }
 
 void MotorController::brake(unsigned int i) {
@@ -27,6 +30,7 @@ void MotorController::brake(unsigned int i) {
     Serial.println(i);
     pwm.setPin(reversePins[i], 4096);
     pwm.setPin(forwardPins[i], 4096);
+    lastInstruction[i] = MotorInstruction::brake;
 }
 
 void MotorController::idle(unsigned int i) {
@@ -34,6 +38,7 @@ void MotorController::idle(unsigned int i) {
     Serial.println(i);
     pwm.setPin(reversePins[i], 0);
     pwm.setPin(forwardPins[i], 0);
+    lastInstruction[i] = MotorInstruction::idle;
 }
 
 bool MotorController::checkCurrentLimiting(unsigned int i) {
@@ -46,3 +51,8 @@ void MotorController::setCurrentLimit(unsigned int i, unsigned int limit) {
     Wire.write(limit); //Current limiting value
     Wire.endTransmission();
 }
+
+
+bool MotorController::isClosed[NUMBER_OF_ACTUATORS] = {};
+bool MotorController::isOpen[NUMBER_OF_ACTUATORS] = {};
+MotorInstruction MotorController::lastInstruction[NUMBER_OF_ACTUATORS];

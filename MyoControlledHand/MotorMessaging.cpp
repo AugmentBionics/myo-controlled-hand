@@ -114,20 +114,19 @@ void MotorState::forEachDynamicActuator(MotorControllerFuncPtr function) {
             }
 
             case 'o': {
-                if (!isOpen[i])
+                if (!motorController.isOpen[i])
                     motorController.open(i);
                 break;
             }
 
             case 'c': {
-                if (!isClosed[i])
+                if (!motorController.isClosed[i])
                     motorController.close(i);
                 break;
             }
 
             case 'i': {
-                if (!isClosed[i])
-                    motorController.idle(i);
+                motorController.idle(i);
                 break;
             }
 
@@ -137,11 +136,33 @@ void MotorState::forEachDynamicActuator(MotorControllerFuncPtr function) {
 }
 
 void MotorState::init() {
-  motorController.init();
+    motorController.init();
+}
+
+void MotorState::update() {
+    for (unsigned int i = 0; i < NUMBER_OF_ACTUATORS; ++i) {
+        if (rdCounters[i] >= rdThreshold) {
+            switch (motorController.lastInstruction[i]) {
+                default:break;
+                case MotorInstruction::open: // open -> idle and set isOpen to true
+                    motorController.idle(i);
+                    Serial.println("Motor " + String(i) + "stopped when opening");
+                    Serial.println("Motor " + String(i) + "IDLE");
+                    motorController.isOpen[i] = true;
+                    Serial.println("Motor " + String(i) + "is open");
+                    break;
+                case MotorInstruction::close: // brake
+                    Serial.println("Motor " + String(i) + "stopped when closing");
+                    motorController.brake(i);
+                    break;
+                case MotorInstruction::brake: // using lots of current when braking?
+                    motorController.idle(i);
+                    break;
+            }
+        }
+    }
 }
 
 char MotorState::currentGripPattern[NUMBER_OF_ACTUATORS] = {'o', 'o', 'o', 'o'};
-
-bool MotorState::isClosed[NUMBER_OF_ACTUATORS] = {};
-bool MotorState::isOpen[NUMBER_OF_ACTUATORS] = {};
+unsigned int MotorState::rdCounters[NUMBER_OF_ACTUATORS];
 MotorController MotorState::motorController = MotorController();

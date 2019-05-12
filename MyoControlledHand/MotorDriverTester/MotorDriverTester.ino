@@ -61,9 +61,9 @@ void setup() {
   Serial.begin(9600);
   Serial.println(F("Motor testing Arduino starting..."));
 
-  pinMode(BUTTON1_PIN, INPUT);
-  pinMode(BUTTON2_PIN, INPUT);
-  pinMode(BUTTON3_PIN, INPUT);
+  pinMode(BUTTON1_PIN, INPUT_PULLUP);
+  pinMode(BUTTON2_PIN, INPUT_PULLUP);
+  pinMode(BUTTON3_PIN, INPUT_PULLUP);
 
   sendNextGripPattern();
 }

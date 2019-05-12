@@ -23,7 +23,6 @@ void UIMessageHandler::interpretMessage(int length) {
                 if (gIndex <= 1) {
                     // primary grip
                     Serial.println(F("Primary grip..."));
-                    state->selectGrip(state->primaryIndex);
                     state->showGrip(state->primaryIndex);
                     state->selectGrip();
                     sendCurrentGripSelection();

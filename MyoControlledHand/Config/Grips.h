@@ -54,6 +54,7 @@ simple,\
 {actuate, close, close, close}\
 }
 
-const Grip PROGMEM grips[NUMBER_OF_PRIMARY_GRIPS] = {OPEN_GRIP, POWER_GRIP, PINCH_GRIP, TRIPOD_GRIP, INDEX_GRIP, KEY_GRIP};
+const Grip PROGMEM
+    grips[NUMBER_OF_PRIMARY_GRIPS] = {OPEN_GRIP, POWER_GRIP, PINCH_GRIP, TRIPOD_GRIP, INDEX_GRIP, KEY_GRIP};
 
 #endif // Grips_h

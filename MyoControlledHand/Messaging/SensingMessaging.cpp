@@ -44,8 +44,8 @@ void SensingMessageHandler::interpretMessage(int length) {
                 int lx = str.indexOf('l');
                 int ux = str.indexOf('u');
                 if (lx >= 0 && ux > lx) {
-                    newl = (int)str.substring(lx + 1, ux).toInt();
-                    newu = (int)str.substring(ux + 1).toInt();
+                    newl = (int) str.substring(lx + 1, ux).toInt();
+                    newu = (int) str.substring(ux + 1).toInt();
                 }
                 Serial.print("Set Thresh.: ");
                 switch (messageBuffer[2]) {

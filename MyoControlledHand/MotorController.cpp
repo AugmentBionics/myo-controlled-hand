@@ -17,15 +17,15 @@ void MotorController::open(unsigned int i) {
     if (isOpen[i])
         return;
     //Serial.print("MotorController::open\t");
-    Serial.println(i);
     pwm.setPin(reversePins[i], 4096);
+    //Serial.println(i);
     pwm.setPin(forwardPins[i], 0);
     lastInstruction[i] = MotorInstruction::open;
 }
 
 void MotorController::close(unsigned int i) {
     //Serial.print("MotorController::close\t");
-    Serial.println(i);
+    //Serial.println(i);
     pwm.setPin(reversePins[i], 0);
     pwm.setPin(forwardPins[i], 4096);
     lastInstruction[i] = MotorInstruction::close;
@@ -34,7 +34,7 @@ void MotorController::close(unsigned int i) {
 
 void MotorController::brake(unsigned int i, bool doNotLog) {
     //Serial.print("MotorController::brake\t");
-    Serial.println(i);
+    //Serial.println(i);
     pwm.setPin(reversePins[i], 4096);
     pwm.setPin(forwardPins[i], 4096);
     if (!doNotLog)
@@ -47,7 +47,7 @@ void MotorController::brake(unsigned int i) {
 
 void MotorController::idle(unsigned int i, bool doNotLog) {
     //Serial.print("MotorController::idle\t");
-    Serial.println(i);
+    //Serial.println(i);
     pwm.setPin(reversePins[i], 0);
     pwm.setPin(forwardPins[i], 0);
     if (!doNotLog)

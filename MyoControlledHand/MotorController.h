@@ -42,14 +42,14 @@ class MotorController {
     void idle(unsigned int i);
     bool checkCurrentLimiting(unsigned int i);
 
+    static MotorInstruction lastInstruction[NUMBER_OF_ACTUATORS];
+    static bool isClosed[NUMBER_OF_ACTUATORS];
+    static bool isOpen[NUMBER_OF_ACTUATORS];
+
  private:
 
     Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
     bool _currentLimitingValues[NUMBER_OF_ACTUATORS];
-
-    word regState = del;
-    word outState = 0;
-    const word motorMasks[NUMBER_OF_ACTUATORS] = {m0Mask, m1Mask, m2Mask, m3Mask};
 
     const unsigned int forwardPins[NUMBER_OF_ACTUATORS] = {M0_FWD, M1_FWD, M2_FWD, M3_FWD};
     const unsigned int reversePins[NUMBER_OF_ACTUATORS] = {M0_REV, M1_REV, M2_REV, M3_REV};

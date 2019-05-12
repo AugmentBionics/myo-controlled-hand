@@ -32,7 +32,7 @@ void MotorController::close(unsigned int i) {
     isOpen[i] = false;
 }
 
-void MotorController::brake(unsigned int i, bool doNotLog = false) {
+void MotorController::brake(unsigned int i, bool doNotLog) {
     Serial.print("MotorController::brake\t");
     Serial.println(i);
     pwm.setPin(reversePins[i], 4096);
@@ -41,13 +41,21 @@ void MotorController::brake(unsigned int i, bool doNotLog = false) {
         lastInstruction[i] = MotorInstruction::brake;
 }
 
-void MotorController::idle(unsigned int i, bool doNotLog = false) {
+void MotorController::brake(unsigned int i) {
+    brake(i, true);
+}
+
+void MotorController::idle(unsigned int i, bool doNotLog) {
     Serial.print("MotorController::idle\t");
     Serial.println(i);
     pwm.setPin(reversePins[i], 0);
     pwm.setPin(forwardPins[i], 0);
     if (!doNotLog)
         lastInstruction[i] = MotorInstruction::idle;
+}
+
+void MotorController::idle(unsigned int i) {
+    idle(i, true);
 }
 
 bool MotorController::checkCurrentLimiting(unsigned int i) {

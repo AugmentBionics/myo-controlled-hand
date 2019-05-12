@@ -9,7 +9,7 @@ void MotorController::init() {
     Wire.begin();
     for (int i = 0; i < NUMBER_OF_ACTUATORS; ++i) {
         setCurrentLimit(i, 200);
-        pinMode(rdPins, INPUT);
+        pinMode(rdPins[i], INPUT);
     }
 }
 

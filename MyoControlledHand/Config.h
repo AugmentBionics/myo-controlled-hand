@@ -47,6 +47,8 @@
 #define SPEED_CLOSE_M3 4096
 #define SPEED_OPEN_M3 4096
 
+#define RD_DELAY 100 // is in cycles of loop()
+
 #define MYO_1_SIG_PIN A7
 #define MYO_1_RAW_PIN A6
 #define MYO_2_SIG_PIN A5

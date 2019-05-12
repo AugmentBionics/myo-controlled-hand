@@ -20,7 +20,7 @@ class MotorState {
  private:
     static char currentGripPattern[NUMBER_OF_ACTUATORS];
     static unsigned int rdCounters[NUMBER_OF_ACTUATORS];
-    const unsigned int rdThreshold = 100;
+    const unsigned int rdThreshold = RD_DELAY;
     static MotorController motorController;
     void forEachDynamicActuator(MotorControllerFuncPtr function);
 };

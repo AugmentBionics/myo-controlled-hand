@@ -6,6 +6,7 @@ void MessageHandler::clearMessageBuffer() {
         c = 0;
     }
 }
+
 void MessageHandler::handleSerial() {
     if (newMessage)
         interpretMessage(messageLength);

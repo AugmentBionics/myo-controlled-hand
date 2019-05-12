@@ -1,7 +1,6 @@
 //UI
 #include "Arduino.h"
 #include "UIMessaging.h"
-#include "Config.h"
 
 #define BUTTON1_PIN 3
 #define BUTTON2_PIN 4

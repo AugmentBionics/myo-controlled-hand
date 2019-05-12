@@ -32,11 +32,16 @@ void MotorMessageHandler::interpretMessage(int length) {
                         case 'd': // dynamic
                             pattern[i - 2] = c;
                             break;
+                        case 'i': // idle
+                            pattern[i - 2] = c;
+                            break;
                         default: // ignore other characters
                             break;
                     }
+                    Serial.write(c);
                 }
                 state->setGripPattern(pattern);
+                Serial.write('\n');
                 break;
             }
 
@@ -109,13 +114,19 @@ void MotorState::forEachDynamicActuator(MotorControllerFuncPtr function) {
             }
 
             case 'o': {
-                if (!isOpen[i])
-                    motorController.open(i);
+                motorController.open(i);
+                break;
             }
 
             case 'c': {
-                if (!isClosed[i])
+                if (!motorController.isClosed[i])
                     motorController.close(i);
+                break;
+            }
+
+            case 'i': {
+                motorController.idle(i);
+                break;
             }
 
             default:break;
@@ -123,8 +134,35 @@ void MotorState::forEachDynamicActuator(MotorControllerFuncPtr function) {
     }
 }
 
-char MotorState::currentGripPattern[NUMBER_OF_ACTUATORS] = {'o', 'o', 'o', 'o'};
+void MotorState::init() {
+    motorController.init();
+}
 
-bool MotorState::isClosed[NUMBER_OF_ACTUATORS] = {};
-bool MotorState::isOpen[NUMBER_OF_ACTUATORS] = {};
+void MotorState::update() {
+    for (unsigned int i = 0; i < NUMBER_OF_ACTUATORS; ++i) {
+        if (motorController.checkCurrentLimiting(i)) {
+            ++rdCounters[i];
+        } else {
+            rdCounters[i] = 0;
+        }
+    }
+    for (unsigned int i = 0; i < NUMBER_OF_ACTUATORS; ++i) {
+        if (rdCounters[i] >= rdThreshold) {
+            switch (motorController.lastInstruction[i]) {
+                default:break;
+                case MotorInstruction::open: // open -> idle and set isOpen to true
+                    motorController.idle(i, true);
+                    motorController.isOpen[i] = true;
+                    break;
+                case MotorInstruction::close: // brake
+                    motorController.brake(i, true);
+                    break;
+            }
+            rdCounters[i] = 0;
+        }
+    }
+}
+
+char MotorState::currentGripPattern[NUMBER_OF_ACTUATORS] = {'o', 'o', 'o', 'o'};
+unsigned int MotorState::rdCounters[NUMBER_OF_ACTUATORS];
 MotorController MotorState::motorController = MotorController();

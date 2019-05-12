@@ -3,8 +3,8 @@
 
 #include "Arduino.h"
 #include "Messaging.h"
-#include "../Config/Config.h"
-#include "../MotorController/MotorController.h"
+#include "Config.h"
+#include "MotorController.h"
 
 typedef void (MotorController::*MotorControllerFuncPtr)(unsigned int);
 
@@ -15,10 +15,12 @@ class MotorState {
     void openGrip();
     void brake();
     void idle();
+    void init();
+    void update();
  private:
     static char currentGripPattern[NUMBER_OF_ACTUATORS];
-    static bool isClosed[NUMBER_OF_ACTUATORS];
-    static bool isOpen[NUMBER_OF_ACTUATORS];
+    static unsigned int rdCounters[NUMBER_OF_ACTUATORS];
+    const unsigned int rdThreshold = RD_DELAY;
     static MotorController motorController;
     void forEachDynamicActuator(MotorControllerFuncPtr function);
 };

@@ -47,7 +47,7 @@ void MotorController::idle(unsigned int i) {
 }
 
 bool MotorController::checkCurrentLimiting(unsigned int i) {
-    return digitalRead(rdPins[i]) == HIGH;
+    return digitalRead(rdPins[i]) == LOW;
 }
 
 void MotorController::setCurrentLimit(unsigned int i, unsigned int limit) {
@@ -56,7 +56,6 @@ void MotorController::setCurrentLimit(unsigned int i, unsigned int limit) {
     Wire.write(limit); //Current limiting value
     Wire.endTransmission();
 }
-
 
 bool MotorController::isClosed[NUMBER_OF_ACTUATORS] = {};
 bool MotorController::isOpen[NUMBER_OF_ACTUATORS] = {};

@@ -68,10 +68,17 @@ class MotorController {
     const unsigned int
         motorOpenSpeed[NUMBER_OF_ACTUATORS] = {SPEED_OPEN_M0, SPEED_OPEN_M1, SPEED_OPEN_M2, SPEED_OPEN_M3};
     const unsigned int
-        currentLimits[NUMBER_OF_ACTUATORS] =
+        initCurrentLimits[NUMBER_OF_ACTUATORS] =
         {INIT_CURRENT_LIM_M0, INIT_CURRENT_LIM_M1, INIT_CURRENT_LIM_M2, INIT_CURRENT_LIM_M3};
+    const unsigned int
+        openCurrentLimits[NUMBER_OF_ACTUATORS] =
+        {OPEN_CURRENT_LIM_M0, OPEN_CURRENT_LIM_M1, OPEN_CURRENT_LIM_M2, OPEN_CURRENT_LIM_M3};
+    const unsigned int
+        closeCurrentLimits[NUMBER_OF_ACTUATORS] =
+        {CLOSE_CURRENT_LIM_M0, CLOSE_CURRENT_LIM_M1, CLOSE_CURRENT_LIM_M2, CLOSE_CURRENT_LIM_M3};
 
     void setCurrentLimit(unsigned int i, unsigned int limit);
+
     void setDelPin(unsigned int i, unsigned int value);
 };
 

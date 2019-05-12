@@ -9,7 +9,7 @@ void MotorController::init() {
     pwm.setPWMFreq(24.0f);
     Wire.begin();
     for (int i = 0; i < NUMBER_OF_ACTUATORS; ++i) {
-        setCurrentLimit(i, currentLimits[i]);
+        setCurrentLimit(i, initCurrentLimits[i]);
         setDelPin(i, INIT_DEL_PIN_VAL);
         pinMode(rdPins[i], INPUT);
     }
@@ -20,6 +20,7 @@ void MotorController::open(unsigned int i) {
         return;
     //Serial.print("MotorController::open\t");
     //Serial.println(i);
+    setCurrentLimit(i, openCurrentLimits[i]);
     pwm.setPin(reversePins[i], motorOpenSpeed[i]);
     pwm.setPin(forwardPins[i], 0);
     lastInstruction[i] = MotorInstruction::open;
@@ -28,6 +29,7 @@ void MotorController::open(unsigned int i) {
 void MotorController::close(unsigned int i) {
     //Serial.print("MotorController::close\t");
     //Serial.println(i);
+    setCurrentLimit(i, closeCurrentLimits[i]);
     pwm.setPin(reversePins[i], 0);
     pwm.setPin(forwardPins[i], motorCloseSpeed[i]);
     lastInstruction[i] = MotorInstruction::close;

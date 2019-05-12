@@ -114,8 +114,7 @@ void MotorState::forEachDynamicActuator(MotorControllerFuncPtr function) {
             }
 
             case 'o': {
-                if (!motorController.isOpen[i])
-                    motorController.open(i);
+                motorController.open(i);
                 break;
             }
 
@@ -152,7 +151,7 @@ void MotorState::update() {
             switch (motorController.lastInstruction[i]) {
                 default:break;
                 case MotorInstruction::open: // open -> idle and set isOpen to true
-                    motorController.idle(i);
+                    motorController.idle(i, true);
                     Serial.println("Motor " + String(i) + " stopped when opening");
                     Serial.println("Motor " + String(i) + " IDLE");
                     motorController.isOpen[i] = true;
@@ -160,10 +159,7 @@ void MotorState::update() {
                     break;
                 case MotorInstruction::close: // brake
                     Serial.println("Motor " + String(i) + " stopped when closing");
-                    motorController.brake(i);
-                    break;
-                case MotorInstruction::brake: // using lots of current when braking?
-                    motorController.idle(i);
+                    motorController.brake(i, true);
                     break;
             }
         }

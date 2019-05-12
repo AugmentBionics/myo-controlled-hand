@@ -38,8 +38,8 @@ class MotorController {
 
     void open(unsigned int i);
     void close(unsigned int i);
-    void brake(unsigned int i);
-    void idle(unsigned int i);
+    void brake(unsigned int i, bool doNotLog);
+    void idle(unsigned int i, bool doNotLog);
     bool checkCurrentLimiting(unsigned int i);
 
     static MotorInstruction lastInstruction[NUMBER_OF_ACTUATORS];

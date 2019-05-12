@@ -27,6 +27,11 @@
 #define CURRENT_LIMITER_M2 0x60
 #define CURRENT_LIMITER_M3 0x70
 
+#define M0_RD 3
+#define M1_RD 4
+#define M2_RD 5
+#define M3_RD 6
+
 
 #define MYO_1_SIG_PIN A7
 #define MYO_1_RAW_PIN A6

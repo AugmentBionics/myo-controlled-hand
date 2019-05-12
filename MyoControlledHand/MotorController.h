@@ -56,6 +56,7 @@ class MotorController {
     const unsigned int delPins[NUMBER_OF_ACTUATORS] = {M0_DEL, M1_DEL, M2_DEL, M3_DEL};
     const unsigned int
         limPins[NUMBER_OF_ACTUATORS] = {CURRENT_LIMITER_M0, CURRENT_LIMITER_M1, CURRENT_LIMITER_M2, CURRENT_LIMITER_M3};
+    const unsigned int rdPins[NUMBER_OF_ACTUATORS] = {M0_RD, M1_RD, M2_RD, M3_RD};
 
     void setCurrentLimit(unsigned int i, unsigned int limit);
 };

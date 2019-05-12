@@ -1,3 +1,4 @@
+#include "Arduino.h"
 #include "MotorController.h"
 
 MotorController::MotorController() {}
@@ -8,6 +9,7 @@ void MotorController::init() {
     Wire.begin();
     for (int i = 0; i < NUMBER_OF_ACTUATORS; ++i) {
         setCurrentLimit(i, 200);
+        pinMode(rdPins, INPUT);
     }
 }
 
@@ -45,7 +47,7 @@ void MotorController::idle(unsigned int i) {
 }
 
 bool MotorController::checkCurrentLimiting(unsigned int i) {
-    return false;
+    return digitalRead(rdPins[i]) == HIGH;
 }
 
 void MotorController::setCurrentLimit(unsigned int i, unsigned int limit) {

@@ -47,7 +47,10 @@ void loop() {
 
     // Update UI Selection
     if (button1 == HIGH && button2 == HIGH) {
-        // do nothing
+        // Update primary
+        state.primaryIndex = state.getShownGripIndex();
+        state.showGrip(state.primaryIndex); //update 'P' symbol
+        lastChangeMillis = millis();
     } else if (button1 == HIGH && state.getShownGripIndex() < NUMBER_OF_PRIMARY_GRIPS - 1) {
         state.showNextGrip();
         lastChangeMillis = millis();

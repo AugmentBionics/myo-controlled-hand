@@ -141,6 +141,13 @@ void MotorState::init() {
 
 void MotorState::update() {
     for (unsigned int i = 0; i < NUMBER_OF_ACTUATORS; ++i) {
+        if (motorController.checkCurrentLimiting(i)) {
+            ++rdCounters[i];
+        } else {
+            rdCounters[i] = 0;
+        }
+    }
+    for (unsigned int i = 0; i < NUMBER_OF_ACTUATORS; ++i) {
         if (rdCounters[i] >= rdThreshold) {
             switch (motorController.lastInstruction[i]) {
                 default:break;

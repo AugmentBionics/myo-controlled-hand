@@ -1,4 +1,5 @@
 #include "Arduino.h"
+#include "Config.h"
 #include "MotorController.h"
 
 MotorController::MotorController() {}
@@ -8,7 +9,8 @@ void MotorController::init() {
     pwm.setPWMFreq(24.0f);
     Wire.begin();
     for (int i = 0; i < NUMBER_OF_ACTUATORS; ++i) {
-        setCurrentLimit(i, 200);
+        setCurrentLimit(i, currentLimits[i]);
+        setDelPin(i, INIT_DEL_PIN_VAL);
         pinMode(rdPins[i], INPUT);
     }
 }
@@ -17,8 +19,8 @@ void MotorController::open(unsigned int i) {
     if (isOpen[i])
         return;
     //Serial.print("MotorController::open\t");
-    pwm.setPin(reversePins[i], 4096);
     //Serial.println(i);
+    pwm.setPin(reversePins[i], motorOpenSpeed[i]);
     pwm.setPin(forwardPins[i], 0);
     lastInstruction[i] = MotorInstruction::open;
 }
@@ -27,7 +29,7 @@ void MotorController::close(unsigned int i) {
     //Serial.print("MotorController::close\t");
     //Serial.println(i);
     pwm.setPin(reversePins[i], 0);
-    pwm.setPin(forwardPins[i], 4096);
+    pwm.setPin(forwardPins[i], motorCloseSpeed[i]);
     lastInstruction[i] = MotorInstruction::close;
     isOpen[i] = false;
 }
@@ -67,6 +69,10 @@ void MotorController::setCurrentLimit(unsigned int i, unsigned int limit) {
     Wire.write(limPins[i]); //M0 memory address
     Wire.write(limit); //Current limiting value
     Wire.endTransmission();
+}
+
+void MotorController::setDelPin(unsigned int i, unsigned int value) {
+    pwm.setPin(delPins[i], value);
 }
 
 bool MotorController::isClosed[NUMBER_OF_ACTUATORS] = {};

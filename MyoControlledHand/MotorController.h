@@ -3,7 +3,6 @@
 
 #include "Arduino.h"
 #include "Config.h"
-#include "GripUtil.h"
 #include <Adafruit_PWMServoDriver.h>
 
 
@@ -29,7 +28,6 @@ class MotorController {
 
     void init();
 
-    void setGrip(Grip grip);
     void open(unsigned int i);
     void close(unsigned int i);
     void brake(unsigned int i);
@@ -39,7 +37,6 @@ class MotorController {
  private:
 
     Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
-    Grip _currentGrip;
     bool _currentLimitingValues[NUMBER_OF_ACTUATORS];
 
     word regState = del;

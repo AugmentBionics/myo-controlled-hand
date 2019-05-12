@@ -20,9 +20,9 @@ enum GripType {
  * is locked open (<b>open</b>), or is locked closed (<b>close</b>).
  */
 enum ActuationScheme {
-    actuate,
-    open,
-    close
+    myoControl,
+    alwaysOpen,
+    alwaysClosed
 };
 
 /*! @brief Describes a grip

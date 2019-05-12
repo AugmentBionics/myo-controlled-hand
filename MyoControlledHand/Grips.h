@@ -11,7 +11,7 @@
 simple,\
 {0, 0, 0, 0},\
 {0, 0, 0, 0},\
-{open, open, open, open},\
+{alwaysOpen, alwaysOpen, alwaysOpen, alwaysOpen},\
 }
 
 #define POWER_GRIP {\
@@ -19,7 +19,7 @@ simple,\
 simple,\
 {0, 0, 0, 0},\
 {100, 100, 100, 100},\
-{actuate, actuate, actuate, actuate}\
+{myoControl, myoControl, myoControl, myoControl}\
 }
 
 #define PINCH_GRIP {\
@@ -27,7 +27,7 @@ simple,\
 simple,\
 {0, 0, 0, 0},\
 {100, 100, 0, 0},\
-{actuate, actuate, open, open}\
+{myoControl, myoControl, alwaysOpen, alwaysOpen}\
 }
 
 #define TRIPOD_GRIP {\
@@ -35,7 +35,7 @@ simple,\
 simple,\
 {0, 0, 0, 0},\
 {100, 100, 100, 0},\
-{actuate, actuate, actuate, close}\
+{myoControl, myoControl, myoControl, alwaysClosed}\
 }
 
 #define INDEX_GRIP {\
@@ -43,7 +43,7 @@ simple,\
 simple,\
 {0, 0, 0, 0},\
 {0, 100, 0, 0},\
-{close, actuate, close, close}\
+{alwaysClosed, myoControl, alwaysClosed, alwaysClosed}\
 }
 
 #define KEY_GRIP {\
@@ -51,7 +51,7 @@ simple,\
 simple,\
 {0, 0, 0, 0},\
 {100, 0, 0, 0},\
-{actuate, close, close, close}\
+{myoControl, alwaysClosed, alwaysClosed, alwaysClosed}\
 }
 
 const Grip PROGMEM grips[NUMBER_OF_PRIMARY_GRIPS] = {OPEN_GRIP, POWER_GRIP, PINCH_GRIP, TRIPOD_GRIP, INDEX_GRIP, KEY_GRIP};

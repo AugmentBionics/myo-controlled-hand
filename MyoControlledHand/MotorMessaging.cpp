@@ -156,10 +156,12 @@ void MotorState::update() {
                     Serial.println("Motor " + String(i) + " IDLE");
                     motorController.isOpen[i] = true;
                     Serial.println("Motor " + String(i) + " is open");
+                    rdCounters[i] = 0;
                     break;
                 case MotorInstruction::close: // brake
                     Serial.println("Motor " + String(i) + " stopped when closing");
                     motorController.brake(i, true);
+                    rdCounters[i] = 0;
                     break;
             }
         }

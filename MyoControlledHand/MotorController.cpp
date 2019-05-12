@@ -6,6 +6,9 @@ void MotorController::init() {
     pwm.begin();
     pwm.setPWMFreq(24.0f);
     Wire.begin();
+    for (int i = 0; i < NUMBER_OF_ACTUATORS; ++i) {
+        setCurrentLimit(i, 200);
+    }
 }
 
 void MotorController::open(unsigned int i) {

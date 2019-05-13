@@ -56,6 +56,6 @@ simple,\
 
 const Grip PROGMEM
     grips[NUMBER_OF_PRIMARY_GRIPS] = {OPEN_GRIP, POWER_GRIP, PINCH_GRIP, TRIPOD_GRIP, INDEX_GRIP, KEY_GRIP};
-const char PROGMEM gripNames[NUMBER_OF_PRIMARY_GRIPS][8] = {"Open", "Power", "Pinch", "Tripod", "Index", "Key"};
+const char PROGMEM gripNames[NUMBER_OF_PRIMARY_GRIPS][8] = {"Open\0", "Power\0", "Pinch\0", "Tripod\0", "Index\0", "Key\0"};
 
 #endif // Grips_h

@@ -1,5 +1,5 @@
 //SENSING
-#include <MyoInput.h>
+#include "MyoInput.h"
 #include "Arduino.h"
 #include "SensingMessaging.h"
 

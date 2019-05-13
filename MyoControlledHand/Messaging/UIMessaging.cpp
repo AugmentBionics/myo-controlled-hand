@@ -144,6 +144,7 @@ void UIState::showGrip(unsigned int gripIndex) {
 
     //  delay(20);
     digitalWrite(10, LOW); // Motor off
+    shownGripIndex = gripIndex;
 }
 
 void UIState::showNextGrip() {

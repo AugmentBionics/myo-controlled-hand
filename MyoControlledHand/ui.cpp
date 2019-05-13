@@ -33,10 +33,13 @@ unsigned long button4PressStart = 0;
 const unsigned long longPress = 1000;
 const unsigned long waitMillis = 1400;
 
-int lastButton1State = HIGH;
-int lastButton2State = HIGH;
-int lastButton3State = HIGH;
-int lastButton4State = HIGH;
+int lastButtonStates[4] = {HIGH, HIGH, HIGH, HIGH};
+
+unsigned long lastDebounceTimes[4] = {};
+unsigned long debounceDelay = 50;
+bool isDebounced[4];
+bool buttonsUp[4];
+bool buttonsDown[4];
 
 void loop() {
     // Handle serial instructions
@@ -45,28 +48,30 @@ void loop() {
     const unsigned long t = millis();
 
     // Read from buttons
-    int button1State = digitalRead(BUTTON1_PIN);
-    int button2State = digitalRead(BUTTON2_PIN);
-    int button3State = digitalRead(BUTTON3_PIN);
-    int button4State = digitalRead(BUTTON4_PIN);
+    int buttonStates[4] =
+        {digitalRead(BUTTON1_PIN), digitalRead(BUTTON2_PIN), digitalRead(BUTTON3_PIN), digitalRead(BUTTON4_PIN)};
 
-    bool button1Up = button1State == HIGH && lastButton1State == LOW;
-    bool button2Up = button2State == HIGH && lastButton2State == LOW;
-    bool button3Up = button3State == HIGH && lastButton3State == LOW;
-    bool button4Up = button4State == HIGH && lastButton4State == LOW;
-    bool button3Down = button3State == LOW && lastButton3State == HIGH;
-    bool button4Down = button4State == LOW && lastButton4State == HIGH;
+    for (int i = 0; i < 4; ++i) {
+        if (buttonStates[i] != lastButtonStates[i]) {
+            // reset the debouncing timer
+            lastDebounceTimes[i] = t;
+        }
+    }
 
-    if (button3Down)
+    for (int i = 0; i < 4; ++i) {
+        isDebounced[i] = (t - lastDebounceTimes[i]) > debounceDelay;
+        if (isDebounced[i]) {
+            buttonsUp[i] = buttonStates[i] == HIGH && lastButtonStates[i] == LOW;
+            buttonsDown[i] = buttonStates[i] == LOW && lastButtonStates[i] == HIGH;
+        }
+    }
+
+    if (buttonsDown[2])
         button3PressStart = t;
-    if (button4Down)
+    if (buttonsDown[3])
         button4PressStart = t;
 
-    // testing
-    button3Up = false;
-    button4Up = false;
-
-    if (button3Up) {
+    if (buttonsUp[2]) {
         if (t - button3PressStart > longPress) {
             if (state.getShownGripIndex() == state.secondaryIndex)
                 state.secondaryIndex = state.primaryIndex;
@@ -74,7 +79,7 @@ void loop() {
         }
         state.showGrip(state.primaryIndex);
         lastChangeMillis = t;
-    } else if (button4Up) {
+    } else if (buttonsUp[3]) {
         if (t - button4PressStart > longPress) {
             if (state.getShownGripIndex() == state.primaryIndex)
                 state.primaryIndex = state.secondaryIndex;
@@ -85,12 +90,12 @@ void loop() {
 
     } else {
         // Update UI Selection
-        if (button1Up && button2Up) {
+        if (buttonsUp[0] && buttonsUp[1]) {
             // do nothing
-        } else if (button1Up && state.getShownGripIndex() < NUMBER_OF_PRIMARY_GRIPS - 1) {
+        } else if (buttonsUp[0] && state.getShownGripIndex() < NUMBER_OF_PRIMARY_GRIPS - 1) {
             state.showNextGrip();
             lastChangeMillis = t;
-        } else if (button2Up == LOW && state.getShownGripIndex() > 0) {
+        } else if (buttonsUp[2] && state.getShownGripIndex() > 0) {
             state.showPreviousGrip();
             lastChangeMillis = t;
         }
@@ -102,8 +107,6 @@ void loop() {
         messageHandler.sendCurrentGripSelection();
     }
 
-    lastButton1State = button1State;
-    lastButton2State = button2State;
-    lastButton3State = button3State;
-    lastButton4State = button4State;
+    for (int i = 0; i < 4; ++i)
+        lastButtonStates[i] = buttonStates[i];
 }

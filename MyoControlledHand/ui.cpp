@@ -62,6 +62,10 @@ void loop() {
     if (button4Down)
         button4PressStart = t;
 
+    // testing
+    button3Up = false;
+    button4Up = false;
+
     if (button3Up) {
         if (t - button3PressStart > longPress) {
             if (state.getShownGripIndex() == state.secondaryIndex)

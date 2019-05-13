@@ -5,23 +5,6 @@
 #include "Config.h"
 #include <Adafruit_PWMServoDriver.h>
 
-
-/*!
- * Class that controls a number of Actuators.
- */
-
-#define del     0b0000100100100100
-#define mOpen   0b0000001001001001
-#define mClose  0b0000010010010010
-#define mBrake   0b0000011011011011
-
-#define m0Mask  0b0000000000000111
-#define m1Mask  0b0000000000111000
-#define m2Mask  0b0000000111000000
-#define m3Mask  0b0000111000000000
-
-#define NC      0b1111000000000000
-
 enum MotorInstruction {
     none,
     open,

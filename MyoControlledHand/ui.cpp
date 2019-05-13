@@ -33,10 +33,10 @@ unsigned long button4PressStart = 0;
 const unsigned long longPress = 1000;
 const unsigned long waitMillis = 1400;
 
-int lastButton1State;
-int lastButton2State;
-int lastButton3State;
-int lastButton4State;
+int lastButton1State = HIGH;
+int lastButton2State = HIGH;
+int lastButton3State = HIGH;
+int lastButton4State = HIGH;
 
 void loop() {
     // Handle serial instructions

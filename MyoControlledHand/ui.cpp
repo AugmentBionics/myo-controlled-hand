@@ -34,6 +34,7 @@ const unsigned long longPress = 1000;
 const unsigned long waitMillis = 1400;
 
 int lastButtonStates[4] = {HIGH, HIGH, HIGH, HIGH};
+int lastButtonReadings[4] = {HIGH, HIGH, HIGH, HIGH};
 
 unsigned long lastDebounceTimes[4] = {};
 unsigned long debounceDelay = 50;
@@ -48,11 +49,11 @@ void loop() {
     const unsigned long t = millis();
 
     // Read from buttons
-    int buttonStates[4] =
+    int buttonReadings[4] =
         {digitalRead(BUTTON1_PIN), digitalRead(BUTTON2_PIN), digitalRead(BUTTON3_PIN), digitalRead(BUTTON4_PIN)};
 
     for (int i = 0; i < 4; ++i) {
-        if (buttonStates[i] != lastButtonStates[i]) {
+        if (buttonReadings[i] != lastButtonReadings[i]) {
             // reset the debouncing timer
             lastDebounceTimes[i] = t;
         }
@@ -61,8 +62,8 @@ void loop() {
     for (int i = 0; i < 4; ++i) {
         isDebounced[i] = (t - lastDebounceTimes[i]) > debounceDelay;
         if (isDebounced[i]) {
-            buttonsUp[i] = buttonStates[i] == HIGH && lastButtonStates[i] == LOW;
-            buttonsDown[i] = buttonStates[i] == LOW && lastButtonStates[i] == HIGH;
+            buttonsUp[i] = buttonReadings[i] == HIGH && lastButtonStates[i] == LOW;
+            buttonsDown[i] = buttonReadings[i] == LOW && lastButtonStates[i] == HIGH;
         }
     }
 
@@ -107,6 +108,9 @@ void loop() {
         messageHandler.sendCurrentGripSelection();
     }
 
-    for (int i = 0; i < 4; ++i)
-        lastButtonStates[i] = buttonStates[i];
+    for (int i = 0; i < 4; ++i) {
+        if (isDebounced[i])
+            lastButtonStates[i] = buttonReadings[i];
+        lastButtonReadings[i] = buttonReadings[i];
+    }
 }

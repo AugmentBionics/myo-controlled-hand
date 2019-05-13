@@ -1,7 +1,7 @@
 #ifndef MYOCONTROLLEDHAND_MYOINPUT_H
 #define MYOCONTROLLEDHAND_MYOINPUT_H
 
-#include <SensingMessaging.h>
+#include "SensingMessaging.h"
 
 enum GripSelection {
     primary,

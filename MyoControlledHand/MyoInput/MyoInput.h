@@ -2,10 +2,12 @@
 #define MYOCONTROLLEDHAND_MYOINPUT_H
 
 #include <SensingMessaging.h>
+
 enum GripSelection {
     primary,
     other
 };
+
 /*!
  * Class that reads from myo sensors and interprets this as high-level "actions"
  * TODO: Improve action detection

@@ -67,12 +67,12 @@ void loop() {
         }
     }
 
-    if (buttonsDown[2])
+    if (buttonsDown[2] && isDebounced[2])
         button3PressStart = t;
-    if (buttonsDown[3])
+    if (buttonsDown[3] && isDebounced[3])
         button4PressStart = t;
 
-    if (buttonsUp[2]) {
+    if (buttonsUp[2] && isDebounced[2]) {
         if (t - button3PressStart > longPress) {
             if (state.getShownGripIndex() == state.secondaryIndex)
                 state.secondaryIndex = state.primaryIndex;
@@ -80,7 +80,7 @@ void loop() {
         }
         state.showGrip(state.primaryIndex);
         lastChangeMillis = t;
-    } else if (buttonsUp[3]) {
+    } else if (buttonsUp[3] && isDebounced[3]) {
         if (t - button4PressStart > longPress) {
             if (state.getShownGripIndex() == state.primaryIndex)
                 state.primaryIndex = state.secondaryIndex;
@@ -91,12 +91,12 @@ void loop() {
 
     } else {
         // Update UI Selection
-        if (buttonsUp[0] && buttonsUp[1]) {
+        if (buttonsUp[0] && buttonsUp[1] && isDebounced[0] && isDebounced[1]) {
             // do nothing
-        } else if (buttonsUp[0] && state.getShownGripIndex() < NUMBER_OF_PRIMARY_GRIPS - 1) {
+        } else if (buttonsUp[0] && isDebounced[0] && state.getShownGripIndex() < NUMBER_OF_PRIMARY_GRIPS - 1) {
             state.showNextGrip();
             lastChangeMillis = t;
-        } else if (buttonsUp[2] && state.getShownGripIndex() > 0) {
+        } else if (buttonsUp[1] && isDebounced[1] && state.getShownGripIndex() > 0) {
             state.showPreviousGrip();
             lastChangeMillis = t;
         }

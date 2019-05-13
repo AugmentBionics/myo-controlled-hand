@@ -105,4 +105,5 @@ void loop() {
     lastButton1State = button1State;
     lastButton2State = button2State;
     lastButton3State = button3State;
+    lastButton4State = button4State;
 }

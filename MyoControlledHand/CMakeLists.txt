@@ -20,7 +20,7 @@ link_directories(
 generate_arduino_firmware(ab_ui
         BOARD nano328
         SRCS Messaging/Messaging.cpp Messaging/UIMessaging.cpp ui.cpp
-        HDRS Messaging/Messaging.h Messaging/UIMessaging.h Config/Config.h Config/Grips.h
+        HDRS Messaging/Messaging.h Messaging/UIMessaging.h Config/Config.h Config/Grips.h GripUtil/GripUtil.h
         ARDLIBS Wire SPI
         PORT /dev/tty${port_prefix}{ui_port_num})
 #---

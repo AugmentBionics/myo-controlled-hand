@@ -2,7 +2,7 @@
 #define UIMessaging_h
 
 #include <Adafruit_SSD1306.h>
-#include <GripUtil.h>
+#include "GripUtil.h"
 #include "Arduino.h"
 #include "Messaging.h"
 

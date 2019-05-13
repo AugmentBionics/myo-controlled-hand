@@ -20,10 +20,17 @@ void UIMessageHandler::interpretMessage(int length) {
             case 's': // select grip
             {
                 int gIndex = int(messageBuffer[2] - '0');
-                if (gIndex <= 1) {
+                if (gIndex <= 0) {
                     // primary grip
                     Serial.println(F("Primary grip..."));
                     state->showGrip(state->primaryIndex);
+                    state->selectGrip();
+                    sendCurrentGripSelection();
+                    break;
+                } else if(gIndex == 1){
+                    // secondary grip
+                    Serial.println(F("Secondary grip..."));
+                    state->showGrip(state->secondaryIndex);
                     state->selectGrip();
                     sendCurrentGripSelection();
                     break;

@@ -62,28 +62,23 @@ void loop() {
     if (button4Down)
         button4PressStart = t;
 
-    if (button3Up || button4Up) {
-        if (button3Up) {
-            if (t - button3PressStart > longPress) {
-                if (state.getShownGripIndex() == state.secondaryIndex)
-                    state.secondaryIndex = state.primaryIndex;
-                state.primaryIndex = state.getShownGripIndex();
-                state.showGrip(state.primaryIndex); //update 'P' symbol
-            } else {
-                state.showGrip(state.primaryIndex);
-            }
+    if (button3Up) {
+        if (t - button3PressStart > longPress) {
+            if (state.getShownGripIndex() == state.secondaryIndex)
+                state.secondaryIndex = state.primaryIndex;
+            state.primaryIndex = state.getShownGripIndex();
         }
-        if (button4Up) {
-            if (t - button4PressStart > longPress) {
-                if (state.getShownGripIndex() == state.primaryIndex)
-                    state.primaryIndex = state.secondaryIndex;
-                state.secondaryIndex = state.getShownGripIndex();
-                state.showGrip(state.secondaryIndex); //update 'S' symbol
-            } else {
-                state.showGrip(state.secondaryIndex);
-            }
-        }
+        state.showGrip(state.primaryIndex);
         lastChangeMillis = t;
+    } else if (button4Up) {
+        if (t - button4PressStart > longPress) {
+            if (state.getShownGripIndex() == state.primaryIndex)
+                state.primaryIndex = state.secondaryIndex;
+            state.secondaryIndex = state.getShownGripIndex();
+        }
+        state.showGrip(state.secondaryIndex);
+        lastChangeMillis = t;
+
     } else {
         // Update UI Selection
         if (button1Up && button2Up) {

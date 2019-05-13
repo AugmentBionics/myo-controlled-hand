@@ -68,10 +68,8 @@ void loop() {
                     state.secondaryIndex = state.primaryIndex;
                 state.primaryIndex = state.getShownGripIndex();
                 state.showGrip(state.primaryIndex); //update 'P' symbol
-                lastChangeMillis = t;
             } else {
                 state.showGrip(state.primaryIndex);
-                lastChangeMillis = t;
             }
         }
         if (button4Up) {
@@ -80,12 +78,11 @@ void loop() {
                     state.primaryIndex = state.secondaryIndex;
                 state.secondaryIndex = state.getShownGripIndex();
                 state.showGrip(state.secondaryIndex); //update 'S' symbol
-                lastChangeMillis = t;
             } else {
                 state.showGrip(state.secondaryIndex);
-                lastChangeMillis = t;
             }
         }
+        lastChangeMillis = t;
     } else {
         // Update UI Selection
         if (button1Up && button2Up) {

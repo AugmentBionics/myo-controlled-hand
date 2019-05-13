@@ -29,13 +29,14 @@ void setup() {
 unsigned long lastChangeMillis = 0;
 unsigned long button3PressStart = 0;
 unsigned long button4PressStart = 0;
+
 const unsigned long longPress = 1000;
 const unsigned long waitMillis = 1400;
 
-volatile int lastButton1State;
-volatile int lastButton2State;
-volatile int lastButton3State;
-volatile int lastButton4State;
+int lastButton1State;
+int lastButton2State;
+int lastButton3State;
+int lastButton4State;
 
 void loop() {
     // Handle serial instructions
@@ -52,8 +53,8 @@ void loop() {
     bool button1Up = button1State == HIGH && lastButton1State == LOW;
     bool button2Up = button2State == HIGH && lastButton2State == LOW;
     bool button3Up = button3State == HIGH && lastButton3State == LOW;
-    bool button3Down = button3State == LOW && lastButton3State == HIGH;
     bool button4Up = button4State == HIGH && lastButton4State == LOW;
+    bool button3Down = button3State == LOW && lastButton3State == HIGH;
     bool button4Down = button4State == LOW && lastButton4State == HIGH;
 
     if (button3Down)

@@ -86,7 +86,7 @@ void loop() {
         } else if (button1Up && state.getShownGripIndex() < NUMBER_OF_PRIMARY_GRIPS - 1) {
             state.showNextGrip();
             lastChangeMillis = t;
-        } else if (button2Up == LOW && state.getShownGripIndex() > 0) {
+        } else if (button2Up && state.getShownGripIndex() > 0) {
             state.showPreviousGrip();
             lastChangeMillis = t;
         }

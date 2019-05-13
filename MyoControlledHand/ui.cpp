@@ -61,8 +61,6 @@ void loop() {
     if (button4Down)
         button4PressStart = t;
 
-
-    // Select primary grip if button 3 is LOW
     if (button3Up || button4Up) {
         if (button3Up) {
             if (t - button3PressStart > longPress) {
@@ -84,7 +82,7 @@ void loop() {
                 state.showGrip(state.secondaryIndex); //update 'S' symbol
                 lastChangeMillis = t;
             } else {
-                state.showGrip(state.primaryIndex);
+                state.showGrip(state.secondaryIndex);
                 lastChangeMillis = t;
             }
         }

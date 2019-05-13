@@ -133,6 +133,11 @@ void UIState::showGrip(unsigned int gripIndex) {
         display.setTextSize(1);
         display.setCursor(offsetX + 100, 0);
         display.println(F("P"));
+    } else if (gripIndex == secondaryIndex) {
+        //Display S indicator for secondary grip
+        display.setTextSize(1);
+        display.setCursor(offsetX + 100, 0);
+        display.println(F("S"));
     }
 
     display.display();

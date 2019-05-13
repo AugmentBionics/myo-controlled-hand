@@ -102,6 +102,7 @@ class UIState {
     }
 
     unsigned int primaryIndex = 0;
+    unsigned int secondaryIndex = 1;
 
  private:
     void flash(unsigned int t);

@@ -107,14 +107,14 @@ void UIState::showGrip(unsigned int gripIndex) {
         display.setTextSize(1);
         display.setCursor(offsetX, 0);
         display.print('\x10');
-        display.println(grips[gripIndex - 1].name);
+        display.println(gripNames[gripIndex - 1]);
     }
 
     //Display current grip name in middle
     display.setTextSize(2);
     display.setCursor(offsetX + 0, offsetY + 5);
     display.print('\x10');
-    display.print(grips[gripIndex].name);
+    display.print(gripNames[gripIndex]);
 
     //Display grip index + 1 also
     display.setCursor(1, offsetY + 5);
@@ -125,7 +125,7 @@ void UIState::showGrip(unsigned int gripIndex) {
         display.setTextSize(1);
         display.setCursor(offsetX, 55);
         display.print('\x10');
-        display.println(grips[gripIndex + 1].name);
+        display.println(gripNames[gripIndex + 1]);
     }
 
     if (gripIndex == primaryIndex) {

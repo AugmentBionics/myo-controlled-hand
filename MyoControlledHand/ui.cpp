@@ -16,9 +16,9 @@ void setup() {
     // Motor
     pinMode(10, OUTPUT);
 
-    pinMode(BUTTON1_PIN, INPUT);
-    pinMode(BUTTON2_PIN, INPUT);
-    pinMode(BUTTON3_PIN, INPUT);
+    pinMode(BUTTON1_PIN, INPUT_PULLUP);
+    pinMode(BUTTON2_PIN, INPUT_PULLUP);
+    pinMode(BUTTON3_PIN, INPUT_PULLUP);
 
     state.setupScreen();
     state.showGrip(0);

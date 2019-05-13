@@ -36,8 +36,8 @@ void loop() {
     int button2 = digitalRead(BUTTON2_PIN);
     int button3 = digitalRead(BUTTON3_PIN);
 
-    // Select primary grip if button 3 is HIGH
-    if (button3 == HIGH) {
+    // Select primary grip if button 3 is LOW
+    if (button3 == LOW) {
         state.showGrip(state.primaryIndex);
         lastChangeMillis = millis();
         state.selectGrip();
@@ -46,15 +46,15 @@ void loop() {
     }
 
     // Update UI Selection
-    if (button1 == HIGH && button2 == HIGH) {
+    if (button1 == LOW && button2 == LOW) {
         // Update primary
         state.primaryIndex = state.getShownGripIndex();
         state.showGrip(state.primaryIndex); //update 'P' symbol
         lastChangeMillis = millis();
-    } else if (button1 == HIGH && state.getShownGripIndex() < NUMBER_OF_PRIMARY_GRIPS - 1) {
+    } else if (button1 == LOW && state.getShownGripIndex() < NUMBER_OF_PRIMARY_GRIPS - 1) {
         state.showNextGrip();
         lastChangeMillis = millis();
-    } else if (button2 == HIGH && state.getShownGripIndex() > 0) {
+    } else if (button2 == LOW && state.getShownGripIndex() > 0) {
         state.showPreviousGrip();
         lastChangeMillis = millis();
     }

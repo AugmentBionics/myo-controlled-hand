@@ -1,5 +1,18 @@
 #!/usr/bin/python3
 import shutil
+import os
+
+if not os.path.exists("Arduino-IDE-Projects"):
+    os.makedirs("Arduino-IDE-Projects")
+
+if not os.path.exists("Arduino-IDE-Projects/UI"):
+    os.makedirs("Arduino-IDE-Projects/UI")
+
+if not os.path.exists("Arduino-IDE-Projects/SENSING"):
+    os.makedirs("Arduino-IDE-Projects/SENSING")
+
+if not os.path.exists("Arduino-IDE-Projects/MOTOR"):
+    os.makedirs("Arduino-IDE-Projects/MOTOR")
 
 # UI
 shutil.copyfile("ui.cpp", "Arduino-IDE-Projects/UI/UI.ino")

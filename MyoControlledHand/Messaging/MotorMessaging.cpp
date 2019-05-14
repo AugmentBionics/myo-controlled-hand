@@ -50,20 +50,32 @@ void MotorMessageHandler::interpretMessage(int length) {
                 Serial.print("Move: ");
                 switch (messageBuffer[2]) {
                     case 'o': // open
-                        Serial.println("open");
-                        state->openGrip();
+                        if (lastGripCommand != messageBuffer[2]) {
+                            Serial.println("open");
+                            state->openGrip();
+                            lastGripCommand = messageBuffer[2];
+                        }
                         break;
                     case 'c': // close
-                        Serial.println("close");
-                        state->closeGrip();
+                        if (lastGripCommand != messageBuffer[2]) {
+                            Serial.println("close");
+                            state->closeGrip();
+                            lastGripCommand = messageBuffer[2];
+                        }
                         break;
                     case 'i': // idle
-                        Serial.println("idle");
-                        state->idle();
+                        if (lastGripCommand != messageBuffer[2]) {
+                            Serial.println("idle");
+                            state->idle();
+                            lastGripCommand = messageBuffer[2];
+                        }
                         break;
                     case 'b': // brake
-                        Serial.println("brake");
-                        state->brake();
+                        if (lastGripCommand != messageBuffer[2]) {
+                            Serial.println("brake");
+                            state->brake();
+                            lastGripCommand = messageBuffer[2];
+                        }
                         break;
                     default:break;
                 }

@@ -33,6 +33,7 @@ class MotorMessageHandler : public MessageHandler {
     explicit MotorMessageHandler(MotorState *state);
  private:
     void interpretMessage(int length) final;
+    char lastGripCommand = '\0';
     MotorState *state;
 };
 

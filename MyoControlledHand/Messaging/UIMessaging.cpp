@@ -64,7 +64,7 @@ void UIMessageHandler::sendCurrentGripSelection() {
 void UIMessageHandler::serializeGrip(const Grip &grip, char *out) {
     char c;
     out[0] = 'p'; // p for pattern
-    for (unsigned int i = 1; i <= NUMBER_OF_ACTUATORS; ++i) {
+    for (unsigned int i = 0; i < NUMBER_OF_ACTUATORS; ++i) {
         switch (grip.actuationPattern[i]) {
             case close:c = 'c';
                 break;
@@ -73,7 +73,7 @@ void UIMessageHandler::serializeGrip(const Grip &grip, char *out) {
             default:c = 'o';
                 break;
         }
-        out[i] = c;
+        out[i + 1] = c;
     }
 }
 

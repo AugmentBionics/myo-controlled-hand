@@ -31,6 +31,10 @@ void SensingMessageHandler::interpretMessage(int length) {
                         Serial.println("mode 3: idle");
                         state->setMode(idle);
                         break;
+                    case '4': // mode 3: demo
+                        Serial.println("mode 4: demo");
+                        state->setMode(demo);
+                        break;
                     default:break;
                 }
                 break;
@@ -101,4 +105,8 @@ void SensingMessageHandler::sendSelectPrimary() {
 
 void SensingState::setMode(Mode mode) {
     this->mode = mode;
+}
+
+Mode SensingState::getMode() {
+    return mode;
 }

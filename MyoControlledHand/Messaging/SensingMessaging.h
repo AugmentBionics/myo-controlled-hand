@@ -7,13 +7,15 @@
 enum Mode {
     freemove,
     idle,
-    locked
+    locked,
+    demo
 };
 
 class SensingState {
     friend class MyoInput;
  public:
     void setMode(Mode mode);
+    Mode getMode();
  private:
     Mode mode = idle;
     float t1 = 375.0f;

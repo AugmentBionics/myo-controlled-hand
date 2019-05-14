@@ -1,7 +1,6 @@
 //SENSING
 #include "MyoInput.h"
-#include "Arduino.h"
-#include "SensingMessaging.h"
+#include "MyoDemo.h"
 
 void setup() {
     Serial.begin(9600);
@@ -12,6 +11,7 @@ SensingState state;
 SensingMessageHandler messageHandler(&state);
 MyoInput input(&state);
 MyoInput::Action lastAction = MyoInput::none;
+MyoDemo d;
 
 void loop() {
     messageHandler.handleSerial();
@@ -20,7 +20,16 @@ void loop() {
         messageHandler.sendSelectPrimary();
     }
 
-    MyoInput::Action action = input.readAction();
+    MyoInput::Action action = MyoInput::none;
+    switch (state.getMode()) {
+        case Mode::freemove: // handle real myo input
+            action = input.readAction();
+            break;
+        case Mode::demo: // fake myo input
+            action = d.getNextDemoAction();
+            break;
+        default:break;
+    }
 
     // ~~~ Testing
     //action = MyoInput::none;

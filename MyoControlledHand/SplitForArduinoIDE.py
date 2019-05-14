@@ -24,7 +24,7 @@ for file in ui_files:
 # SENSING
 shutil.copyfile("sensing.cpp", "Arduino-IDE-Projects/SENSING/SENSING.ino")
 sensing_files = ["Messaging/Messaging.cpp", "Messaging/SensingMessaging.cpp", "Messaging/Messaging.h",
-                 "Messaging/SensingMessaging.h", "Config/Config.h", "MyoInput/MyoInput.cpp", "MyoInput/MyoInput.h"]
+                 "Messaging/SensingMessaging.h", "Config/Config.h", "MyoInput/MyoInput.cpp", "MyoInput/MyoInput.h", "MyoInput/MyoDemo.cpp", "MyoInput/MyoDemo.h"]
 for file in sensing_files:
     shutil.copy(file, "Arduino-IDE-Projects/SENSING/")
 

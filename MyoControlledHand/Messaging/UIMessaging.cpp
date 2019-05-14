@@ -77,6 +77,12 @@ void UIMessageHandler::serializeGrip(const Grip &grip, char *out) {
     }
 }
 
+void UIMessageHandler::sendSetMode(unsigned int i) {
+    String str = String("m");
+    str.concat(i);
+    sendMessage('s', str);
+}
+
 void UIState::setupScreen() {
     // by default, we'll generate the high voltage from the 3.3v line internally! (neat!)
     display.begin(SSD1306_SWITCHCAPVCC, 0x3C);  // initialize with the I2C addr 0x3D (for the 128x64)

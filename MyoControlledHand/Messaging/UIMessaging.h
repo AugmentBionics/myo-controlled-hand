@@ -122,6 +122,7 @@ class UIMessageHandler : public MessageHandler {
  public:
     explicit UIMessageHandler(UIState *state);
     void sendCurrentGripSelection();
+    void sendSetMode(unsigned int i);
  private:
     void interpretMessage(int length) final;
     void serializeGrip(const Grip &grip, char out[]);

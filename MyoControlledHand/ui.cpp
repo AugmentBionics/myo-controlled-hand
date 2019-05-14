@@ -31,7 +31,10 @@ unsigned long button3PressStart = 0;
 unsigned long button4PressStart = 0;
 
 const unsigned long longPress = 1000;
+const unsigned long veryLongPress = 3000;
 const unsigned long waitMillis = 1400;
+
+bool inDemoMode = false;
 
 int lastButton1State = HIGH;
 int lastButton2State = HIGH;
@@ -71,14 +74,21 @@ void loop() {
         state.showGrip(state.primaryIndex);
         lastChangeMillis = t;
     } else if (button4Up) {
-        if (t - button4PressStart > longPress) {
+        if (t - button4PressStart > veryLongPress) {
+            // demo mode
+            unsigned int mode = inDemoMode ? 1 : 4;
+            messageHandler.sendSetMode(mode);
+            inDemoMode = !inDemoMode;
+
+        } else if (t - button4PressStart > longPress) {
             if (state.getShownGripIndex() == state.primaryIndex)
                 state.primaryIndex = state.secondaryIndex;
             state.secondaryIndex = state.getShownGripIndex();
         }
-        state.showGrip(state.secondaryIndex);
-        lastChangeMillis = t;
-
+        if (!inDemoMode) {
+            state.showGrip(state.secondaryIndex);
+            lastChangeMillis = t;
+        }
     } else {
         // Update UI Selection
         if (button1Up && button2Up) {

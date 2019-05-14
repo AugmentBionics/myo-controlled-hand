@@ -35,13 +35,13 @@ void loop() {
     //action = MyoInput::none;
     // ~~~
 
-    if (lastAction != action) {
+    if (action == MyoInput::close) {
+        messageHandler.sendGripClose();
+        lastAction = action;
+    } else if (lastAction != action) {
         switch (action) {
             case MyoInput::open: // Open grip
                 messageHandler.sendGripOpen();
-                break;
-            case MyoInput::close: // Close grip
-                messageHandler.sendGripClose();
                 break;
             default:  // No instruction
                 messageHandler.sendGripIdle();

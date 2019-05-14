@@ -2,14 +2,9 @@
 #define SensingMessaging_h
 
 #include "Arduino.h"
+#include "GripUtil.h"
 #include "Messaging.h"
 
-enum Mode {
-    freemove,
-    idle,
-    locked,
-    demo
-};
 
 class SensingState {
     friend class MyoInput;

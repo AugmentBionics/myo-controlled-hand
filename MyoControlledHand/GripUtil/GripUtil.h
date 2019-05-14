@@ -8,6 +8,13 @@
 #include "Arduino.h"
 #include "Config.h"
 
+enum Mode {
+    freemove,
+    idle,
+    locked,
+    demo
+};
+
 /*! @brief Type of grip
  * (to support future expansion to different grip control schemes
  * and possible haptic feedback) */
